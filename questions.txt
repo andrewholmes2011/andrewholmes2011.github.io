@@ -1,0 +1,3 @@
+# Questions awaiting answers
+
+The FAQ form on faq.html downloads new submissions here as a questions.txt file. GitHub Pages is static and cannot automatically append files to the repository, so review submissions and add answered questions to faq.html manually.
