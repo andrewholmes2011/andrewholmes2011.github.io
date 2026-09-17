@@ -1,3 +1,102 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Common computer problems and practical solutions."><title>FAQ | Andrew Holmes</title><link rel="icon" type="image/png" href="https://codehs.com/uploads/6e1009498f8ed2ac6b3b1d6bcb9d8cf3"><link rel="stylesheet" href="style.css"><script src="script.js" defer></script></head>
-<body><header class="site-header"><nav class="nav shell" aria-label="Main navigation"><a class="brand" href="index.html"><img src="https://codehs.com/uploads/6e1009498f8ed2ac6b3b1d6bcb9d8cf3" alt="" class="brand-logo">Andrew <span>Holmes</span></a><button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button><div class="nav-links"><a href="index.html">Home</a><a class="active" href="faq.html">FAQ</a><a href="directory.html">Directory</a><a href="downloads.html">Downloads</a><a href="streams.html">Streams</a><a href="resume.html">Resume</a><a href="contact.html">Contact</a></div><form class="nav-search" action="search.html"><label class="sr-only" for="nav-search">Search</label><input name="q" type="search" placeholder="Search…"><button>⌕</button></form></nav></header><main class="shell"><section class="page-hero"><p class="eyebrow">Knowledge base</p><h1>Common computer issues</h1><p>Simple, safe steps for solving everyday computer and technology problems.</p></section><section id="computer-issues" class="content-grid"><div><h2>Everyday fixes</h2><details class="faq-item" open><summary>My computer is slow. What should I try?</summary><p>Restart it, close unused apps and browser tabs, check available storage, and install pending system updates. If it is still slow, check for unwanted programs and ask a trusted adult or technician before deleting anything important.</p></details><details class="faq-item"><summary>My Wi-Fi is not working.</summary><p>Check whether other devices connect, move closer to the router, restart the router and your device, and verify Wi-Fi is enabled. If every device is offline, the internet provider may be having an outage.</p></details><details class="faq-item"><summary>An app froze. How do I fix it?</summary><p>Wait briefly, then close and reopen the app. If it will not close, use the operating system’s task manager or force-quit tool, restart the computer, and check the app for updates.</p></details><details class="faq-item"><summary>My computer will not turn on.</summary><p>Check the power cable or charger, try another outlet, disconnect accessories, and hold the power button for a few seconds. For a laptop, let it charge before trying again. Get help if you notice heat, smoke, or a damaged battery.</p></details></div><div><h2>Accounts & security</h2><details class="faq-item" open><summary>How do I make an account safer?</summary><p>Use a unique password, turn on multi-factor authentication, keep recovery details current, and never share verification codes.</p></details><details class="faq-item"><summary>Why should I install updates?</summary><p>Updates improve stability and fix security weaknesses. Use official update tools and keep your operating system, browser, and important apps current.</p></details><details class="faq-item"><summary>What should I do about a suspicious email?</summary><p>Do not click links or open attachments. Check the sender carefully, report or delete the message, and contact the organization through a trusted website or phone number.</p></details><details class="faq-item"><summary>What is a backup?</summary><p>A backup is an extra copy of important data stored separately from the original. Keep more than one copy when possible and test that files can be restored.</p></details></div></section><section id="ask" class="card" style="margin-bottom:70px"><p class="eyebrow">Have a question?</p><h2>Submit an unanswered question</h2><p>GitHub Pages cannot privately write to the repository. This form creates a questions.txt download in your browser only; it is not uploaded or visible to website visitors.</p><form id="question-form"><label>Your name (optional)<input name="name" type="text"></label><label>Your question<textarea name="question" rows="3" required></textarea></label><button class="button primary" type="submit">Download private questions.txt</button><p id="form-message" role="status"></p></form></section></main><footer class="site-footer"><div class="shell footer-inner"><p><strong>Andrew Holmes</strong><br>Computer help & technology FAQ</p><p><a href="search.html">Search</a></p></div></footer></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Common computer problems and practical solutions.">
+  <title>FAQ | Andrew Holmes</title>
+  <link rel="icon" type="image/png" href="https://codehs.com/uploads/6e1009498f8ed2ac6b3b1d6bcb9d8cf3">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav shell" aria-label="Main navigation">
+      <a class="brand" href="index.html">
+        <img src="https://codehs.com/uploads/6e1009498f8ed2ac6b3b1d6bcb9d8cf3" alt="" class="brand-logo">
+        Andrew <span>Holmes</span>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a class="active" href="faq.html">FAQ</a>
+        <a href="directory.html">Directory</a>
+        <a href="downloads.html">Downloads</a>
+        <a href="streams.html">Streams</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <form class="nav-search" action="search.html">
+        <label class="sr-only" for="nav-search">Search</label>
+        <input id="nav-search" name="q" type="search" placeholder="Search…">
+        <button type="submit" aria-label="Search">⌕</button>
+      </form>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section class="page-hero">
+      <p class="eyebrow">Quick answers</p>
+      <h1>Common computer issues</h1>
+      <p>Simple, safe steps for solving everyday computer and technology problems.</p>
+    </section>
+
+    <section id="computer-issues" class="content-grid">
+      <div>
+        <h2>Everyday fixes</h2>
+
+        <details class="faq-item" open>
+          <summary>My computer is slow. What should I try?</summary>
+          <p>Restart it, close unused apps and tabs, check available storage, and install system updates. Ask a trusted adult or technician before deleting anything important.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>My Wi-Fi is not working.</summary>
+          <p>Check other devices, move closer to the router, restart the router and device, and verify Wi-Fi is enabled. If everything is offline, check for an outage.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>An app froze. How do I fix it?</summary>
+          <p>Wait briefly, close and reopen it, then use the operating system’s task manager if needed. Restart the computer and check for app updates.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>My computer will not turn on.</summary>
+          <p>Check the charger and outlet, disconnect accessories, and try holding the power button. Stop and get help if there is heat, smoke, or a damaged battery.</p>
+        </details>
+      </div>
+
+      <div>
+        <h2>Accounts &amp; security</h2>
+
+        <details class="faq-item" open>
+          <summary>How do I make an account safer?</summary>
+          <p>Use a unique password, enable multi-factor authentication, keep recovery details current, and never share verification codes.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Why should I install updates?</summary>
+          <p>Updates improve stability and fix security weaknesses. Use official update tools and keep your operating system, browser, and important apps current.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>What should I do about a suspicious email?</summary>
+          <p>Do not click links or open attachments. Check the sender, report or delete the message, and contact the organization through a trusted channel.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>What is a backup?</summary>
+          <p>A backup is an extra copy of important data stored separately from the original. Keep more than one copy and test that files can be restored.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <p><strong>Andrew Holmes</strong><br>Computer help &amp; technology FAQ</p>
+      <p><a href="search.html">Search</a></p>
+    </div>
+  </footer>
+</body>
+</html>

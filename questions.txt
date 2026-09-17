@@ -1,1 +1,1 @@
-.questions.txt is intentionally not used for public submissions. GitHub Pages is static and public, so the FAQ form downloads questions.txt locally in the submitter's browser instead of writing questions into this repository. To keep questions private, do not commit submitted files here; review them locally or use a private backend/repository.
+Questions removed.
