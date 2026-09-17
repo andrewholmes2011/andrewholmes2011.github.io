@@ -1,3 +1,1 @@
-# Questions awaiting answers
-
-The FAQ form on faq.html downloads new submissions here as a questions.txt file. GitHub Pages is static and cannot automatically append files to the repository, so review submissions and add answered questions to faq.html manually.
+.questions.txt is intentionally not used for public submissions. GitHub Pages is static and public, so the FAQ form downloads questions.txt locally in the submitter's browser instead of writing questions into this repository. To keep questions private, do not commit submitted files here; review them locally or use a private backend/repository.
