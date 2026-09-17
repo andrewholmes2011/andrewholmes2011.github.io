@@ -1,197 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Andrew Holmes</title>
-  <link rel="icon" type="image/png" href="https://codehs.com/uploads/6e1009498f8ed2ac6b3b1d6bcb9d8cf3" />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Andrew Holmes — high school student interested in coding, cybersecurity, IT, and technology.">
+  <title>Andrew Holmes | Portfolio</title>
+  <link rel="icon" type="image/png" href="https://codehs.com/uploads/6e1009498f8ed2ac6b3b1d6bcb9d8cf3">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --navy:#0b1d2d;
+      --blue:#176da8;
+      --bright:#2d9cdb;
+      --light:#bfe8ff;
+      --bg:#eef5f9;
+      --white:#fff;
+      --text:#172936;
+      --muted:#617482;
+      --border:#d8e5ec;
+      --shadow:0 10px 30px rgba(13,45,68,.10);
+    }
+    * {box-sizing:border-box}
+    html {scroll-behavior:smooth}
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom right, #0f4c75, #3282b8);
-      margin: 0;
-      padding: 0;
-      color: #f1f1f1;
-      text-align: center;
+      margin:0;
+      font-family:Inter,Arial,sans-serif;
+      color:var(--text);
+      background:linear-gradient(180deg,#f5faff 0%,var(--bg) 100%);
+      line-height:1.6;
     }
-
-    header {
-      background-color: #1b262c;
-      padding: 20px;
+    .nav {
+      position:sticky;top:0;z-index:20;
+      background:rgba(11,29,45,.96);
+      border-bottom:3px solid var(--bright);
+      box-shadow:0 4px 18px rgba(0,0,0,.10);
     }
-
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      color: #bbe1fa;
+    .nav-inner {
+      width:min(1050px,calc(100% - 32px));
+      min-height:64px;margin:auto;
+      display:flex;align-items:center;justify-content:space-between;gap:20px;
     }
-
-    nav {
-      background-color: #0f4c75;
-      padding: 10px;
+    .brand {
+      color:#fff;text-decoration:none;font-size:1rem;font-weight:800;
+      letter-spacing:.3px;
     }
-
-    nav a {
-      color: #bbe1fa;
-      text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
-      transition: 0.3s;
+    .brand span {color:var(--light)}
+    .links {display:flex;gap:22px;flex-wrap:wrap}
+    .links a {
+      color:#d9eaf4;text-decoration:none;font-size:.86rem;font-weight:600;
+      transition:.2s;
     }
-
-    nav a:hover {
-      color: #fff;
-      text-decoration: underline;
+    .links a:hover {color:#fff}
+    .hero {
+      width:min(1050px,calc(100% - 32px));margin:auto;
+      padding:75px 0 60px;
+      display:grid;grid-template-columns:1.5fr .5fr;gap:55px;align-items:center;
     }
-
-    img {
-      border-radius: 50%;
-      margin-top: 20px;
-      border: 4px solid #bbe1fa;
+    .intro-label {
+      color:var(--blue);font-family:"JetBrains Mono",monospace;
+      font-size:.78rem;font-weight:500;letter-spacing:1px;text-transform:uppercase;
     }
-
-    h2 {
-      margin-top: 40px;
-      color: #bbe1fa;
+    h1 {
+      font-size:clamp(2.7rem,6vw,4.8rem);
+      line-height:1.02;letter-spacing:-2.5px;margin:12px 0 18px;
+      color:var(--navy);
     }
-
-    p {
-      max-width: 600px;
-      margin: 20px auto;
-      color: #e0f7fa;
-      font-size: 1.1rem;
+    h1 span {color:var(--blue)}
+    .hero p {max-width:650px;color:var(--muted);font-size:1.05rem;margin:0}
+    .buttons {display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+    .button {
+      display:inline-block;padding:11px 17px;border-radius:8px;
+      text-decoration:none;font-weight:700;font-size:.86rem;
+      border:1px solid var(--blue);transition:.2s;
     }
-
-    table {
-      margin: 30px auto;
-      border-collapse: collapse;
-      width: 80%;
-      background-color: #1b262c;
-      color: #f1f1f1;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    .button.primary {background:var(--blue);color:#fff}
+    .button.secondary {background:#fff;color:var(--blue)}
+    .button:hover {transform:translateY(-2px);box-shadow:var(--shadow)}
+    .profile-card {
+      background:#fff;border:1px solid var(--border);border-radius:18px;
+      padding:26px;text-align:center;box-shadow:var(--shadow);
     }
-
-    th, td {
-      border: 1px solid #3282b8;
-      padding: 12px;
-      text-align: center;
+    .profile-card img {
+      width:145px;height:145px;object-fit:cover;border-radius:50%;
+      border:4px solid var(--light);outline:2px solid var(--bright);
     }
-
-    th {
-      background-color: #0f4c75;
-      color: #bbe1fa;
+    .profile-card h2 {font-size:1.25rem;margin:15px 0 3px;color:var(--navy)}
+    .profile-card p {margin:0;color:var(--muted);font-size:.82rem}
+    .status {
+      display:inline-flex;align-items:center;gap:7px;margin-top:15px;
+      background:#edf8ff;color:var(--blue);border:1px solid #ccecfb;
+      border-radius:20px;padding:6px 10px;font-size:.72rem;font-weight:700;
     }
-
-    tr:nth-child(even) {
-      background-color: #2c3e50;
+    .status i {width:7px;height:7px;border-radius:50%;background:#31a56b}
+    .section {width:min(1050px,calc(100% - 32px));margin:auto;padding:55px 0}
+    .section-heading {margin-bottom:24px}
+    .section-heading small {
+      color:var(--blue);font-family:"JetBrains Mono",monospace;font-size:.72rem;
+      font-weight:500;text-transform:uppercase;letter-spacing:1px;
     }
-
-    .button-link {
-      display: inline-block;
-      margin: 15px;
-      padding: 12px 20px;
-      text-decoration: none;
-      color: #0f4c75;
-      background-color: #bbe1fa;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: 0.3s;
+    .section-heading h2 {
+      margin:4px 0 0;color:var(--navy);font-size:2rem;letter-spacing:-1px;
     }
-
-    .button-link:hover {
-      background-color: #3282b8;
-      color: #fff;
+    .about {
+      display:grid;grid-template-columns:1fr 1fr;gap:18px;
     }
-
-    iframe {
-      margin: 30px 0;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    .card {
+      background:#fff;border:1px solid var(--border);border-radius:14px;
+      padding:25px;box-shadow:var(--shadow);
     }
-
-    /* Center LinkedIn badge */
-    .linkedin-container {
-      display: flex;
-      justify-content: center;
-      margin: 30px 0;
+    .card p {color:var(--muted);margin:0 0 12px;font-size:.92rem}
+    .card p:last-child {margin-bottom:0}
+    .chips {display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
+    .chip {
+      padding:6px 10px;background:#edf7fc;border:1px solid #d3eaf5;
+      color:var(--blue);border-radius:7px;font-size:.74rem;font-weight:700;
+    }
+    .skills {display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+    .skill {border-top:3px solid var(--bright)}
+    .skill h3 {margin:0 0 6px;color:var(--navy);font-size:1rem}
+    .skill p {font-size:.84rem}
+    .skill .number {font-family:"JetBrains Mono",monospace;color:var(--bright);font-size:.72rem;margin-bottom:12px}
+    .education {display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+    .school {border-left:4px solid var(--bright)}
+    .school h3 {margin:0;color:var(--navy)}
+    .school .location {color:var(--blue);font-size:.82rem;font-weight:700;margin:3px 0 13px}
+    .school-info {display:flex;flex-wrap:wrap;gap:9px}
+    .info {
+      background:#f3f8fb;border:1px solid var(--border);border-radius:7px;
+      padding:7px 10px;font-size:.75rem;font-weight:700;color:var(--text)
+    }
+    .course-title {margin:0 0 12px;color:var(--navy);font-size:1rem}
+    .work-grid {display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+    .work h3 {margin:0 0 7px;color:var(--navy)}
+    .work p {margin-bottom:13px}
+    footer {
+      margin-top:30px;padding:28px 20px;text-align:center;
+      background:var(--navy);color:#a9c1cf;font-size:.76rem;
+      border-top:3px solid var(--bright);
+    }
+    footer strong {color:#fff}
+    @media(max-width:780px) {
+      .nav-inner {flex-direction:column;padding:12px 0}
+      .hero,.about,.education {grid-template-columns:1fr}
+      .hero {padding-top:48px}
+      .skills {grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:520px) {
+      .skills,.work-grid {grid-template-columns:1fr}
+      .links {justify-content:center;gap:14px}
+      h1 {letter-spacing:-1.8px}
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1><em><strong>Andrew Holmes</strong></em></h1>
-  </header>
-  <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
-
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="resume.html">Resume</a>
-    <a href="https://www.linkedin.com/in/andrewaholmes/" target="">LinkedIn</a>
-  </nav>
-
-  <img src="https://codehs.com/uploads/4176a1b336525bab96e869f5f5b55159" width="150px" alt="Profile Picture">
-
-  <h2>Intro</h2>
-  <p><em>I have been at Chief Joseph Middle School for 3 years, took Computer Science Discoveries 1 in 8th Grade. I have been a Student Assistant for Chief Joseph Broadcasting Camp (2 Weeks Long)</em></p>
-  
-  <h2>Education</h2>
-  <p><em>Richland School District 400 <br> Sacajawea Elementary School Student <br> Chief Joseph Middle School Student (2022-2025) <br> (Broadcasting Student Assistant) <br> (Computer Science Discoveries 1 (CSD1)) <br> Hanford High School (2025-Current)</em></p>
-
-  <!-- LinkedIn badge centered -->
-  <div class="linkedin-container">
-    <div class="badge-base LI-profile-badge" 
-      data-locale="en_US" 
-      data-size="large" 
-      data-theme="dark" 
-      data-type="HORIZONTAL" 
-      data-vanity="andrew-holmes-5b9b54382" 
-      data-version="v1">
-      <a class="badge-base__link LI-simple-link" 
-        href="https://www.linkedin.com/in/andrew-holmes-5b9b54382?trk=profile-badge">
-      </a>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">Andrew <span>Holmes</span></a>
+      <nav class="links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
+        <a href="#work">Work</a>
+        <a href="resume.html">Resume</a>
+        <a href="https://www.linkedin.com/in/andrewaholmes/" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
     </div>
-  </div>
-              
-  <h2>Skills</h2>
-  <table>
-    <tr>
-      <th>Skill</th>
-      <th>Description</th>
-      <th>Rating (1–10)</th>
-    </tr>
-    <tr>
-      <td>Communication</td>
-      <td>To communicate fluently and fully</td>
-      <td>9.3</td>
-    </tr>
-    <tr>
-      <td>Coding</td>
-      <td>To be able to code in HTML and CSS</td>
-      <td>7.5</td>
-    </tr>
-    <tr>
-      <td>Helping Others</td>
-      <td>To help those who need assistance to understand things</td>
-      <td>9.7</td>
-    </tr>
-  </table>
+  </header>
 
-  <a class="button-link" href="https://codehs.com/share/id/does-taylor-swift-lack-style-1icl7h/run">View My Other Work</a>
-  <a class="button-link" href="https://www.youtube.com/watch?v=HoRkntoHkIE&list=RDHoRkntoHkIE&start_radio=1">My Favorite Songs Playlist</a>
+  <main>
+    <section class="hero">
+      <div>
+        <div class="intro-label">High School Student • Technology • Coding</div>
+        <h1>Hi, I'm <span>Andrew.</span></h1>
+        <p>I’m a high school student interested in coding, cybersecurity, IT, and technology. I like building things, solving problems, and learning new technical skills.</p>
+        <div class="buttons">
+          <a class="button primary" href="resume.html">View My Resume</a>
+          <a class="button secondary" href="#work">See My Work</a>
+        </div>
+      </div>
+      <div class="profile-card">
+        <img src="https://codehs.com/uploads/4176a1b336525bab96e869f5f5b55159" alt="Andrew Holmes">
+        <h2>Andrew Holmes</h2>
+        <p>Student Developer & Technology Enthusiast</p>
+        <div class="status"><i></i> Currently at Hanford High School</div>
+      </div>
+    </section>
 
-  <h2>YouTube Playlist</h2>
-  /* <iframe 
-    width="560" 
-    height="315" 
-    src="https://www.youtube.com/embed/videoseries?list=RDHoRkntoHkIE" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe> */
+    <section class="section" id="about">
+      <div class="section-heading"><small>01 / About</small><h2>A little about me</h2></div>
+      <div class="about">
+        <div class="card">
+          <p>I’m a motivated high school student who enjoys technology, coding, troubleshooting, and learning how systems work.</p>
+          <p>I’m especially interested in cybersecurity and information technology, while also enjoying creative technical work such as live video production.</p>
+          <div class="chips">
+            <span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span>
+            <span class="chip">Cybersecurity</span><span class="chip">IT</span><span class="chip">Networking</span>
+          </div>
+        </div>
+        <div class="card">
+          <p><strong>What I enjoy:</strong></p>
+          <p>Building websites, figuring out technical problems, helping other people, working with computers, and taking on projects that let me learn something new.</p>
+          <p><strong>My goal:</strong></p>
+          <p>Continue developing my skills in cybersecurity, information technology, programming, and real-world technical work.</p>
+        </div>
+      </div>
+    </section>
 
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?si=rc4fy4AftBpxGTsA&amp;list=PL4AZpmpYK0cJqSNVuqh-TICWunLjO5wjs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <section class="section" id="skills">
+      <div class="section-heading"><small>02 / Skills</small><h2>What I can do</h2></div>
+      <div class="skills">
+        <div class="card skill"><div class="number">01</div><h3>Web Development</h3><p>HTML, CSS, JavaScript, and creating functional websites.</p></div>
+        <div class="card skill"><div class="number">02</div><h3>Computer Technology</h3><p>Computer troubleshooting and understanding how systems work together.</p></div>
+        <div class="card skill"><div class="number">03</div><h3>Cybersecurity</h3><p>Building knowledge in cybersecurity, networking, and information technology.</p></div>
+        <div class="card skill"><div class="number">04</div><h3>Live Production</h3><p>PTZ Optics cameras, vMix video switching, and live event operations.</p></div>
+        <div class="card skill"><div class="number">05</div><h3>Communication</h3><p>Communicating clearly and helping others understand technical problems.</p></div>
+        <div class="card skill"><div class="number">06</div><h3>Problem Solving</h3><p>Finding practical solutions and staying organized when something needs fixing.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="education">
+      <div class="section-heading"><small>03 / Education</small><h2>School & coursework</h2></div>
+      <div class="education">
+        <div class="card school">
+          <h3>Hanford High School</h3>
+          <div class="location">Richland, Washington • Current</div>
+          <div class="school-info">
+            <span class="info">10th Grade</span>
+            <span class="info">Graduation: 2029</span>
+            <span class="info">GPA: 3.94 / 4.00</span>
+          </div>
+          <p style="margin-top:15px">Previously attended Chief Joseph Middle School from 2022–2025, including Computer Science Discoveries 1 and broadcasting student assistant experience.</p>
+        </div>
+        <div class="card">
+          <h3 class="course-title">Relevant Coursework</h3>
+          <div class="chips">
+            <span class="chip">AP Human Geography</span><span class="chip">AP Cyber Security</span>
+            <span class="chip">AP Computer Science A</span><span class="chip">Computer Science Discoveries 1</span>
+            <span class="chip">Spanish 1</span><span class="chip">LA 10 Honors</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="section-heading"><small>04 / Experience & Work</small><h2>Things I've worked on</h2></div>
+      <div class="work-grid">
+        <div class="card work">
+          <h3>Web & Coding Projects</h3>
+          <p>Web projects and programming experiments created while building my HTML, CSS, JavaScript, and coding skills.</p>
+          <a class="button secondary" href="https://codehs.com/share/id/does-taylor-swift-lack-style-1icl7h/run" target="_blank" rel="noopener">View Other Work</a>
+        </div>
+        <div class="card work">
+          <h3>Live Video Production</h3>
+          <p>Operating PTZ Optics cameras and switching live video feeds with vMix during services and special events.</p>
+        </div>
+        <div class="card work">
+          <h3>Community & Events</h3>
+          <p>Helping with event planning, sponsorships, community outreach, media promotion, and event logistics.</p>
+        </div>
+        <div class="card work">
+          <h3>Future Goals</h3>
+          <p>Continue learning cybersecurity, networking, programming, and IT through school and hands-on projects.</p>
+        </div>
+      </div>
+      <div class="buttons" style="justify-content:center">
+        <a class="button primary" href="resume.html">View Full Resume</a>
+        <a class="button secondary" href="https://www.linkedin.com/in/andrewaholmes/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>Andrew Holmes</strong><br>
+    Student Developer • Technology • Cybersecurity • IT
+  </footer>
 </body>
 </html>
