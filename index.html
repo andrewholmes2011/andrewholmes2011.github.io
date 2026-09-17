@@ -1,54 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andrew Holmes | Cybersecurity Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Andrew Holmes</title>
+  <link rel="icon" type="image/png" href="https://codehs.com/uploads/6e1009498f8ed2ac6b3b1d6bcb9d8cf3" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, #0f4c75, #3282b8);
+      margin: 0;
+      padding: 0;
+      color: #f1f1f1;
+      text-align: center;
+    }
+
+    header {
+      background-color: #1b262c;
+      padding: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      color: #bbe1fa;
+    }
+
+    nav {
+      background-color: #0f4c75;
+      padding: 10px;
+    }
+
+    nav a {
+      color: #bbe1fa;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    img {
+      border-radius: 50%;
+      margin-top: 20px;
+      border: 4px solid #bbe1fa;
+    }
+
+    h2 {
+      margin-top: 40px;
+      color: #bbe1fa;
+    }
+
+    p {
+      max-width: 600px;
+      margin: 20px auto;
+      color: #e0f7fa;
+      font-size: 1.1rem;
+    }
+
+    table {
+      margin: 30px auto;
+      border-collapse: collapse;
+      width: 80%;
+      background-color: #1b262c;
+      color: #f1f1f1;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    th, td {
+      border: 1px solid #3282b8;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #0f4c75;
+      color: #bbe1fa;
+    }
+
+    tr:nth-child(even) {
+      background-color: #2c3e50;
+    }
+
+    .button-link {
+      display: inline-block;
+      margin: 15px;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: #0f4c75;
+      background-color: #bbe1fa;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .button-link:hover {
+      background-color: #3282b8;
+      color: #fff;
+    }
+
+    iframe {
+      margin: 30px 0;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    }
+
+    /* Center LinkedIn badge */
+    .linkedin-container {
+      display: flex;
+      justify-content: center;
+      margin: 30px 0;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1><em><strong>Andrew Holmes</strong></em></h1>
+  </header>
+  <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
 
-    <nav>
-        <div class="logo">A_HOLMES//></div>
-        <ul>
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="resume.html">Resume</a>
+    <a href="https://www.linkedin.com/in/andrewaholmes/" target="">LinkedIn</a>
+  </nav>
 
-    <div class="container">
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1>Hello, I'm <span class="accent-text">Andrew Holmes</span></h1>
-            <h3>Cybersecurity Student & Aspiring Ethical Hacker</h3>
-            <p style="color: var(--text-muted); margin: 1rem 0 2rem 0;">Based in Richland, Washington. Focused on network security, penetration testing, and vulnerability assessment.</p>
-            <a href="projects.html" class="btn">View My Lab Projects</a>
-        </section>
+  <img src="https://codehs.com/uploads/4176a1b336525bab96e869f5f5b55159" width="150px" alt="Profile Picture">
 
-        <!-- Skills Matrix Section -->
-        <section class="skills">
-            <h2><span class="accent-text">[01]</span> Technical Skills Matrix</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Tools & Software</h3>
-                    <p style="color: var(--text-muted);">Wireshark, Nmap, Metasploit, Kali Linux, Burp Suite, John the Ripper.</p>
-                </div>
-                <div class="card">
-                    <h3>Core Competencies</h3>
-                    <p style="color: var(--text-muted);">Network Packet Analysis, Firewalls, Threat Modeling, Ethical Hacking, Linux System Administration.</p>
-                </div>
-                <div class="card">
-                    <h3>Languages & Scripts</h3>
-                    <p style="color: var(--text-muted);">Python, Bash Scripting, PowerShell, HTML/CSS.</p>
-                </div>
-            </div>
-        </section>
+  <h2>Intro</h2>
+  <p><em>I have been at Chief Joseph Middle School for 3 years, took Computer Science Discoveries 1 in 8th Grade. I have been a Student Assistant for Chief Joseph Broadcasting Camp (2 Weeks Long)</em></p>
+  
+  <h2>Education</h2>
+  <p><em>Richland School District 400 <br> Sacajawea Elementary School Student <br> Chief Joseph Middle School Student (2022-2025) <br> (Broadcasting Student Assistant) <br> (Computer Science Discoveries 1 (CSD1)) <br> Hanford High School (2025-Current)</em></p>
+
+  <!-- LinkedIn badge centered -->
+  <div class="linkedin-container">
+    <div class="badge-base LI-profile-badge" 
+      data-locale="en_US" 
+      data-size="large" 
+      data-theme="dark" 
+      data-type="HORIZONTAL" 
+      data-vanity="andrew-holmes-5b9b54382" 
+      data-version="v1">
+      <a class="badge-base__link LI-simple-link" 
+        href="https://www.linkedin.com/in/andrew-holmes-5b9b54382?trk=profile-badge">
+      </a>
     </div>
+  </div>
+              
+  <h2>Skills</h2>
+  <table>
+    <tr>
+      <th>Skill</th>
+      <th>Description</th>
+      <th>Rating (1–10)</th>
+    </tr>
+    <tr>
+      <td>Communication</td>
+      <td>To communicate fluently and fully</td>
+      <td>9.3</td>
+    </tr>
+    <tr>
+      <td>Coding</td>
+      <td>To be able to code in HTML and CSS</td>
+      <td>7.5</td>
+    </tr>
+    <tr>
+      <td>Helping Others</td>
+      <td>To help those who need assistance to understand things</td>
+      <td>9.7</td>
+    </tr>
+  </table>
 
-    <footer>
-        <p>&copy; 2026 Andrew Holmes | Richland, WA</p>
-    </footer>
+  <a class="button-link" href="https://codehs.com/share/id/does-taylor-swift-lack-style-1icl7h/run">View My Other Work</a>
+  <a class="button-link" href="https://www.youtube.com/watch?v=HoRkntoHkIE&list=RDHoRkntoHkIE&start_radio=1">My Favorite Songs Playlist</a>
 
+  <h2>YouTube Playlist</h2>
+  <iframe 
+    width="560" 
+    height="315" 
+    src="https://www.youtube.com/embed/videoseries?list=RDHoRkntoHkIE" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen>
+  </iframe>
 </body>
 </html>
