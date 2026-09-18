@@ -3,65 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0; url=resources.html">
   <meta name="description" content="Downloads and official resources from Andrew Holmes.">
-  <title>Redirecting to Resources | Andrew Holmes</title>
+  <title>Downloads | Andrew Holmes</title>
   <link rel="icon" href="https://codehs.com/uploads/6e1009498f8ed2ac6b3b1d6bcb9d8cf3">
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
-  <style>
-    .download-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .download-card {
-      display: flex;
-      flex-direction: column;
-      padding: 22px;
-      border-radius: 14px;
-    }
-
-    .download-card h2 {
-      margin: 12px 0 8px;
-      color: var(--navy);
-      font-size: 1.15rem;
-      line-height: 1.2;
-    }
-
-    .download-card p {
-      margin-bottom: 10px;
-      font-size: .86rem;
-    }
-
-    .download-card .file-meta {
-      margin-top: auto;
-      color: var(--muted);
-      font-size: .75rem;
-    }
-
-    .download-card .button {
-      width: 100%;
-      margin-top: 12px;
-      padding: 9px 12px;
-      text-align: center;
-      border-radius: 9px;
-      font-size: .82rem;
-    }
-
-    @media (max-width: 800px) {
-      .download-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 560px) {
-      .download-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
 </head>
 <body>
   <header class="site-header">
@@ -74,7 +20,7 @@
       <div class="nav-links">
         <a href="index.html">Home</a><a href="faq.html">FAQ</a>
         <a href="directory.html">Directory</a><a class="active" href="resources.html">Resources</a>
-        <a href="streams.html">Streams</a><a href="resume.html">Resume</a><a href="contact.html">Contact</a>
+        <a href="resume.html">Resume</a><a href="contact.html">Contact</a>
       </div>
       <form class="nav-search" action="search.html" method="get">
         <label class="sr-only" for="nav-search">Search</label>
@@ -83,16 +29,43 @@
       </form>
     </nav>
   </header>
-
   <main class="shell">
     <section class="page-hero">
       <p class="eyebrow">Files and resources</p>
-      <h1>Redirecting...</h1>
-      <p>Taking you to the Resources page.</p>
-      <p><a href="resources.html">Click here if you are not redirected automatically.</a></p>
+      <h1>Resources</h1>
+      <p>Download files hosted here or visit official websites for trusted software and resources.</p>
+    </section>
+    <section class="download-section">
+      <div class="section-heading">
+        <p class="eyebrow">Trusted links</p>
+        <h2>Official websites</h2>
+        <p>Use official sources when downloading software. Check the address before downloading anything.</p>
+      </div>
+      <div class="download-grid">
+        <article class="card download-card">
+          <span class="tag">Official</span>
+          <h2>Visual Studio Code</h2>
+          <p>Source-code editor from Microsoft.</p>
+          <p class="file-meta">Added: 9/16/26</p>
+          <a class="button secondary" href="https://code.visualstudio.com/download" target="_blank" rel="noopener noreferrer">Download Visual Studio Code</a>
+        </article>
+        <article class="card download-card">
+          <span class="tag">Official</span>
+          <h2>GitHub Desktop</h2>
+          <p>Desktop Git client from GitHub.</p>
+          <p class="file-meta">Added: 9/16/26</p>
+          <a class="button secondary" href="https://desktop.github.com/download/" target="_blank" rel="noopener noreferrer">Download GitHub Desktop</a>
+        </article>
+        <article class="card download-card">
+          <span class="tag">Official</span>
+          <h2>Google Chrome</h2>
+          <p>Web browser from Google.</p>
+          <p class="file-meta">Added: 9/16/26</p>
+          <a class="button secondary" href="https://www.google.com/chrome/dr/download/" target="_blank" rel="noopener noreferrer">Download Google Chrome</a>
+        </article>
+      </div>
     </section>
   </main>
-
   <footer class="site-footer">
     <div class="shell footer-inner">
       <p><strong>Andrew Holmes</strong><br>Student developer · technology · IT</p>
