@@ -1,3 +1,0 @@
-Text.txt
-Description: This is a test
-Uploaded: 9/4/26
