@@ -40,7 +40,8 @@ echo [Step 2] Opening Windows App Settings directly to Chrome page...
 echo Please click the "Set default" button at the top of the window.
 echo.
 
-start "" "ms-settings:defaultapps?registeredApp=Google%%20Chrome"
+start ms-settings:windowsupdate-action
+
 
 echo.
 echo [Step 3] Preparing file system refresh...
