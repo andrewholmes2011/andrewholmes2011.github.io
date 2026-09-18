@@ -8,6 +8,59 @@
   <link rel="icon" href="https://codehs.com/uploads/6e1009498f8ed2ac6b3b1d6bcb9d8cf3">
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
+  <style>
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .download-card {
+      display: flex;
+      flex-direction: column;
+      padding: 22px;
+      border-radius: 14px;
+    }
+
+    .download-card h2 {
+      margin: 12px 0 8px;
+      color: var(--navy);
+      font-size: 1.15rem;
+      line-height: 1.2;
+    }
+
+    .download-card p {
+      margin-bottom: 10px;
+      font-size: .86rem;
+    }
+
+    .download-card .file-meta {
+      margin-top: auto;
+      color: var(--muted);
+      font-size: .75rem;
+    }
+
+    .download-card .button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 9px 12px;
+      text-align: center;
+      border-radius: 9px;
+      font-size: .82rem;
+    }
+
+    @media (max-width: 800px) {
+      .download-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .download-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Shared site navigation -->
@@ -50,7 +103,7 @@
           <h2>text.txt</h2>
           <p>A small test file uploaded to the portfolio.</p>
           <p class="file-meta">Uploaded: 9/4/26 · Text file</p>
-          <a class="button primary" href="text.txt" download>Download file</a>
+          <a class="button primary" href="text.txt" download>Download text.txt</a>
         </article>
       </div>
     </section>
@@ -67,19 +120,19 @@
           <span class="tag">Official</span>
           <h2>Visual Studio Code</h2>
           <p>Source-code editor from Microsoft.</p>
-          <a class="button secondary" href="https://code.visualstudio.com/download" target="_blank" rel="noopener noreferrer">Visit official site</a>
+          <a class="button secondary" href="https://code.visualstudio.com/download" target="_blank" rel="noopener noreferrer">Download Visual Studio Code</a>
         </article>
         <article class="card download-card">
           <span class="tag">Official</span>
           <h2>GitHub Desktop</h2>
           <p>Desktop Git client from GitHub.</p>
-          <a class="button secondary" href="https://desktop.github.com/download/" target="_blank" rel="noopener noreferrer">Visit official site</a>
+          <a class="button secondary" href="https://desktop.github.com/download/" target="_blank" rel="noopener noreferrer">Download GitHub Desktop</a>
         </article>
         <article class="card download-card">
           <span class="tag">Official</span>
           <h2>Mozilla Firefox</h2>
           <p>Web browser from Mozilla.</p>
-          <a class="button secondary" href="https://www.mozilla.org/firefox/new/" target="_blank" rel="noopener noreferrer">Visit official site</a>
+          <a class="button secondary" href="https://www.mozilla.org/firefox/new/" target="_blank" rel="noopener noreferrer">Download Mozilla Firefox</a>
         </article>
       </div>
     </section>
