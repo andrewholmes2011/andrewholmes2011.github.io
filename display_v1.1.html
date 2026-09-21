@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Display</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body, html {
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background-color: #000;
+        }
+        /* Photo Background Overlay */
+        #bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 1s ease-in-out;
+            z-index: 1;
+        }
+        /* Dark tint so text remains readable over photos */
+        #bg-tint {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+        /* Layout Grid */
+        .container {
+            position: relative;
+            z-index: 3;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 100vh;
+            padding: 40px;
+            gap: 40px;
+            color: white;
+        }
+        /* Left Column: Time and Date */
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+        #clock {
+            font-size: 7rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+        #date {
+            font-size: 2.5rem;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        /* Right Column: Calendar Widget */
+        .right-panel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        iframe {
+            width: 100%;
+            height: 90%;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: rgba(255, 255, 255, 0.9); /* Makes the calendar readable */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="bg-overlay"></div>
+    <div id="bg-tint"></div>
+
+    <div class="container">
+        <!-- Time Section -->
+        <div class="left-panel">
+            <div id="clock">00:00:00</div>
+            <div id="date">Loading Date...</div>
+        </div>
+        
+        <!-- Calendar Section -->
+        <div class="right-panel">
+            <!-- ⚠️ REPLACE THE URL BELOW WITH YOUR GOOGLE CALENDAR EMBED LINK ⚠️ -->
+            <iframe src="https://calendar.google.com/calendar/embed?src=c_560725f86d53fd5ffb032653725ff961a6b54e94c772cc47b2e89a19d373efbb%40group.calendar.google.com&ctz=America%2FLos_Angeles"></iframe>
+        </div>
+    </div>
+
+    <script>
+        // 1. LIVE CLOCK FUNCTION
+        function updateClock() {
+            const now = new Date();
+            
+            // Format Time
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // convert 0 to 12
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            
+            document.getElementById('clock').textContent = `${hours}:${minutes} ${ampm}`;
+
+            // Format Date
+            const options = { weekday: 'long', month: 'long', day: 'numeric' };
+            document.getElementById('date').textContent = now.toLocaleDateString('en-US', options);
+        }
+        setInterval(updateClock, 1000);
+        updateClock(); // Run immediately on load
+
+        const photos = [
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbFbjMClvGGnfdRSTGBw_oIo96C44MCtZZvDQpo5RstQnuBwyKqnzr7a2o&s=10'
+        ];
+
+        let currentPhotoIndex = 0;
+        const bgOverlay = document.getElementById('bg-overlay');
+
+        function changeBackground() {
+            bgOverlay.style.backgroundImage = `url('${photos[currentPhotoIndex]}')`;
+            currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+        }
+        
+        // Change photo every 15 seconds (15000 milliseconds)
+        setInterval(changeBackground, 15000);
+        changeBackground(); // Run immediately on load
+    </script>
+</body>
+</html>
