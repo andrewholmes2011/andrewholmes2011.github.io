@@ -1,0 +1,2369 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Resume Maker</title>
+
+<style>
+:root {
+    --navy: #1b262c;
+    --dark-green: #1d5d46;
+    --green: #3f8f67;
+    --light-green: #d9f2df;
+    --background: #edf7f0;
+    --white: #ffffff;
+    --text: #24313a;
+    --muted: #5f6b73;
+    --border: #d6e8dc;
+    --danger: #a93232;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.topbar {
+    background: var(--navy);
+    border-bottom: 4px solid var(--green);
+    padding: 15px 25px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.topbar-inner {
+    max-width: 1250px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.brand {
+    color: var(--light-green);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.navigation {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.navigation a {
+    color: white;
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: bold;
+}
+
+.navigation a:hover {
+    color: var(--light-green);
+}
+
+.page {
+    width: min(1250px, calc(100% - 30px));
+    margin: 30px auto;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.page-title h1 {
+    margin: 0;
+    color: var(--navy);
+    font-size: 2.3rem;
+}
+
+.page-title p {
+    color: var(--muted);
+    margin-top: 8px;
+}
+
+.maker {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.panel {
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(27, 38, 44, .12);
+}
+
+.form-panel {
+    padding: 25px;
+    position: sticky;
+    top: 90px;
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
+}
+
+.form-panel h2 {
+    margin-top: 0;
+    color: var(--navy);
+}
+
+.form-section {
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.form-section h3 {
+    color: var(--dark-green);
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 13px;
+    margin-bottom: 5px;
+    font-size: .88rem;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px 11px;
+    border: 1px solid #cbd8d0;
+    border-radius: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: .9rem;
+    background: white;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 0 2px var(--light-green);
+}
+
+.item {
+    border: 1px solid var(--border);
+    background: #f7fcf8;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.item-header strong {
+    color: var(--navy);
+}
+
+.remove-btn {
+    background: var(--danger);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 9px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.remove-btn:hover {
+    background: #7d2424;
+}
+
+.add-btn {
+    width: 100%;
+    background: white;
+    color: var(--dark-green);
+    border: 2px solid var(--dark-green);
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background: var(--light-green);
+}
+
+.actions {
+    display: grid;
+    gap: 9px;
+    margin-top: 25px;
+}
+
+.button {
+    border: none;
+    border-radius: 5px;
+    padding: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: .9rem;
+}
+
+.button.primary {
+    background: var(--dark-green);
+    color: white;
+}
+
+.button.primary:hover {
+    background: var(--green);
+}
+
+.button.secondary {
+    background: white;
+    color: var(--dark-green);
+    border: 2px solid var(--dark-green);
+}
+
+.button.secondary:hover {
+    background: var(--light-green);
+}
+
+.button.danger {
+    background: var(--danger);
+    color: white;
+}
+
+.resume-container {
+    background: #dfe8e2;
+    padding: 25px;
+    border-radius: 8px;
+}
+
+.resume {
+    background: white;
+    box-shadow: 0 8px 30px rgba(27, 38, 44, .16);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.resume-header {
+    background: var(--navy);
+    color: white;
+    padding: 35px 45px 30px;
+    border-bottom: 7px solid var(--green);
+}
+
+.resume-header h1 {
+    margin: 0;
+    color: var(--light-green);
+    font-size: 2.6rem;
+    line-height: 1.1;
+}
+
+.resume-header .subtitle {
+    margin-top: 7px;
+    font-weight: bold;
+}
+
+.contact-info {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    font-size: .86rem;
+}
+
+.contact-item {
+    display: flex;
+    gap: 6px;
+}
+
+.contact-icon {
+    color: var(--light-green);
+    font-weight: bold;
+}
+
+.resume-content {
+    padding: 35px 45px 40px;
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+.section:last-child {
+    margin-bottom: 0;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 15px;
+    color: var(--dark-green);
+    font-size: 1.08rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.section-title::after {
+    content: "";
+    height: 2px;
+    flex: 1;
+    background: var(--light-green);
+}
+
+.summary {
+    margin: 0;
+    line-height: 1.55;
+    font-size: .92rem;
+}
+
+.experience-item {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 24px;
+    border-left: 3px solid var(--light-green);
+}
+
+.experience-item:last-child {
+    margin-bottom: 0;
+}
+
+.experience-item::before {
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--green);
+    position: absolute;
+    left: -6px;
+    top: 5px;
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.job-title {
+    margin: 0;
+    font-size: .98rem;
+    color: var(--navy);
+}
+
+.company {
+    color: var(--dark-green);
+    font-weight: bold;
+    font-size: .88rem;
+    margin-top: 3px;
+}
+
+.date {
+    color: var(--muted);
+    font-size: .82rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.experience-item ul {
+    margin: 8px 0 0;
+    padding-left: 18px;
+}
+
+.experience-item li {
+    margin-bottom: 4px;
+    font-size: .86rem;
+}
+
+.education-card,
+.reference {
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--green);
+    padding: 16px 18px;
+    border-radius: 4px;
+    background: #f7fcf8;
+    margin-bottom: 12px;
+}
+
+.education-card h3 {
+    margin: 0;
+    color: var(--navy);
+    font-size: 1rem;
+}
+
+.education-location {
+    color: var(--muted);
+    margin: 3px 0 10px;
+    font-size: .84rem;
+}
+
+.education-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.education-tag {
+    background: var(--light-green);
+    color: var(--navy);
+    padding: 5px 9px;
+    border-radius: 4px;
+    font-size: .76rem;
+    font-weight: bold;
+}
+
+.reference blockquote {
+    margin: 0;
+    font-size: .86rem;
+    line-height: 1.55;
+    font-style: italic;
+}
+
+.reference-person {
+    border-top: 1px solid var(--border);
+    margin-top: 12px;
+    padding-top: 10px;
+}
+
+.reference-person strong {
+    display: block;
+    font-size: .88rem;
+}
+
+.reference-person span {
+    color: var(--muted);
+    font-size: .78rem;
+}
+
+.placeholder-text {
+    color: #89949a;
+    font-style: italic;
+}
+
+.footer-note {
+    text-align: center;
+    color: var(--muted);
+    font-size: .75rem;
+    margin-top: 15px;
+}
+
+@media (max-width: 1000px) {
+
+    .maker {
+        grid-template-columns: 1fr;
+    }
+
+    .form-panel {
+        position: static;
+        max-height: none;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .topbar-inner {
+        flex-direction: column;
+    }
+
+    .page {
+        width: calc(100% - 12px);
+    }
+
+    .resume-container {
+        padding: 8px;
+    }
+
+    .resume-header {
+        padding: 25px;
+    }
+
+    .resume-content {
+        padding: 25px;
+    }
+
+    .resume-header h1 {
+        font-size: 2rem;
+    }
+
+    .job-header {
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .date {
+        white-space: normal;
+    }
+}
+
+@media print {
+
+    @page {
+        size: Letter;
+        margin: .45in;
+    }
+
+    body {
+        background: white !important;
+    }
+
+    .topbar,
+    .page-title,
+    .form-panel,
+    .footer-note {
+        display: none !important;
+    }
+
+    .page {
+        width: 100%;
+        margin: 0;
+    }
+
+    .maker {
+        display: block;
+    }
+
+    .resume-container {
+        padding: 0;
+        background: white;
+    }
+
+    .resume {
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    .resume-header {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .section,
+    .experience-item,
+    .education-card,
+    .reference {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+
+    <div class="topbar-inner">
+
+        <a class="brand" href="index.html">
+            RESUME MAKER
+        </a>
+
+        <nav class="navigation">
+            <a href="#personal">Personal</a>
+            <a href="#experience-form">Experience</a>
+            <a href="#education-form">Education</a>
+            <a href="#skills-form">Skills</a>
+            <a href="#reference-form">References</a>
+        </nav>
+
+    </div>
+
+</div>
+
+<main class="page">
+
+    <div class="page-title">
+
+        <h1>Resume Maker</h1>
+
+        <p>
+            Build a professional resume with a live preview.
+        </p>
+
+    </div>
+
+    <div class="maker">
+
+        <!-- =====================================================
+             FORM
+             ===================================================== -->
+
+        <div class="panel form-panel">
+
+            <h2>Resume Information</h2>
+
+            <!-- PERSONAL -->
+
+            <div class="form-section" id="personal">
+
+                <h3>Personal Information</h3>
+
+                <label for="name">
+                    Full Name
+                </label>
+
+                <input
+                    id="name"
+                    type="text"
+                    placeholder="Enter your full name"
+                >
+
+                <label for="title">
+                    Professional Title
+                </label>
+
+                <input
+                    id="title"
+                    type="text"
+                    placeholder="Example: High School Student"
+                >
+
+                <label for="location">
+                    Location
+                </label>
+
+                <input
+                    id="location"
+                    type="text"
+                    placeholder="City, State ZIP"
+                >
+
+                <label for="phone">
+                    Phone
+                </label>
+
+                <input
+                    id="phone"
+                    type="tel"
+                    placeholder="Phone number"
+                >
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="email@example.com"
+                >
+
+                <label for="summary">
+                    Professional Summary
+                </label>
+
+                <textarea
+                    id="summary"
+                    placeholder="Write a short professional summary..."
+                ></textarea>
+
+            </div>
+
+            <!-- EXPERIENCE -->
+
+            <div class="form-section" id="experience-form">
+
+                <h3>Experience</h3>
+
+                <div id="experience-list"></div>
+
+                <button
+                    class="add-btn"
+                    onclick="addExperience()"
+                >
+                    + Add Experience
+                </button>
+
+            </div>
+
+            <!-- VOLUNTEER -->
+
+            <div class="form-section" id="volunteer-form">
+
+                <h3>Volunteer Experience</h3>
+
+                <div id="volunteer-list"></div>
+
+                <button
+                    class="add-btn"
+                    onclick="addVolunteer()"
+                >
+                    + Add Volunteer Experience
+                </button>
+
+            </div>
+
+            <!-- EDUCATION -->
+
+            <div class="form-section" id="education-form">
+
+                <h3>Education</h3>
+
+                <div id="education-list"></div>
+
+                <button
+                    class="add-btn"
+                    onclick="addEducation()"
+                >
+                    + Add Education
+                </button>
+
+            </div>
+
+            <!-- SKILLS -->
+
+            <div class="form-section" id="skills-form">
+
+                <h3>Skills & Courses</h3>
+
+                <label for="skills">
+                    Skills
+                </label>
+
+                <textarea
+                    id="skills"
+                    placeholder="HTML, CSS, JavaScript, Customer Service..."
+                ></textarea>
+
+                <label for="courses">
+                    Courses
+                </label>
+
+                <textarea
+                    id="courses"
+                    placeholder="AP Computer Science, Spanish, etc..."
+                ></textarea>
+
+            </div>
+
+            <!-- REFERENCES -->
+
+            <div class="form-section" id="reference-form">
+
+                <h3>References</h3>
+
+                <div id="reference-list"></div>
+
+                <button
+                    class="add-btn"
+                    onclick="addReference()"
+                >
+                    + Add Reference
+                </button>
+
+            </div>
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+                <button
+                    class="button primary"
+                    onclick="window.print()"
+                >
+                    Print / Save as PDF
+                </button>
+
+                <button
+                    class="button secondary"
+                    onclick="loadExample()"
+                >
+                    Load Example Resume
+                </button>
+
+                <button
+                    class="button secondary"
+                    onclick="downloadData()"
+                >
+                    Download Resume Data
+                </button>
+
+                <button
+                    class="button secondary"
+                    onclick="document.getElementById('fileInput').click()"
+                >
+                    Load Resume Data
+                </button>
+
+                <button
+                    class="button danger"
+                    onclick="clearResume()"
+                >
+                    Clear Resume
+                </button>
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    accept=".json"
+                    style="display:none"
+                    onchange="loadData(event)"
+                >
+
+            </div>
+
+        </div>
+
+        <!-- =====================================================
+             LIVE RESUME
+             ===================================================== -->
+
+        <div class="resume-container">
+
+            <article class="resume">
+
+                <header class="resume-header">
+
+                    <h1 id="preview-name">
+                        Your Name
+                    </h1>
+
+                    <div
+                        class="subtitle"
+                        id="preview-title"
+                    >
+                        Professional Title
+                    </div>
+
+                    <div class="contact-info">
+
+                        <div class="contact-item">
+                            <span class="contact-icon">◆</span>
+                            <span id="preview-location">
+                                Location
+                            </span>
+                        </div>
+
+                        <div class="contact-item">
+                            <span class="contact-icon">◆</span>
+                            <span id="preview-phone">
+                                Phone
+                            </span>
+                        </div>
+
+                        <div class="contact-item">
+                            <span class="contact-icon">◆</span>
+                            <span id="preview-email">
+                                Email
+                            </span>
+                        </div>
+
+                    </div>
+
+                </header>
+
+                <div class="resume-content">
+
+                    <!-- SUMMARY -->
+
+                    <section
+                        class="section"
+                        id="preview-summary-section"
+                    >
+
+                        <h2 class="section-title">
+                            Professional Summary
+                        </h2>
+
+                        <p
+                            class="summary placeholder-text"
+                            id="preview-summary"
+                        >
+                            Your professional summary will appear here.
+                        </p>
+
+                    </section>
+
+                    <!-- EXPERIENCE -->
+
+                    <section
+                        class="section"
+                        id="preview-experience-section"
+                        style="display:none;"
+                    >
+
+                        <h2 class="section-title">
+                            Experience
+                        </h2>
+
+                        <div id="preview-experience"></div>
+
+                    </section>
+
+                    <!-- VOLUNTEER -->
+
+                    <section
+                        class="section"
+                        id="preview-volunteer-section"
+                        style="display:none;"
+                    >
+
+                        <h2 class="section-title">
+                            Volunteer Experience
+                        </h2>
+
+                        <div id="preview-volunteer"></div>
+
+                    </section>
+
+                    <!-- EDUCATION -->
+
+                    <section
+                        class="section"
+                        id="preview-education-section"
+                        style="display:none;"
+                    >
+
+                        <h2 class="section-title">
+                            Education
+                        </h2>
+
+                        <div id="preview-education"></div>
+
+                    </section>
+
+                    <!-- SKILLS -->
+
+                    <section
+                        class="section"
+                        id="preview-skills-section"
+                        style="display:none;"
+                    >
+
+                        <h2 class="section-title">
+                            Skills & Courses
+                        </h2>
+
+                        <div id="preview-skills"></div>
+
+                        <div
+                            id="preview-courses"
+                            style="margin-top:12px;"
+                        ></div>
+
+                    </section>
+
+                    <!-- REFERENCES -->
+
+                    <section
+                        class="section"
+                        id="preview-reference-section"
+                        style="display:none;"
+                    >
+
+                        <h2 class="section-title">
+                            References
+                        </h2>
+
+                        <div id="preview-reference"></div>
+
+                    </section>
+
+                </div>
+
+            </article>
+
+            <div class="footer-note">
+                Resume Maker • Create, customize, and print your resume
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<script>
+
+let experienceCount = 0;
+let volunteerCount = 0;
+let educationCount = 0;
+let referenceCount = 0;
+
+
+/* =========================================================
+   SECURITY / HTML ESCAPING
+   ========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =========================================================
+   EXPERIENCE
+   ========================================================= */
+
+function addExperience(data = {}) {
+
+    experienceCount++;
+
+    const id = experienceCount;
+
+    const div = document.createElement("div");
+
+    div.className = "item";
+
+    div.id = "experience-" + id;
+
+    div.innerHTML = `
+
+        <div class="item-header">
+
+            <strong>
+                Experience #${id}
+            </strong>
+
+            <button
+                class="remove-btn"
+                onclick="removeItem('experience-${id}')"
+            >
+                Remove
+            </button>
+
+        </div>
+
+        <label>Job Title</label>
+
+        <input
+            class="exp-title"
+            type="text"
+            placeholder="Job title"
+            value="${escapeHTML(data.title || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Company / Organization</label>
+
+        <input
+            class="exp-company"
+            type="text"
+            placeholder="Company or organization"
+            value="${escapeHTML(data.company || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Dates</label>
+
+        <input
+            class="exp-date"
+            type="text"
+            placeholder="June 2025 – Present"
+            value="${escapeHTML(data.date || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Responsibilities</label>
+
+        <textarea
+            class="exp-details"
+            placeholder="Enter one responsibility per line..."
+            oninput="updateResume()"
+        >${escapeHTML(data.details || "")}</textarea>
+
+    `;
+
+    document
+        .getElementById("experience-list")
+        .appendChild(div);
+
+    updateResume();
+}
+
+
+/* =========================================================
+   VOLUNTEER
+   ========================================================= */
+
+function addVolunteer(data = {}) {
+
+    volunteerCount++;
+
+    const id = volunteerCount;
+
+    const div = document.createElement("div");
+
+    div.className = "item";
+
+    div.id = "volunteer-" + id;
+
+    div.innerHTML = `
+
+        <div class="item-header">
+
+            <strong>
+                Volunteer Experience #${id}
+            </strong>
+
+            <button
+                class="remove-btn"
+                onclick="removeItem('volunteer-${id}')"
+            >
+                Remove
+            </button>
+
+        </div>
+
+        <label>Position</label>
+
+        <input
+            class="vol-title"
+            type="text"
+            placeholder="Volunteer position"
+            value="${escapeHTML(data.title || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Organization</label>
+
+        <input
+            class="vol-company"
+            type="text"
+            placeholder="Organization"
+            value="${escapeHTML(data.company || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Dates</label>
+
+        <input
+            class="vol-date"
+            type="text"
+            placeholder="August 2024 – Present"
+            value="${escapeHTML(data.date || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Responsibilities</label>
+
+        <textarea
+            class="vol-details"
+            placeholder="Enter one responsibility per line..."
+            oninput="updateResume()"
+        >${escapeHTML(data.details || "")}</textarea>
+
+    `;
+
+    document
+        .getElementById("volunteer-list")
+        .appendChild(div);
+
+    updateResume();
+}
+
+
+/* =========================================================
+   EDUCATION
+   ========================================================= */
+
+function addEducation(data = {}) {
+
+    educationCount++;
+
+    const id = educationCount;
+
+    const div = document.createElement("div");
+
+    div.className = "item";
+
+    div.id = "education-" + id;
+
+    div.innerHTML = `
+
+        <div class="item-header">
+
+            <strong>
+                Education #${id}
+            </strong>
+
+            <button
+                class="remove-btn"
+                onclick="removeItem('education-${id}')"
+            >
+                Remove
+            </button>
+
+        </div>
+
+        <label>School</label>
+
+        <input
+            class="edu-school"
+            type="text"
+            placeholder="School name"
+            value="${escapeHTML(data.school || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Location</label>
+
+        <input
+            class="edu-location"
+            type="text"
+            placeholder="City, State"
+            value="${escapeHTML(data.location || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Graduation Year</label>
+
+        <input
+            class="edu-grad"
+            type="text"
+            placeholder="2029"
+            value="${escapeHTML(data.grad || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>GPA</label>
+
+        <input
+            class="edu-gpa"
+            type="text"
+            placeholder="3.94 / 4.00"
+            value="${escapeHTML(data.gpa || "")}"
+            oninput="updateResume()"
+        >
+
+    `;
+
+    document
+        .getElementById("education-list")
+        .appendChild(div);
+
+    updateResume();
+}
+
+
+/* =========================================================
+   REFERENCES
+   ========================================================= */
+
+function addReference(data = {}) {
+
+    referenceCount++;
+
+    const id = referenceCount;
+
+    const div = document.createElement("div");
+
+    div.className = "item";
+
+    div.id = "reference-" + id;
+
+    div.innerHTML = `
+
+        <div class="item-header">
+
+            <strong>
+                Reference #${id}
+            </strong>
+
+            <button
+                class="remove-btn"
+                onclick="removeItem('reference-${id}')"
+            >
+                Remove
+            </button>
+
+        </div>
+
+        <label>Name</label>
+
+        <input
+            class="ref-name"
+            type="text"
+            placeholder="Reference name"
+            value="${escapeHTML(data.name || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Position</label>
+
+        <input
+            class="ref-position"
+            type="text"
+            placeholder="Position"
+            value="${escapeHTML(data.position || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Organization</label>
+
+        <input
+            class="ref-company"
+            type="text"
+            placeholder="Organization"
+            value="${escapeHTML(data.company || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Reference Statement</label>
+
+        <textarea
+            class="ref-text"
+            placeholder="Optional reference statement..."
+            oninput="updateResume()"
+        >${escapeHTML(data.text || "")}</textarea>
+
+    `;
+
+    document
+        .getElementById("reference-list")
+        .appendChild(div);
+
+    updateResume();
+}
+
+
+/* =========================================================
+   REMOVE
+   ========================================================= */
+
+function removeItem(id) {
+
+    const element =
+        document.getElementById(id);
+
+    if (element) {
+        element.remove();
+    }
+
+    updateResume();
+}
+
+
+/* =========================================================
+   MAIN UPDATE
+   ========================================================= */
+
+function updateResume() {
+
+    const name =
+        document.getElementById("name").value.trim();
+
+    const title =
+        document.getElementById("title").value.trim();
+
+    const location =
+        document.getElementById("location").value.trim();
+
+    const phone =
+        document.getElementById("phone").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const summary =
+        document.getElementById("summary").value.trim();
+
+
+    document.getElementById("preview-name").textContent =
+        name || "Your Name";
+
+    document.getElementById("preview-title").textContent =
+        title || "Professional Title";
+
+    document.getElementById("preview-location").textContent =
+        location || "Location";
+
+    document.getElementById("preview-phone").textContent =
+        phone || "Phone";
+
+    document.getElementById("preview-email").textContent =
+        email || "Email";
+
+
+    const summaryElement =
+        document.getElementById("preview-summary");
+
+    summaryElement.textContent =
+        summary || "Your professional summary will appear here.";
+
+    summaryElement.classList.toggle(
+        "placeholder-text",
+        !summary
+    );
+
+
+    updateExperience();
+
+    updateVolunteer();
+
+    updateEducation();
+
+    updateSkills();
+
+    updateReferences();
+}
+
+
+/* =========================================================
+   EXPERIENCE PREVIEW
+   ========================================================= */
+
+function updateExperience() {
+
+    const items =
+        document.querySelectorAll(
+            "#experience-list .item"
+        );
+
+    const preview =
+        document.getElementById(
+            "preview-experience"
+        );
+
+    preview.innerHTML = "";
+
+    items.forEach(item => {
+
+        const title =
+            item.querySelector(".exp-title")
+                .value.trim();
+
+        const company =
+            item.querySelector(".exp-company")
+                .value.trim();
+
+        const date =
+            item.querySelector(".exp-date")
+                .value.trim();
+
+        const details =
+            item.querySelector(".exp-details")
+                .value.trim();
+
+        if (!title && !company && !details) {
+            return;
+        }
+
+        let bullets = "";
+
+        details
+            .split("\n")
+            .map(x => x.trim())
+            .filter(Boolean)
+            .forEach(line => {
+
+                bullets +=
+                    `<li>${escapeHTML(line)}</li>`;
+
+            });
+
+
+        preview.innerHTML += `
+
+            <div class="experience-item">
+
+                <div class="job-header">
+
+                    <div>
+
+                        <h3 class="job-title">
+                            ${escapeHTML(title)}
+                        </h3>
+
+                        <div class="company">
+                            ${escapeHTML(company)}
+                        </div>
+
+                    </div>
+
+                    <div class="date">
+                        ${escapeHTML(date)}
+                    </div>
+
+                </div>
+
+                ${
+                    bullets
+                        ? `<ul>${bullets}</ul>`
+                        : ""
+                }
+
+            </div>
+
+        `;
+    });
+
+
+    document.getElementById(
+        "preview-experience-section"
+    ).style.display =
+        preview.innerHTML.trim()
+            ? "block"
+            : "none";
+}
+
+
+/* =========================================================
+   VOLUNTEER PREVIEW
+   ========================================================= */
+
+function updateVolunteer() {
+
+    const items =
+        document.querySelectorAll(
+            "#volunteer-list .item"
+        );
+
+    const preview =
+        document.getElementById(
+            "preview-volunteer"
+        );
+
+    preview.innerHTML = "";
+
+    items.forEach(item => {
+
+        const title =
+            item.querySelector(".vol-title")
+                .value.trim();
+
+        const company =
+            item.querySelector(".vol-company")
+                .value.trim();
+
+        const date =
+            item.querySelector(".vol-date")
+                .value.trim();
+
+        const details =
+            item.querySelector(".vol-details")
+                .value.trim();
+
+        if (!title && !company && !details) {
+            return;
+        }
+
+        let bullets = "";
+
+        details
+            .split("\n")
+            .map(x => x.trim())
+            .filter(Boolean)
+            .forEach(line => {
+
+                bullets +=
+                    `<li>${escapeHTML(line)}</li>`;
+
+            });
+
+
+        preview.innerHTML += `
+
+            <div class="experience-item">
+
+                <div class="job-header">
+
+                    <div>
+
+                        <h3 class="job-title">
+                            ${escapeHTML(title)}
+                        </h3>
+
+                        <div class="company">
+                            ${escapeHTML(company)}
+                        </div>
+
+                    </div>
+
+                    <div class="date">
+                        ${escapeHTML(date)}
+                    </div>
+
+                </div>
+
+                ${
+                    bullets
+                        ? `<ul>${bullets}</ul>`
+                        : ""
+                }
+
+            </div>
+
+        `;
+    });
+
+
+    document.getElementById(
+        "preview-volunteer-section"
+    ).style.display =
+        preview.innerHTML.trim()
+            ? "block"
+            : "none";
+}
+
+
+/* =========================================================
+   EDUCATION PREVIEW
+   ========================================================= */
+
+function updateEducation() {
+
+    const items =
+        document.querySelectorAll(
+            "#education-list .item"
+        );
+
+    const preview =
+        document.getElementById(
+            "preview-education"
+        );
+
+    preview.innerHTML = "";
+
+    items.forEach(item => {
+
+        const school =
+            item.querySelector(".edu-school")
+                .value.trim();
+
+        const location =
+            item.querySelector(".edu-location")
+                .value.trim();
+
+        const grad =
+            item.querySelector(".edu-grad")
+                .value.trim();
+
+        const gpa =
+            item.querySelector(".edu-gpa")
+                .value.trim();
+
+        if (!school) {
+            return;
+        }
+
+        let tags = "";
+
+        if (grad) {
+
+            tags += `
+                <span class="education-tag">
+                    Graduation: ${escapeHTML(grad)}
+                </span>
+            `;
+
+        }
+
+        if (gpa) {
+
+            tags += `
+                <span class="education-tag">
+                    GPA: ${escapeHTML(gpa)}
+                </span>
+            `;
+
+        }
+
+
+        preview.innerHTML += `
+
+            <div class="education-card">
+
+                <h3>
+                    ${escapeHTML(school)}
+                </h3>
+
+                <div class="education-location">
+                    ${escapeHTML(location)}
+                </div>
+
+                <div class="education-details">
+                    ${tags}
+                </div>
+
+            </div>
+
+        `;
+    });
+
+
+    document.getElementById(
+        "preview-education-section"
+    ).style.display =
+        preview.innerHTML.trim()
+            ? "block"
+            : "none";
+}
+
+
+/* =========================================================
+   SKILLS / COURSES
+   ========================================================= */
+
+function updateSkills() {
+
+    const skills =
+        document.getElementById("skills")
+            .value
+            .split(",")
+            .map(x => x.trim())
+            .filter(Boolean);
+
+    const courses =
+        document.getElementById("courses")
+            .value
+            .split(",")
+            .map(x => x.trim())
+            .filter(Boolean);
+
+
+    let skillHTML = "";
+
+    if (skills.length) {
+
+        skillHTML = `
+
+            <div class="education-card">
+
+                <h3>
+                    Skills
+                </h3>
+
+                <div class="education-details">
+
+                    ${
+                        skills.map(skill =>
+                            `
+                            <span class="education-tag">
+                                ${escapeHTML(skill)}
+                            </span>
+                            `
+                        ).join("")
+                    }
+
+                </div>
+
+            </div>
+
+        `;
+    }
+
+
+    let courseHTML = "";
+
+    if (courses.length) {
+
+        courseHTML = `
+
+            <div class="education-card">
+
+                <h3>
+                    Courses
+                </h3>
+
+                <div class="education-details">
+
+                    ${
+                        courses.map(course =>
+                            `
+                            <span class="education-tag">
+                                ${escapeHTML(course)}
+                            </span>
+                            `
+                        ).join("")
+                    }
+
+                </div>
+
+            </div>
+
+        `;
+    }
+
+
+    document.getElementById(
+        "preview-skills"
+    ).innerHTML = skillHTML;
+
+    document.getElementById(
+        "preview-courses"
+    ).innerHTML = courseHTML;
+
+
+    document.getElementById(
+        "preview-skills-section"
+    ).style.display =
+        skillHTML || courseHTML
+            ? "block"
+            : "none";
+}
+
+
+/* =========================================================
+   REFERENCES
+   ========================================================= */
+
+function updateReferences() {
+
+    const items =
+        document.querySelectorAll(
+            "#reference-list .item"
+        );
+
+    const preview =
+        document.getElementById(
+            "preview-reference"
+        );
+
+    preview.innerHTML = "";
+
+    items.forEach(item => {
+
+        const name =
+            item.querySelector(".ref-name")
+                .value.trim();
+
+        const position =
+            item.querySelector(".ref-position")
+                .value.trim();
+
+        const company =
+            item.querySelector(".ref-company")
+                .value.trim();
+
+        const text =
+            item.querySelector(".ref-text")
+                .value.trim();
+
+        if (!name && !position && !company && !text) {
+            return;
+        }
+
+
+        preview.innerHTML += `
+
+            <div class="reference">
+
+                ${
+                    text
+                        ? `
+                        <blockquote>
+                            "${escapeHTML(text)}"
+                        </blockquote>
+                        `
+                        : ""
+                }
+
+                <div class="reference-person">
+
+                    <strong>
+                        ${escapeHTML(name)}
+                    </strong>
+
+                    <span>
+                        ${escapeHTML(position)}
+                        ${
+                            position && company
+                                ? ", "
+                                : ""
+                        }
+                        ${escapeHTML(company)}
+                    </span>
+
+                </div>
+
+            </div>
+
+        `;
+    });
+
+
+    document.getElementById(
+        "preview-reference-section"
+    ).style.display =
+        preview.innerHTML.trim()
+            ? "block"
+            : "none";
+}
+
+
+/* =========================================================
+   CLEAR
+   ========================================================= */
+
+function clearResume() {
+
+    if (!confirm("Clear the entire resume?")) {
+        return;
+    }
+
+    clearResumeWithoutConfirmation();
+
+    updateResume();
+}
+
+
+function clearResumeWithoutConfirmation() {
+
+    document.getElementById("name").value = "";
+
+    document.getElementById("title").value = "";
+
+    document.getElementById("location").value = "";
+
+    document.getElementById("phone").value = "";
+
+    document.getElementById("email").value = "";
+
+    document.getElementById("summary").value = "";
+
+    document.getElementById("skills").value = "";
+
+    document.getElementById("courses").value = "";
+
+
+    document.getElementById(
+        "experience-list"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "volunteer-list"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "education-list"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "reference-list"
+    ).innerHTML = "";
+
+
+    experienceCount = 0;
+
+    volunteerCount = 0;
+
+    educationCount = 0;
+
+    referenceCount = 0;
+}
+
+
+/* =========================================================
+   EXAMPLE RESUME
+   ========================================================= */
+
+function loadExample() {
+
+    clearResumeWithoutConfirmation();
+
+
+    document.getElementById("name").value =
+        "Example Student";
+
+    document.getElementById("title").value =
+        "High School Student";
+
+    document.getElementById("location").value =
+        "Richland, WA 99354";
+
+    document.getElementById("phone").value =
+        "(555) 555-5555";
+
+    document.getElementById("email").value =
+        "student@example.com";
+
+    document.getElementById("summary").value =
+        "Motivated high school student with experience in technology, customer service, teamwork, and community involvement. Dependable, organized, and willing to learn new skills.";
+
+    document.getElementById("skills").value =
+        "HTML, CSS, JavaScript, Customer Service, Communication, Teamwork";
+
+    document.getElementById("courses").value =
+        "Computer Science, English, Mathematics";
+
+
+    addExperience({
+
+        title: "Student Worker",
+
+        company: "Example School",
+
+        date: "August 2025 – Present",
+
+        details:
+            "Assist students and staff during daily operations.\nMaintain a clean and organized work environment.\nWork effectively with other team members."
+
+    });
+
+
+    addVolunteer({
+
+        title: "Volunteer",
+
+        company: "Community Organization",
+
+        date: "June 2024 – Present",
+
+        details:
+            "Assist with community events.\nHelp organize materials and activities.\nWork with volunteers and community members."
+
+    });
+
+
+    addEducation({
+
+        school: "Example High School",
+
+        location: "Richland, Washington",
+
+        grad: "2029",
+
+        gpa: "3.90 / 4.00"
+
+    });
+
+
+    addReference({
+
+        name: "Example Reference",
+
+        position: "Manager",
+
+        company: "Example Organization",
+
+        text:
+            "This student is dependable, hardworking, and willing to learn."
+
+    });
+
+
+    updateResume();
+}
+
+
+/* =========================================================
+   SAVE DATA
+   ========================================================= */
+
+function collectData() {
+
+    const data = {
+
+        personal: {
+
+            name:
+                document.getElementById("name").value,
+
+            title:
+                document.getElementById("title").value,
+
+            location:
+                document.getElementById("location").value,
+
+            phone:
+                document.getElementById("phone").value,
+
+            email:
+                document.getElementById("email").value,
+
+            summary:
+                document.getElementById("summary").value
+
+        },
+
+        experience: [],
+
+        volunteer: [],
+
+        education: [],
+
+        skills:
+            document.getElementById("skills").value,
+
+        courses:
+            document.getElementById("courses").value,
+
+        references: []
+
+    };
+
+
+    document.querySelectorAll(
+        "#experience-list .item"
+    ).forEach(item => {
+
+        data.experience.push({
+
+            title:
+                item.querySelector(".exp-title").value,
+
+            company:
+                item.querySelector(".exp-company").value,
+
+            date:
+                item.querySelector(".exp-date").value,
+
+            details:
+                item.querySelector(".exp-details").value
+
+        });
+
+    });
+
+
+    document.querySelectorAll(
+        "#volunteer-list .item"
+    ).forEach(item => {
+
+        data.volunteer.push({
+
+            title:
+                item.querySelector(".vol-title").value,
+
+            company:
+                item.querySelector(".vol-company").value,
+
+            date:
+                item.querySelector(".vol-date").value,
+
+            details:
+                item.querySelector(".vol-details").value
+
+        });
+
+    });
+
+
+    document.querySelectorAll(
+        "#education-list .item"
+    ).forEach(item => {
+
+        data.education.push({
+
+            school:
+                item.querySelector(".edu-school").value,
+
+            location:
+                item.querySelector(".edu-location").value,
+
+            grad:
+                item.querySelector(".edu-grad").value,
+
+            gpa:
+                item.querySelector(".edu-gpa").value
+
+        });
+
+    });
+
+
+    document.querySelectorAll(
+        "#reference-list .item"
+    ).forEach(item => {
+
+        data.references.push({
+
+            name:
+                item.querySelector(".ref-name").value,
+
+            position:
+                item.querySelector(".ref-position").value,
+
+            company:
+                item.querySelector(".ref-company").value,
+
+            text:
+                item.querySelector(".ref-text").value
+
+        });
+
+    });
+
+
+    return data;
+}
+
+
+/* =========================================================
+   DOWNLOAD JSON
+   ========================================================= */
+
+function downloadData() {
+
+    const data = collectData();
+
+    const blob = new Blob(
+        [
+            JSON.stringify(data, null, 2)
+        ],
+        {
+            type: "application/json"
+        }
+    );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "ResumeData.json";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+}
+
+
+/* =========================================================
+   LOAD JSON
+   ========================================================= */
+
+function loadData(event) {
+
+    const file =
+        event.target.files[0];
+
+    if (!file) {
+        return;
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload = function(e) {
+
+        try {
+
+            const data =
+                JSON.parse(e.target.result);
+
+
+            clearResumeWithoutConfirmation();
+
+
+            const personal =
+                data.personal || {};
+
+
+            document.getElementById("name").value =
+                personal.name || "";
+
+            document.getElementById("title").value =
+                personal.title || "";
+
+            document.getElementById("location").value =
+                personal.location || "";
+
+            document.getElementById("phone").value =
+                personal.phone || "";
+
+            document.getElementById("email").value =
+                personal.email || "";
+
+            document.getElementById("summary").value =
+                personal.summary || "";
+
+            document.getElementById("skills").value =
+                data.skills || "";
+
+            document.getElementById("courses").value =
+                data.courses || "";
+
+
+            (data.experience || [])
+                .forEach(addExperience);
+
+            (data.volunteer || [])
+                .forEach(addVolunteer);
+
+            (data.education || [])
+                .forEach(addEducation);
+
+            (data.references || [])
+                .forEach(addReference);
+
+
+            updateResume();
+
+
+        } catch (error) {
+
+            alert(
+                "That file is not a valid Resume Maker file."
+            );
+
+        }
+
+    };
+
+
+    reader.readAsText(file);
+
+    event.target.value = "";
+}
+
+
+/* =========================================================
+   FORM LISTENERS
+   ========================================================= */
+
+document.querySelectorAll(
+    "#name, #title, #location, #phone, #email, #summary, #skills, #courses"
+).forEach(input => {
+
+    input.addEventListener(
+        "input",
+        updateResume
+    );
+
+});
+
+
+/* =========================================================
+   IMPORTANT:
+   DO NOT LOAD EXAMPLE DATA AUTOMATICALLY.
+   PAGE STARTS COMPLETELY BLANK.
+   ========================================================= */
+
+updateResume();
+
+</script>
+
+</body>
+</html>
+```
