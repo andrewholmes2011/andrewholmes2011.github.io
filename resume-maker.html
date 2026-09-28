@@ -1,26 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Resume Maker</title>
+<title>Resume Builder</title>
 
 <style>
-:root {
-    --navy: #1b262c;
-    --dark-green: #1d5d46;
-    --green: #3f8f67;
-    --light-green: #d9f2df;
-    --background: #edf7f0;
-    --white: #ffffff;
-    --text: #24313a;
-    --muted: #5f6b73;
-    --border: #d6e8dc;
-    --danger: #a93232;
-}
-
 * {
     box-sizing: border-box;
 }
@@ -31,22 +17,26 @@ html {
 
 body {
     margin: 0;
-    background: var(--background);
-    color: var(--text);
+    background: #f3f3f3;
+    color: #222;
     font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.4;
 }
 
+/* =========================
+   TOP NAVIGATION
+   ========================= */
+
 .topbar {
-    background: var(--navy);
-    border-bottom: 4px solid var(--green);
-    padding: 15px 25px;
+    background: #222;
+    padding: 14px 20px;
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
 .topbar-inner {
-    max-width: 1250px;
+    max-width: 1200px;
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -55,262 +45,288 @@ body {
 }
 
 .brand {
-    color: var(--light-green);
+    color: #fff;
     text-decoration: none;
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .navigation {
     display: flex;
-    gap: 20px;
+    gap: 18px;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .navigation a {
-    color: white;
+    color: #fff;
     text-decoration: none;
-    font-size: .9rem;
-    font-weight: bold;
+    font-size: .85rem;
 }
 
 .navigation a:hover {
-    color: var(--light-green);
+    text-decoration: underline;
 }
 
+/* =========================
+   PAGE
+   ========================= */
+
 .page {
-    width: min(1250px, calc(100% - 30px));
-    margin: 30px auto;
+    width: min(1200px, calc(100% - 30px));
+    margin: 25px auto;
 }
 
 .page-title {
-    text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .page-title h1 {
     margin: 0;
-    color: var(--navy);
-    font-size: 2.3rem;
+    font-size: 2rem;
+    color: #222;
 }
 
 .page-title p {
-    color: var(--muted);
-    margin-top: 8px;
+    margin: 5px 0 0;
+    color: #666;
 }
+
+/* =========================
+   BUILDER
+   ========================= */
 
 .maker {
     display: grid;
-    grid-template-columns: 420px 1fr;
+    grid-template-columns: 380px 1fr;
     gap: 25px;
     align-items: start;
 }
 
 .panel {
-    background: var(--white);
-    border-radius: 8px;
-    box-shadow: 0 8px 25px rgba(27, 38, 44, .12);
+    background: #fff;
+    border: 1px solid #ddd;
 }
 
+/* =========================
+   FORM
+   ========================= */
+
 .form-panel {
-    padding: 25px;
+    padding: 22px;
     position: sticky;
-    top: 90px;
-    max-height: calc(100vh - 110px);
+    top: 70px;
+    max-height: calc(100vh - 90px);
     overflow-y: auto;
 }
 
 .form-panel h2 {
     margin-top: 0;
-    color: var(--navy);
+    font-size: 1.25rem;
 }
 
 .form-section {
-    border-top: 1px solid var(--border);
-    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 18px;
     margin-top: 20px;
 }
 
 .form-section h3 {
-    color: var(--dark-green);
-    margin-top: 0;
+    margin: 0 0 12px;
+    font-size: 1rem;
 }
 
 label {
     display: block;
     font-weight: bold;
-    margin-top: 13px;
+    margin-top: 12px;
     margin-bottom: 5px;
-    font-size: .88rem;
+    font-size: .85rem;
 }
 
 input,
-textarea {
+textarea,
+select {
     width: 100%;
-    padding: 10px 11px;
-    border: 1px solid #cbd8d0;
-    border-radius: 5px;
+    padding: 9px 10px;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    background: #fff;
+    color: #222;
     font-family: Arial, Helvetica, sans-serif;
     font-size: .9rem;
-    background: white;
 }
 
 textarea {
-    min-height: 90px;
+    min-height: 80px;
     resize: vertical;
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
     outline: none;
-    border-color: var(--green);
-    box-shadow: 0 0 0 2px var(--light-green);
+    border-color: #555;
 }
 
+/* =========================
+   FORM ITEMS
+   ========================= */
+
 .item {
-    border: 1px solid var(--border);
-    background: #f7fcf8;
-    border-radius: 6px;
-    padding: 15px;
-    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    background: #fafafa;
+    padding: 14px;
+    margin-bottom: 12px;
 }
 
 .item-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
     margin-bottom: 5px;
 }
 
 .item-header strong {
-    color: var(--navy);
+    font-size: .9rem;
 }
 
 .remove-btn {
-    background: var(--danger);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 5px 9px;
+    background: #fff;
+    color: #a00000;
+    border: 1px solid #a00000;
+    padding: 4px 8px;
+    border-radius: 3px;
     cursor: pointer;
-    font-weight: bold;
+    font-size: .78rem;
 }
 
 .remove-btn:hover {
-    background: #7d2424;
+    background: #a00000;
+    color: #fff;
 }
 
 .add-btn {
     width: 100%;
-    background: white;
-    color: var(--dark-green);
-    border: 2px solid var(--dark-green);
-    padding: 10px;
-    border-radius: 5px;
+    background: #fff;
+    color: #222;
+    border: 1px solid #555;
+    padding: 9px;
+    border-radius: 3px;
     font-weight: bold;
     cursor: pointer;
 }
 
 .add-btn:hover {
-    background: var(--light-green);
+    background: #f1f1f1;
 }
+
+/* =========================
+   BUTTONS
+   ========================= */
 
 .actions {
     display: grid;
-    gap: 9px;
+    gap: 8px;
     margin-top: 25px;
 }
 
 .button {
-    border: none;
-    border-radius: 5px;
-    padding: 12px;
+    border: 1px solid #333;
+    background: #fff;
+    color: #222;
+    padding: 10px;
+    border-radius: 3px;
     cursor: pointer;
     font-weight: bold;
-    font-size: .9rem;
+    font-size: .85rem;
+}
+
+.button:hover {
+    background: #eee;
 }
 
 .button.primary {
-    background: var(--dark-green);
-    color: white;
+    background: #222;
+    color: #fff;
 }
 
 .button.primary:hover {
-    background: var(--green);
-}
-
-.button.secondary {
-    background: white;
-    color: var(--dark-green);
-    border: 2px solid var(--dark-green);
-}
-
-.button.secondary:hover {
-    background: var(--light-green);
+    background: #444;
 }
 
 .button.danger {
-    background: var(--danger);
-    color: white;
+    color: #a00000;
+    border-color: #a00000;
 }
 
+.button.danger:hover {
+    background: #a00000;
+    color: #fff;
+}
+
+/* =========================
+   RESUME PREVIEW
+   ========================= */
+
 .resume-container {
-    background: #dfe8e2;
-    padding: 25px;
-    border-radius: 8px;
+    background: #ddd;
+    padding: 20px;
 }
 
 .resume {
-    background: white;
-    box-shadow: 0 8px 30px rgba(27, 38, 44, .16);
-    border-radius: 5px;
-    overflow: hidden;
+    background: #fff;
+    min-height: 900px;
+    border: 1px solid #ccc;
 }
 
 .resume-header {
-    background: var(--navy);
-    color: white;
-    padding: 35px 45px 30px;
-    border-bottom: 7px solid var(--green);
+    padding: 35px 45px 25px;
+    border-bottom: 1px solid #222;
 }
 
 .resume-header h1 {
     margin: 0;
-    color: var(--light-green);
-    font-size: 2.6rem;
-    line-height: 1.1;
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #111;
 }
 
 .resume-header .subtitle {
-    margin-top: 7px;
-    font-weight: bold;
+    margin-top: 4px;
+    font-size: 1rem;
+    color: #444;
 }
 
 .contact-info {
-    margin-top: 18px;
+    margin-top: 12px;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px 20px;
-    font-size: .86rem;
+    gap: 5px 18px;
+    font-size: .82rem;
+    color: #555;
 }
 
 .contact-item {
-    display: flex;
-    gap: 6px;
+    display: inline;
 }
 
-.contact-icon {
-    color: var(--light-green);
-    font-weight: bold;
+.contact-item:not(:last-child)::after {
+    content: " |";
+    margin-left: 18px;
+    color: #aaa;
 }
+
+/* =========================
+   RESUME CONTENT
+   ========================= */
 
 .resume-content {
-    padding: 35px 45px 40px;
+    padding: 30px 45px 40px;
 }
 
 .section {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .section:last-child {
@@ -318,49 +334,36 @@ textarea:focus {
 }
 
 .section-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 0 0 15px;
-    color: var(--dark-green);
-    font-size: 1.08rem;
+    margin: 0 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #333;
+    font-size: .95rem;
+    font-weight: bold;
     text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.section-title::after {
-    content: "";
-    height: 2px;
-    flex: 1;
-    background: var(--light-green);
+    letter-spacing: .5px;
 }
 
 .summary {
     margin: 0;
+    font-size: .88rem;
     line-height: 1.55;
-    font-size: .92rem;
 }
 
+.placeholder-text {
+    color: #888;
+    font-style: italic;
+}
+
+/* =========================
+   EXPERIENCE
+   ========================= */
+
 .experience-item {
-    position: relative;
-    padding-left: 20px;
-    margin-bottom: 24px;
-    border-left: 3px solid var(--light-green);
+    margin-bottom: 20px;
 }
 
 .experience-item:last-child {
     margin-bottom: 0;
-}
-
-.experience-item::before {
-    content: "";
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--green);
-    position: absolute;
-    left: -6px;
-    top: 5px;
 }
 
 .job-header {
@@ -371,107 +374,139 @@ textarea:focus {
 
 .job-title {
     margin: 0;
-    font-size: .98rem;
-    color: var(--navy);
+    font-size: .95rem;
+    font-weight: bold;
 }
 
 .company {
-    color: var(--dark-green);
-    font-weight: bold;
-    font-size: .88rem;
-    margin-top: 3px;
+    color: #444;
+    font-size: .87rem;
+    margin-top: 2px;
 }
 
 .date {
-    color: var(--muted);
+    color: #555;
     font-size: .82rem;
-    font-weight: bold;
     white-space: nowrap;
 }
 
 .experience-item ul {
-    margin: 8px 0 0;
+    margin: 7px 0 0;
     padding-left: 18px;
 }
 
 .experience-item li {
-    margin-bottom: 4px;
-    font-size: .86rem;
-}
-
-.education-card,
-.reference {
-    border: 1px solid var(--border);
-    border-left: 5px solid var(--green);
-    padding: 16px 18px;
-    border-radius: 4px;
-    background: #f7fcf8;
-    margin-bottom: 12px;
-}
-
-.education-card h3 {
-    margin: 0;
-    color: var(--navy);
-    font-size: 1rem;
-}
-
-.education-location {
-    color: var(--muted);
-    margin: 3px 0 10px;
+    margin-bottom: 3px;
     font-size: .84rem;
 }
 
-.education-details {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
+/* =========================
+   EDUCATION
+   ========================= */
+
+.education-item {
+    margin-bottom: 14px;
 }
 
-.education-tag {
-    background: var(--light-green);
-    color: var(--navy);
-    padding: 5px 9px;
-    border-radius: 4px;
-    font-size: .76rem;
+.education-item:last-child {
+    margin-bottom: 0;
+}
+
+.education-school {
     font-weight: bold;
+    font-size: .92rem;
 }
 
-.reference blockquote {
-    margin: 0;
-    font-size: .86rem;
-    line-height: 1.55;
-    font-style: italic;
+.education-details {
+    color: #555;
+    font-size: .83rem;
 }
 
-.reference-person {
-    border-top: 1px solid var(--border);
-    margin-top: 12px;
-    padding-top: 10px;
+.education-extra {
+    margin-top: 3px;
+    font-size: .82rem;
 }
 
-.reference-person strong {
-    display: block;
-    font-size: .88rem;
+/* =========================
+   SKILLS
+   ========================= */
+
+.skills-list {
+    font-size: .85rem;
+    line-height: 1.6;
 }
 
-.reference-person span {
-    color: var(--muted);
-    font-size: .78rem;
+/* =========================
+   ACCOMPLISHMENTS
+   ========================= */
+
+.accomplishment-item {
+    margin-bottom: 12px;
 }
 
-.placeholder-text {
-    color: #89949a;
-    font-style: italic;
+.accomplishment-item:last-child {
+    margin-bottom: 0;
 }
+
+.accomplishment-title {
+    font-weight: bold;
+    font-size: .9rem;
+}
+
+.accomplishment-category {
+    color: #555;
+    font-size: .8rem;
+    margin-left: 5px;
+}
+
+.accomplishment-details {
+    font-size: .83rem;
+    margin-top: 2px;
+}
+
+/* =========================
+   REFERENCES
+   ========================= */
+
+.reference-item {
+    margin-bottom: 14px;
+}
+
+.reference-item:last-child {
+    margin-bottom: 0;
+}
+
+.reference-name {
+    font-weight: bold;
+    font-size: .9rem;
+}
+
+.reference-details {
+    color: #555;
+    font-size: .82rem;
+}
+
+.reference-text {
+    margin-top: 4px;
+    font-size: .82rem;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
 
 .footer-note {
     text-align: center;
-    color: var(--muted);
+    color: #666;
     font-size: .75rem;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
-@media (max-width: 1000px) {
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 950px) {
 
     .maker {
         grid-template-columns: 1fr;
@@ -487,6 +522,11 @@ textarea:focus {
 
     .topbar-inner {
         flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navigation {
+        gap: 12px;
     }
 
     .page {
@@ -494,7 +534,7 @@ textarea:focus {
     }
 
     .resume-container {
-        padding: 8px;
+        padding: 6px;
     }
 
     .resume-header {
@@ -506,7 +546,7 @@ textarea:focus {
     }
 
     .resume-header h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
 
     .job-header {
@@ -517,17 +557,25 @@ textarea:focus {
     .date {
         white-space: normal;
     }
+
+    .contact-item:not(:last-child)::after {
+        display: none;
+    }
 }
+
+/* =========================
+   PRINT
+   ========================= */
 
 @media print {
 
     @page {
         size: Letter;
-        margin: .45in;
+        margin: .5in;
     }
 
     body {
-        background: white !important;
+        background: #fff !important;
     }
 
     .topbar,
@@ -548,23 +596,19 @@ textarea:focus {
 
     .resume-container {
         padding: 0;
-        background: white;
+        background: #fff;
     }
 
     .resume {
-        box-shadow: none;
-        border-radius: 0;
-    }
-
-    .resume-header {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        border: none;
+        min-height: 0;
     }
 
     .section,
     .experience-item,
-    .education-card,
-    .reference {
+    .education-item,
+    .accomplishment-item,
+    .reference-item {
         break-inside: avoid;
         page-break-inside: avoid;
     }
@@ -574,47 +618,57 @@ textarea:focus {
 
 <body>
 
+<!-- =========================
+     NAVIGATION
+     ========================= -->
+
 <div class="topbar">
 
     <div class="topbar-inner">
 
         <a class="brand" href="index.html">
-            RESUME MAKER
+            RESUME BUILDER
         </a>
 
         <nav class="navigation">
+
             <a href="#personal">Personal</a>
             <a href="#experience-form">Experience</a>
             <a href="#education-form">Education</a>
             <a href="#skills-form">Skills</a>
+            <a href="#accomplishments-form">Accomplishments</a>
             <a href="#reference-form">References</a>
+
         </nav>
 
     </div>
 
 </div>
 
+
 <main class="page">
 
     <div class="page-title">
 
-        <h1>Resume Maker</h1>
+        <h1>Resume Builder</h1>
 
         <p>
-            Build a professional resume with a live preview.
+            Create a simple, professional resume.
         </p>
 
     </div>
 
+
     <div class="maker">
 
-        <!-- =====================================================
+        <!-- =========================
              FORM
-             ===================================================== -->
+             ========================= -->
 
         <div class="panel form-panel">
 
             <h2>Resume Information</h2>
+
 
             <!-- PERSONAL -->
 
@@ -629,7 +683,7 @@ textarea:focus {
                 <input
                     id="name"
                     type="text"
-                    placeholder="Enter your full name"
+                    placeholder="Your full name"
                 >
 
                 <label for="title">
@@ -639,7 +693,7 @@ textarea:focus {
                 <input
                     id="title"
                     type="text"
-                    placeholder="Example: High School Student"
+                    placeholder="Your job title or professional field"
                 >
 
                 <label for="location">
@@ -649,7 +703,7 @@ textarea:focus {
                 <input
                     id="location"
                     type="text"
-                    placeholder="City, State ZIP"
+                    placeholder="City, State"
                 >
 
                 <label for="phone">
@@ -678,16 +732,17 @@ textarea:focus {
 
                 <textarea
                     id="summary"
-                    placeholder="Write a short professional summary..."
+                    placeholder="Write a short summary of your experience, skills, and goals."
                 ></textarea>
 
             </div>
+
 
             <!-- EXPERIENCE -->
 
             <div class="form-section" id="experience-form">
 
-                <h3>Experience</h3>
+                <h3>Work Experience</h3>
 
                 <div id="experience-list"></div>
 
@@ -695,10 +750,11 @@ textarea:focus {
                     class="add-btn"
                     onclick="addExperience()"
                 >
-                    + Add Experience
+                    + Add Work Experience
                 </button>
 
             </div>
+
 
             <!-- VOLUNTEER -->
 
@@ -717,6 +773,7 @@ textarea:focus {
 
             </div>
 
+
             <!-- EDUCATION -->
 
             <div class="form-section" id="education-form">
@@ -734,11 +791,12 @@ textarea:focus {
 
             </div>
 
+
             <!-- SKILLS -->
 
             <div class="form-section" id="skills-form">
 
-                <h3>Skills & Courses</h3>
+                <h3>Skills</h3>
 
                 <label for="skills">
                     Skills
@@ -746,19 +804,34 @@ textarea:focus {
 
                 <textarea
                     id="skills"
-                    placeholder="HTML, CSS, JavaScript, Customer Service..."
-                ></textarea>
-
-                <label for="courses">
-                    Courses
-                </label>
-
-                <textarea
-                    id="courses"
-                    placeholder="AP Computer Science, Spanish, etc..."
+                    placeholder="Enter skills separated by commas."
                 ></textarea>
 
             </div>
+
+
+            <!-- ACCOMPLISHMENTS -->
+
+            <div class="form-section" id="accomplishments-form">
+
+                <h3>Accomplishments & Credentials</h3>
+
+                <p style="font-size:.8rem;color:#666;">
+                    Add achievements, awards, licenses, certifications,
+                    honors, activities, publications, or other accomplishments.
+                </p>
+
+                <div id="accomplishment-list"></div>
+
+                <button
+                    class="add-btn"
+                    onclick="addAccomplishment()"
+                >
+                    + Add Accomplishment
+                </button>
+
+            </div>
+
 
             <!-- REFERENCES -->
 
@@ -777,6 +850,7 @@ textarea:focus {
 
             </div>
 
+
             <!-- ACTIONS -->
 
             <div class="actions">
@@ -789,21 +863,21 @@ textarea:focus {
                 </button>
 
                 <button
-                    class="button secondary"
+                    class="button"
                     onclick="loadExample()"
                 >
-                    Load Example Resume
+                    Load Example
                 </button>
 
                 <button
-                    class="button secondary"
+                    class="button"
                     onclick="downloadData()"
                 >
                     Download Resume Data
                 </button>
 
                 <button
-                    class="button secondary"
+                    class="button"
                     onclick="document.getElementById('fileInput').click()"
                 >
                     Load Resume Data
@@ -828,9 +902,10 @@ textarea:focus {
 
         </div>
 
-        <!-- =====================================================
-             LIVE RESUME
-             ===================================================== -->
+
+        <!-- =========================
+             RESUME PREVIEW
+             ========================= -->
 
         <div class="resume-container">
 
@@ -851,30 +926,31 @@ textarea:focus {
 
                     <div class="contact-info">
 
-                        <div class="contact-item">
-                            <span class="contact-icon">◆</span>
-                            <span id="preview-location">
-                                Location
-                            </span>
+                        <div
+                            class="contact-item"
+                            id="preview-location"
+                        >
+                            Location
                         </div>
 
-                        <div class="contact-item">
-                            <span class="contact-icon">◆</span>
-                            <span id="preview-phone">
-                                Phone
-                            </span>
+                        <div
+                            class="contact-item"
+                            id="preview-phone"
+                        >
+                            Phone
                         </div>
 
-                        <div class="contact-item">
-                            <span class="contact-icon">◆</span>
-                            <span id="preview-email">
-                                Email
-                            </span>
+                        <div
+                            class="contact-item"
+                            id="preview-email"
+                        >
+                            Email
                         </div>
 
                     </div>
 
                 </header>
+
 
                 <div class="resume-content">
 
@@ -898,6 +974,7 @@ textarea:focus {
 
                     </section>
 
+
                     <!-- EXPERIENCE -->
 
                     <section
@@ -913,6 +990,7 @@ textarea:focus {
                         <div id="preview-experience"></div>
 
                     </section>
+
 
                     <!-- VOLUNTEER -->
 
@@ -930,6 +1008,7 @@ textarea:focus {
 
                     </section>
 
+
                     <!-- EDUCATION -->
 
                     <section
@@ -946,6 +1025,7 @@ textarea:focus {
 
                     </section>
 
+
                     <!-- SKILLS -->
 
                     <section
@@ -955,17 +1035,33 @@ textarea:focus {
                     >
 
                         <h2 class="section-title">
-                            Skills & Courses
+                            Skills
                         </h2>
 
-                        <div id="preview-skills"></div>
-
                         <div
-                            id="preview-courses"
-                            style="margin-top:12px;"
+                            class="skills-list"
+                            id="preview-skills"
                         ></div>
 
                     </section>
+
+
+                    <!-- ACCOMPLISHMENTS -->
+
+                    <section
+                        class="section"
+                        id="preview-accomplishments-section"
+                        style="display:none;"
+                    >
+
+                        <h2 class="section-title">
+                            Accomplishments & Credentials
+                        </h2>
+
+                        <div id="preview-accomplishments"></div>
+
+                    </section>
+
 
                     <!-- REFERENCES -->
 
@@ -988,7 +1084,7 @@ textarea:focus {
             </article>
 
             <div class="footer-note">
-                Resume Maker • Create, customize, and print your resume
+                Resume Builder
             </div>
 
         </div>
@@ -997,17 +1093,19 @@ textarea:focus {
 
 </main>
 
+
 <script>
 
 let experienceCount = 0;
 let volunteerCount = 0;
 let educationCount = 0;
+let accomplishmentCount = 0;
 let referenceCount = 0;
 
 
-/* =========================================================
-   SECURITY / HTML ESCAPING
-   ========================================================= */
+/* =========================
+   HTML ESCAPING
+   ========================= */
 
 function escapeHTML(value) {
 
@@ -1020,9 +1118,9 @@ function escapeHTML(value) {
 }
 
 
-/* =========================================================
+/* =========================
    EXPERIENCE
-   ========================================================= */
+   ========================= */
 
 function addExperience(data = {}) {
 
@@ -1033,7 +1131,6 @@ function addExperience(data = {}) {
     const div = document.createElement("div");
 
     div.className = "item";
-
     div.id = "experience-" + id;
 
     div.innerHTML = `
@@ -1041,7 +1138,7 @@ function addExperience(data = {}) {
         <div class="item-header">
 
             <strong>
-                Experience #${id}
+                Work Experience #${id}
             </strong>
 
             <button
@@ -1078,16 +1175,16 @@ function addExperience(data = {}) {
         <input
             class="exp-date"
             type="text"
-            placeholder="June 2025 – Present"
+            placeholder="June 2024 – Present"
             value="${escapeHTML(data.date || "")}"
             oninput="updateResume()"
         >
 
-        <label>Responsibilities</label>
+        <label>Responsibilities / Accomplishments</label>
 
         <textarea
             class="exp-details"
-            placeholder="Enter one responsibility per line..."
+            placeholder="Enter one item per line."
             oninput="updateResume()"
         >${escapeHTML(data.details || "")}</textarea>
 
@@ -1101,9 +1198,9 @@ function addExperience(data = {}) {
 }
 
 
-/* =========================================================
+/* =========================
    VOLUNTEER
-   ========================================================= */
+   ========================= */
 
 function addVolunteer(data = {}) {
 
@@ -1114,7 +1211,6 @@ function addVolunteer(data = {}) {
     const div = document.createElement("div");
 
     div.className = "item";
-
     div.id = "volunteer-" + id;
 
     div.innerHTML = `
@@ -1139,7 +1235,7 @@ function addVolunteer(data = {}) {
         <input
             class="vol-title"
             type="text"
-            placeholder="Volunteer position"
+            placeholder="Position"
             value="${escapeHTML(data.title || "")}"
             oninput="updateResume()"
         >
@@ -1159,16 +1255,16 @@ function addVolunteer(data = {}) {
         <input
             class="vol-date"
             type="text"
-            placeholder="August 2024 – Present"
+            placeholder="June 2024 – Present"
             value="${escapeHTML(data.date || "")}"
             oninput="updateResume()"
         >
 
-        <label>Responsibilities</label>
+        <label>Responsibilities / Accomplishments</label>
 
         <textarea
             class="vol-details"
-            placeholder="Enter one responsibility per line..."
+            placeholder="Enter one item per line."
             oninput="updateResume()"
         >${escapeHTML(data.details || "")}</textarea>
 
@@ -1182,9 +1278,9 @@ function addVolunteer(data = {}) {
 }
 
 
-/* =========================================================
+/* =========================
    EDUCATION
-   ========================================================= */
+   ========================= */
 
 function addEducation(data = {}) {
 
@@ -1195,7 +1291,6 @@ function addEducation(data = {}) {
     const div = document.createElement("div");
 
     div.className = "item";
-
     div.id = "education-" + id;
 
     div.innerHTML = `
@@ -1215,12 +1310,12 @@ function addEducation(data = {}) {
 
         </div>
 
-        <label>School</label>
+        <label>School / Institution</label>
 
         <input
             class="edu-school"
             type="text"
-            placeholder="School name"
+            placeholder="School or institution"
             value="${escapeHTML(data.school || "")}"
             oninput="updateResume()"
         >
@@ -1235,23 +1330,33 @@ function addEducation(data = {}) {
             oninput="updateResume()"
         >
 
-        <label>Graduation Year</label>
+        <label>Degree / Program</label>
+
+        <input
+            class="edu-degree"
+            type="text"
+            placeholder="Degree, diploma, or program"
+            value="${escapeHTML(data.degree || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Graduation Date</label>
 
         <input
             class="edu-grad"
             type="text"
-            placeholder="2029"
+            placeholder="May 2027"
             value="${escapeHTML(data.grad || "")}"
             oninput="updateResume()"
         >
 
-        <label>GPA</label>
+        <label>Additional Information</label>
 
         <input
-            class="edu-gpa"
+            class="edu-extra"
             type="text"
-            placeholder="3.94 / 4.00"
-            value="${escapeHTML(data.gpa || "")}"
+            placeholder="GPA, honors, relevant coursework, etc."
+            value="${escapeHTML(data.extra || "")}"
             oninput="updateResume()"
         >
 
@@ -1265,9 +1370,140 @@ function addEducation(data = {}) {
 }
 
 
-/* =========================================================
+/* =========================
+   ACCOMPLISHMENTS
+   ========================= */
+
+function addAccomplishment(data = {}) {
+
+    accomplishmentCount++;
+
+    const id = accomplishmentCount;
+
+    const div = document.createElement("div");
+
+    div.className = "item";
+    div.id = "accomplishment-" + id;
+
+    div.innerHTML = `
+
+        <div class="item-header">
+
+            <strong>
+                Accomplishment #${id}
+            </strong>
+
+            <button
+                class="remove-btn"
+                onclick="removeItem('accomplishment-${id}')"
+            >
+                Remove
+            </button>
+
+        </div>
+
+        <label>Category</label>
+
+        <select
+            class="achievement-category"
+            onchange="updateResume()"
+        >
+
+            <option value="Achievement">
+                Achievement
+            </option>
+
+            <option value="Award">
+                Award
+            </option>
+
+            <option value="Certification">
+                Certification
+            </option>
+
+            <option value="License">
+                License
+            </option>
+
+            <option value="Honor">
+                Honor
+            </option>
+
+            <option value="Activity">
+                Activity
+            </option>
+
+            <option value="Publication">
+                Publication
+            </option>
+
+            <option value="Membership">
+                Membership
+            </option>
+
+            <option value="Other">
+                Other
+            </option>
+
+        </select>
+
+        <label>Title</label>
+
+        <input
+            class="achievement-title"
+            type="text"
+            placeholder="Name of achievement, award, license, etc."
+            value="${escapeHTML(data.title || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Organization / Issuer</label>
+
+        <input
+            class="achievement-organization"
+            type="text"
+            placeholder="Organization, school, company, or issuing body"
+            value="${escapeHTML(data.organization || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Date</label>
+
+        <input
+            class="achievement-date"
+            type="text"
+            placeholder="2026"
+            value="${escapeHTML(data.date || "")}"
+            oninput="updateResume()"
+        >
+
+        <label>Description</label>
+
+        <textarea
+            class="achievement-description"
+            placeholder="Optional description"
+            oninput="updateResume()"
+        >${escapeHTML(data.description || "")}</textarea>
+
+    `;
+
+    const select =
+        div.querySelector(".achievement-category");
+
+    select.value =
+        data.category || "Achievement";
+
+    document
+        .getElementById("accomplishment-list")
+        .appendChild(div);
+
+    updateResume();
+}
+
+
+/* =========================
    REFERENCES
-   ========================================================= */
+   ========================= */
 
 function addReference(data = {}) {
 
@@ -1278,7 +1514,6 @@ function addReference(data = {}) {
     const div = document.createElement("div");
 
     div.className = "item";
-
     div.id = "reference-" + id;
 
     div.innerHTML = `
@@ -1328,13 +1563,15 @@ function addReference(data = {}) {
             oninput="updateResume()"
         >
 
-        <label>Reference Statement</label>
+        <label>Contact Information</label>
 
-        <textarea
-            class="ref-text"
-            placeholder="Optional reference statement..."
+        <input
+            class="ref-contact"
+            type="text"
+            placeholder="Phone or email"
+            value="${escapeHTML(data.contact || "")}"
             oninput="updateResume()"
-        >${escapeHTML(data.text || "")}</textarea>
+        >
 
     `;
 
@@ -1346,9 +1583,9 @@ function addReference(data = {}) {
 }
 
 
-/* =========================================================
+/* =========================
    REMOVE
-   ========================================================= */
+   ========================= */
 
 function removeItem(id) {
 
@@ -1363,9 +1600,9 @@ function removeItem(id) {
 }
 
 
-/* =========================================================
+/* =========================
    MAIN UPDATE
-   ========================================================= */
+   ========================= */
 
 function updateResume() {
 
@@ -1417,20 +1654,45 @@ function updateResume() {
 
 
     updateExperience();
-
     updateVolunteer();
-
     updateEducation();
-
     updateSkills();
-
+    updateAccomplishments();
     updateReferences();
 }
 
 
-/* =========================================================
+/* =========================
+   BULLET LIST
+   ========================= */
+
+function createBulletList(text) {
+
+    const lines =
+        String(text || "")
+            .split("\n")
+            .map(line => line.trim())
+            .filter(Boolean);
+
+    if (!lines.length) {
+        return "";
+    }
+
+    return `
+        <ul>
+            ${
+                lines.map(line =>
+                    `<li>${escapeHTML(line)}</li>`
+                ).join("")
+            }
+        </ul>
+    `;
+}
+
+
+/* =========================
    EXPERIENCE PREVIEW
-   ========================================================= */
+   ========================= */
 
 function updateExperience() {
 
@@ -1468,20 +1730,6 @@ function updateExperience() {
             return;
         }
 
-        let bullets = "";
-
-        details
-            .split("\n")
-            .map(x => x.trim())
-            .filter(Boolean)
-            .forEach(line => {
-
-                bullets +=
-                    `<li>${escapeHTML(line)}</li>`;
-
-            });
-
-
         preview.innerHTML += `
 
             <div class="experience-item">
@@ -1490,9 +1738,9 @@ function updateExperience() {
 
                     <div>
 
-                        <h3 class="job-title">
+                        <div class="job-title">
                             ${escapeHTML(title)}
-                        </h3>
+                        </div>
 
                         <div class="company">
                             ${escapeHTML(company)}
@@ -1506,17 +1754,12 @@ function updateExperience() {
 
                 </div>
 
-                ${
-                    bullets
-                        ? `<ul>${bullets}</ul>`
-                        : ""
-                }
+                ${createBulletList(details)}
 
             </div>
 
         `;
     });
-
 
     document.getElementById(
         "preview-experience-section"
@@ -1527,9 +1770,9 @@ function updateExperience() {
 }
 
 
-/* =========================================================
+/* =========================
    VOLUNTEER PREVIEW
-   ========================================================= */
+   ========================= */
 
 function updateVolunteer() {
 
@@ -1567,20 +1810,6 @@ function updateVolunteer() {
             return;
         }
 
-        let bullets = "";
-
-        details
-            .split("\n")
-            .map(x => x.trim())
-            .filter(Boolean)
-            .forEach(line => {
-
-                bullets +=
-                    `<li>${escapeHTML(line)}</li>`;
-
-            });
-
-
         preview.innerHTML += `
 
             <div class="experience-item">
@@ -1589,9 +1818,9 @@ function updateVolunteer() {
 
                     <div>
 
-                        <h3 class="job-title">
+                        <div class="job-title">
                             ${escapeHTML(title)}
-                        </h3>
+                        </div>
 
                         <div class="company">
                             ${escapeHTML(company)}
@@ -1605,17 +1834,12 @@ function updateVolunteer() {
 
                 </div>
 
-                ${
-                    bullets
-                        ? `<ul>${bullets}</ul>`
-                        : ""
-                }
+                ${createBulletList(details)}
 
             </div>
 
         `;
     });
-
 
     document.getElementById(
         "preview-volunteer-section"
@@ -1626,9 +1850,9 @@ function updateVolunteer() {
 }
 
 
-/* =========================================================
+/* =========================
    EDUCATION PREVIEW
-   ========================================================= */
+   ========================= */
 
 function updateEducation() {
 
@@ -1654,62 +1878,66 @@ function updateEducation() {
             item.querySelector(".edu-location")
                 .value.trim();
 
+        const degree =
+            item.querySelector(".edu-degree")
+                .value.trim();
+
         const grad =
             item.querySelector(".edu-grad")
                 .value.trim();
 
-        const gpa =
-            item.querySelector(".edu-gpa")
+        const extra =
+            item.querySelector(".edu-extra")
                 .value.trim();
 
-        if (!school) {
+        if (!school && !degree) {
             return;
         }
 
-        let tags = "";
-
-        if (grad) {
-
-            tags += `
-                <span class="education-tag">
-                    Graduation: ${escapeHTML(grad)}
-                </span>
-            `;
-
-        }
-
-        if (gpa) {
-
-            tags += `
-                <span class="education-tag">
-                    GPA: ${escapeHTML(gpa)}
-                </span>
-            `;
-
-        }
-
-
         preview.innerHTML += `
 
-            <div class="education-card">
+            <div class="education-item">
 
-                <h3>
+                <div class="education-school">
                     ${escapeHTML(school)}
-                </h3>
-
-                <div class="education-location">
-                    ${escapeHTML(location)}
                 </div>
 
                 <div class="education-details">
-                    ${tags}
+
+                    ${escapeHTML(degree)}
+
+                    ${
+                        degree && location
+                            ? " | "
+                            : ""
+                    }
+
+                    ${escapeHTML(location)}
+
+                    ${
+                        (degree || location) && grad
+                            ? " | "
+                            : ""
+                    }
+
+                    ${escapeHTML(grad)}
+
                 </div>
+
+                ${
+                    extra
+                        ? `
+                        <div class="education-extra">
+                            ${escapeHTML(extra)}
+                        </div>
+                        `
+                        : ""
+                }
 
             </div>
 
         `;
     });
-
 
     document.getElementById(
         "preview-education-section"
@@ -1720,9 +1948,9 @@ function updateEducation() {
 }
 
 
-/* =========================================================
-   SKILLS / COURSES
-   ========================================================= */
+/* =========================
+   SKILLS
+   ========================= */
 
 function updateSkills() {
 
@@ -1733,99 +1961,135 @@ function updateSkills() {
             .map(x => x.trim())
             .filter(Boolean);
 
-    const courses =
-        document.getElementById("courses")
-            .value
-            .split(",")
-            .map(x => x.trim())
-            .filter(Boolean);
+    const preview =
+        document.getElementById("preview-skills");
 
-
-    let skillHTML = "";
-
-    if (skills.length) {
-
-        skillHTML = `
-
-            <div class="education-card">
-
-                <h3>
-                    Skills
-                </h3>
-
-                <div class="education-details">
-
-                    ${
-                        skills.map(skill =>
-                            `
-                            <span class="education-tag">
-                                ${escapeHTML(skill)}
-                            </span>
-                            `
-                        ).join("")
-                    }
-
-                </div>
-
-            </div>
-
-        `;
-    }
-
-
-    let courseHTML = "";
-
-    if (courses.length) {
-
-        courseHTML = `
-
-            <div class="education-card">
-
-                <h3>
-                    Courses
-                </h3>
-
-                <div class="education-details">
-
-                    ${
-                        courses.map(course =>
-                            `
-                            <span class="education-tag">
-                                ${escapeHTML(course)}
-                            </span>
-                            `
-                        ).join("")
-                    }
-
-                </div>
-
-            </div>
-
-        `;
-    }
-
-
-    document.getElementById(
-        "preview-skills"
-    ).innerHTML = skillHTML;
-
-    document.getElementById(
-        "preview-courses"
-    ).innerHTML = courseHTML;
-
+    preview.textContent =
+        skills.join(" • ");
 
     document.getElementById(
         "preview-skills-section"
     ).style.display =
-        skillHTML || courseHTML
+        skills.length
             ? "block"
             : "none";
 }
 
 
-/* =========================================================
-   REFERENCES
-   ========================================================= */
+/* =========================
+   ACCOMPLISHMENTS PREVIEW
+   ========================= */
+
+function updateAccomplishments() {
+
+    const items =
+        document.querySelectorAll(
+            "#accomplishment-list .item"
+        );
+
+    const preview =
+        document.getElementById(
+            "preview-accomplishments"
+        );
+
+    preview.innerHTML = "";
+
+    items.forEach(item => {
+
+        const category =
+            item.querySelector(
+                ".achievement-category"
+            ).value.trim();
+
+        const title =
+            item.querySelector(
+                ".achievement-title"
+            ).value.trim();
+
+        const organization =
+            item.querySelector(
+                ".achievement-organization"
+            ).value.trim();
+
+        const date =
+            item.querySelector(
+                ".achievement-date"
+            ).value.trim();
+
+        const description =
+            item.querySelector(
+                ".achievement-description"
+            ).value.trim();
+
+        if (
+            !title &&
+            !organization &&
+            !description
+        ) {
+            return;
+        }
+
+        preview.innerHTML += `
+
+            <div class="accomplishment-item">
+
+                <div class="accomplishment-title">
+
+                    ${escapeHTML(title)}
+
+                    ${
+                        category
+                            ? `
+                            <span class="accomplishment-category">
+                                (${escapeHTML(category)})
+                            </span>
+                            `
+                            : ""
+                    }
+
+                </div>
+
+                <div class="accomplishment-details">
+
+                    ${escapeHTML(organization)}
+
+                    ${
+                        organization && date
+                            ? " | "
+                            : ""
+                    }
+
+                    ${escapeHTML(date)}
+
+                </div>
+
+                ${
+                    description
+                        ? `
+                        <div class="accomplishment-details">
+                            ${escapeHTML(description)}
+                        </div>
+                        `
+                        : ""
+                }
+
+            </div>
+
+        `;
+    });
+
+    document.getElementById(
+        "preview-accomplishments-section"
+    ).style.display =
+        preview.innerHTML.trim()
+            ? "block"
+            : "none";
+}
+
+
+/* =========================
+   REFERENCES PREVIEW
+   ========================= */
 
 function updateReferences() {
 
@@ -1855,44 +2119,39 @@ function updateReferences() {
             item.querySelector(".ref-company")
                 .value.trim();
 
-        const text =
-            item.querySelector(".ref-text")
+        const contact =
+            item.querySelector(".ref-contact")
                 .value.trim();
 
-        if (!name && !position && !company && !text) {
+        if (!name && !position && !company && !contact) {
             return;
         }
 
-
         preview.innerHTML += `
 
-            <div class="reference">
+            <div class="reference-item">
 
-                ${
-                    text
-                        ? `
-                        <blockquote>
-                            "${escapeHTML(text)}"
-                        </blockquote>
-                        `
-                        : ""
-                }
+                <div class="reference-name">
+                    ${escapeHTML(name)}
+                </div>
 
-                <div class="reference-person">
+                <div class="reference-details">
 
-                    <strong>
-                        ${escapeHTML(name)}
-                    </strong>
+                    ${escapeHTML(position)}
 
-                    <span>
-                        ${escapeHTML(position)}
-                        ${
-                            position && company
-                                ? ", "
-                                : ""
-                        }
-                        ${escapeHTML(company)}
-                    </span>
+                    ${
+                        position && company
+                            ? ", "
+                            : ""
+                    }
+
+                    ${escapeHTML(company)}
+
+                    ${
+                        contact
+                            ? " | " + escapeHTML(contact)
+                            : ""
+                    }
 
                 </div>
 
@@ -1900,7 +2159,6 @@ function updateReferences() {
 
         `;
     });
-
 
     document.getElementById(
         "preview-reference-section"
@@ -1911,9 +2169,9 @@ function updateReferences() {
 }
 
 
-/* =========================================================
+/* =========================
    CLEAR
-   ========================================================= */
+   ========================= */
 
 function clearResume() {
 
@@ -1930,93 +2188,67 @@ function clearResume() {
 function clearResumeWithoutConfirmation() {
 
     document.getElementById("name").value = "";
-
     document.getElementById("title").value = "";
-
     document.getElementById("location").value = "";
-
     document.getElementById("phone").value = "";
-
     document.getElementById("email").value = "";
-
     document.getElementById("summary").value = "";
-
     document.getElementById("skills").value = "";
 
-    document.getElementById("courses").value = "";
-
-
-    document.getElementById(
-        "experience-list"
-    ).innerHTML = "";
-
-    document.getElementById(
-        "volunteer-list"
-    ).innerHTML = "";
-
-    document.getElementById(
-        "education-list"
-    ).innerHTML = "";
-
-    document.getElementById(
-        "reference-list"
-    ).innerHTML = "";
-
+    document.getElementById("experience-list").innerHTML = "";
+    document.getElementById("volunteer-list").innerHTML = "";
+    document.getElementById("education-list").innerHTML = "";
+    document.getElementById("accomplishment-list").innerHTML = "";
+    document.getElementById("reference-list").innerHTML = "";
 
     experienceCount = 0;
-
     volunteerCount = 0;
-
     educationCount = 0;
-
+    accomplishmentCount = 0;
     referenceCount = 0;
 }
 
 
-/* =========================================================
+/* =========================
    EXAMPLE RESUME
-   ========================================================= */
+   ========================= */
 
 function loadExample() {
 
     clearResumeWithoutConfirmation();
 
-
     document.getElementById("name").value =
-        "Example Student";
+        "Jordan Smith";
 
     document.getElementById("title").value =
-        "High School Student";
+        "Administrative Assistant";
 
     document.getElementById("location").value =
-        "Richland, WA 99354";
+        "Richland, WA";
 
     document.getElementById("phone").value =
         "(555) 555-5555";
 
     document.getElementById("email").value =
-        "student@example.com";
+        "jordan@example.com";
 
     document.getElementById("summary").value =
-        "Motivated high school student with experience in technology, customer service, teamwork, and community involvement. Dependable, organized, and willing to learn new skills.";
+        "Organized and dependable professional with experience supporting customers, managing daily tasks, and working effectively with teams. Strong communication, organization, and problem-solving skills.";
 
     document.getElementById("skills").value =
-        "HTML, CSS, JavaScript, Customer Service, Communication, Teamwork";
-
-    document.getElementById("courses").value =
-        "Computer Science, English, Mathematics";
+        "Communication, Organization, Customer Service, Teamwork, Scheduling";
 
 
     addExperience({
 
-        title: "Student Worker",
+        title: "Administrative Assistant",
 
-        company: "Example School",
+        company: "Example Company",
 
-        date: "August 2025 – Present",
+        date: "2024 – Present",
 
         details:
-            "Assist students and staff during daily operations.\nMaintain a clean and organized work environment.\nWork effectively with other team members."
+            "Managed daily administrative tasks and scheduling.\nAssisted customers and responded to questions.\nMaintained organized records and documents."
 
     });
 
@@ -2027,37 +2259,84 @@ function loadExample() {
 
         company: "Community Organization",
 
-        date: "June 2024 – Present",
+        date: "2023 – Present",
 
         details:
-            "Assist with community events.\nHelp organize materials and activities.\nWork with volunteers and community members."
+            "Helped organize community events.\nAssisted visitors and participants.\nWorked with other volunteers to complete daily tasks."
 
     });
 
 
     addEducation({
 
-        school: "Example High School",
+        school: "Example College",
 
-        location: "Richland, Washington",
+        location: "Richland, WA",
 
-        grad: "2029",
+        degree: "Associate Degree",
 
-        gpa: "3.90 / 4.00"
+        grad: "2026",
+
+        extra: "Dean's List"
+
+    });
+
+
+    addAccomplishment({
+
+        category: "Achievement",
+
+        title: "Employee of the Month",
+
+        organization: "Example Company",
+
+        date: "2025",
+
+        description:
+            "Recognized for dependable performance and excellent customer service."
+
+    });
+
+
+    addAccomplishment({
+
+        category: "Certification",
+
+        title: "First Aid and CPR Certification",
+
+        organization: "Example Organization",
+
+        date: "2025",
+
+        description: ""
+
+    });
+
+
+    addAccomplishment({
+
+        category: "Award",
+
+        title: "Community Service Award",
+
+        organization: "Example Organization",
+
+        date: "2024",
+
+        description: ""
 
     });
 
 
     addReference({
 
-        name: "Example Reference",
+        name: "Alex Johnson",
 
         position: "Manager",
 
-        company: "Example Organization",
+        company: "Example Company",
 
-        text:
-            "This student is dependable, hardworking, and willing to learn."
+        contact: "alex@example.com"
 
     });
 
@@ -2066,9 +2345,9 @@ function loadExample() {
 }
 
 
-/* =========================================================
+/* =========================
    SAVE DATA
-   ========================================================= */
+   ========================= */
 
 function collectData() {
 
@@ -2105,8 +2384,7 @@ function collectData() {
         skills:
             document.getElementById("skills").value,
 
-        courses:
-            document.getElementById("courses").value,
+        accomplishments: [],
 
         references: []
 
@@ -2171,11 +2449,50 @@ function collectData() {
             location:
                 item.querySelector(".edu-location").value,
 
+            degree:
+                item.querySelector(".edu-degree").value,
+
             grad:
                 item.querySelector(".edu-grad").value,
 
-            gpa:
-                item.querySelector(".edu-gpa").value
+            extra:
+                item.querySelector(".edu-extra").value
+
+        });
+
+    });
+
+
+    document.querySelectorAll(
+        "#accomplishment-list .item"
+    ).forEach(item => {
+
+        data.accomplishments.push({
+
+            category:
+                item.querySelector(
+                    ".achievement-category"
+                ).value,
+
+            title:
+                item.querySelector(
+                    ".achievement-title"
+                ).value,
+
+            organization:
+                item.querySelector(
+                    ".achievement-organization"
+                ).value,
+
+            date:
+                item.querySelector(
+                    ".achievement-date"
+                ).value,
+
+            description:
+                item.querySelector(
+                    ".achievement-description"
+                ).value
 
         });
 
@@ -2197,8 +2514,8 @@ function collectData() {
             company:
                 item.querySelector(".ref-company").value,
 
-            text:
-                item.querySelector(".ref-text").value
+            contact:
+                item.querySelector(".ref-contact").value
 
         });
 
@@ -2209,9 +2526,9 @@ function collectData() {
 }
 
 
-/* =========================================================
+/* =========================
    DOWNLOAD JSON
-   ========================================================= */
+   ========================= */
 
 function downloadData() {
 
@@ -2233,9 +2550,7 @@ function downloadData() {
         document.createElement("a");
 
     link.href = url;
-
-    link.download =
-        "ResumeData.json";
+    link.download = "ResumeData.json";
 
     document.body.appendChild(link);
 
@@ -2247,9 +2562,9 @@ function downloadData() {
 }
 
 
-/* =========================================================
+/* =========================
    LOAD JSON
-   ========================================================= */
+   ========================= */
 
 function loadData(event) {
 
@@ -2260,10 +2575,8 @@ function loadData(event) {
         return;
     }
 
-
     const reader =
         new FileReader();
-
 
     reader.onload = function(e) {
 
@@ -2272,13 +2585,10 @@ function loadData(event) {
             const data =
                 JSON.parse(e.target.result);
 
-
             clearResumeWithoutConfirmation();
-
 
             const personal =
                 data.personal || {};
-
 
             document.getElementById("name").value =
                 personal.name || "";
@@ -2301,9 +2611,6 @@ function loadData(event) {
             document.getElementById("skills").value =
                 data.skills || "";
 
-            document.getElementById("courses").value =
-                data.courses || "";
-
 
             (data.experience || [])
                 .forEach(addExperience);
@@ -2314,23 +2621,23 @@ function loadData(event) {
             (data.education || [])
                 .forEach(addEducation);
 
+            (data.accomplishments || [])
+                .forEach(addAccomplishment);
+
             (data.references || [])
                 .forEach(addReference);
 
-
             updateResume();
-
 
         } catch (error) {
 
             alert(
-                "That file is not a valid Resume Maker file."
+                "That file is not a valid Resume Builder file."
             );
 
         }
 
     };
-
 
     reader.readAsText(file);
 
@@ -2338,12 +2645,12 @@ function loadData(event) {
 }
 
 
-/* =========================================================
+/* =========================
    FORM LISTENERS
-   ========================================================= */
+   ========================= */
 
 document.querySelectorAll(
-    "#name, #title, #location, #phone, #email, #summary, #skills, #courses"
+    "#name, #title, #location, #phone, #email, #summary, #skills"
 ).forEach(input => {
 
     input.addEventListener(
@@ -2354,11 +2661,9 @@ document.querySelectorAll(
 });
 
 
-/* =========================================================
-   IMPORTANT:
-   DO NOT LOAD EXAMPLE DATA AUTOMATICALLY.
-   PAGE STARTS COMPLETELY BLANK.
-   ========================================================= */
+/* =========================
+   START WITH BLANK RESUME
+   ========================= */
 
 updateResume();
 
@@ -2366,4 +2671,3 @@ updateResume();
 
 </body>
 </html>
-```
