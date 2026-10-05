@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profile - LocationApp</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body class="app-body">
+
+<header class="app-navbar">
+
+    <div class="logo">LocationApp</div>
+
+    <nav>
+        <a href="map.html">Map</a>
+        <a href="profile.html">Profile</a>
+        <a href="privacy.html">Privacy</a>
+        <button onclick="logout()" class="logout-button">
+            Logout
+        </button>
+    </nav>
+
+</header>
+
+<main class="settings-page">
+
+    <div class="settings-card">
+
+        <h1>My Profile</h1>
+
+        <div class="profile-avatar" id="profileAvatar">
+            ?
+        </div>
+
+        <h2 id="profileUsername">Username</h2>
+
+        <p class="muted">
+            Your account does not require a phone number or email.
+        </p>
+
+        <div class="profile-info">
+
+            <div>
+                <span>Username</span>
+                <strong id="profileUsername2"></strong>
+            </div>
+
+            <div>
+                <span>Location Sharing</span>
+                <strong id="profileLocationStatus">
+                    Off
+                </strong>
+            </div>
+
+        </div>
+
+        <a href="privacy.html" class="button secondary full">
+            Privacy Settings
+        </a>
+
+    </div>
+
+</main>
+
+<script src="app.js"></script>
+
+<script>
+    requireLogin();
+    loadProfile();
+</script>
+
+</body>
+</html>
