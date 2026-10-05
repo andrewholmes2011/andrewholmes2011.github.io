@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy - LocationApp</title>
+<link rel="stylesheet" href="aistyles.css">
+</head>
+<body class="app-body">
+<header class="app-navbar">
+<div class="logo"><span class="logo-mark">L</span> LocationApp</div>
+<nav class="app-nav">
+<a href="aimap.html">Map</a>
+<a href="aiprofile.html">Profile</a>
+<a href="aiprivacy.html">Privacy</a>
+<button onclick="logout()" class="logout-button">Logout</button>
+</nav>
+</header>
+
+<main class="settings-page">
+<div class="settings-card wide">
+<span class="badge">PRIVACY</span>
+<h1>Privacy Settings</h1>
+<p class="muted">Your location starts hidden. Choose exactly how much approximate location information you want to share.</p>
+
+<div class="setting">
+<div><h3>Show My Location</h3><p>Allow your approximate location to appear on the shared map.</p></div>
+<label class="switch"><input type="checkbox" id="locationToggle" onchange="savePrivacySettings()"><span class="slider"></span></label>
+</div>
+
+<div class="setting">
+<div><h3>Privacy Radius</h3><p>A larger radius means a larger possible offset from your real position.</p></div>
+<select id="privacyRadius" onchange="savePrivacySettings()">
+<option value="0.5">0.5 miles</option>
+<option value="1">1 mile</option>
+<option value="2">2 miles</option>
+<option value="5">5 miles</option>
+</select>
+</div>
+
+<div class="privacy-warning">
+<strong>Important</strong>
+<p>When sharing is turned off, this prototype removes your stored latitude and longitude from its local browser data and does not display your marker.</p>
+</div>
+
+<p id="privacyMessage" class="message" role="status"></p>
+</div>
+</main>
+
+<script src="aiapp.js"></script>
+<script>requireLogin(); loadPrivacySettings();</script>
+</body>
+</html>
