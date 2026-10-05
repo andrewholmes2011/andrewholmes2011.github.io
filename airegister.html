@@ -1,75 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account - LocationApp</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account - LocationApp</title>
+<link rel="stylesheet" href="aistyles.css">
 </head>
 <body>
-
 <div class="auth-page">
-
-    <div class="auth-card">
-
-        <a href="index.html" class="back">← Back</a>
-
-        <h1>Create account</h1>
-
-        <p class="muted">
-            No email or phone number required.
-        </p>
-
-        <form id="registerForm">
-
-            <label>Username</label>
-
-            <input
-                type="text"
-                id="registerUsername"
-                placeholder="Choose a username"
-                minlength="3"
-                maxlength="20"
-                required
-            >
-
-            <label>Password</label>
-
-            <input
-                type="password"
-                id="registerPassword"
-                placeholder="Create a password"
-                minlength="6"
-                required
-            >
-
-            <label>Confirm Password</label>
-
-            <input
-                type="password"
-                id="registerConfirm"
-                placeholder="Confirm your password"
-                required
-            >
-
-            <button type="submit" class="button primary full">
-                Create Account
-            </button>
-
-        </form>
-
-        <p id="registerMessage" class="message"></p>
-
-        <div class="auth-footer">
-            Already have an account?
-            <a href="login.html">Login</a>
-        </div>
-
-    </div>
-
+<div class="auth-card">
+<a href="aiindex.html" class="back">← Back</a>
+<div class="auth-brand">LocationApp</div>
+<h1>Create account</h1>
+<p class="muted">No email or phone number is required.</p>
+<form id="registerForm" autocomplete="on">
+<label for="registerUsername">Username</label>
+<input type="text" id="registerUsername" autocomplete="username" placeholder="Choose a username" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]+" required>
+<small class="field-help">3–20 characters: letters, numbers, and underscores.</small>
+<label for="registerPassword">Password</label>
+<input type="password" id="registerPassword" autocomplete="new-password" placeholder="Create a password" minlength="8" required>
+<label for="registerConfirm">Confirm Password</label>
+<input type="password" id="registerConfirm" autocomplete="new-password" placeholder="Confirm your password" minlength="8" required>
+<button type="submit" class="button primary full">Create Account</button>
+</form>
+<p id="registerMessage" class="message" role="alert"></p>
+<div class="auth-footer">Already have an account? <a href="ailogin.html">Login</a></div>
 </div>
-
-<script src="app.js"></script>
-
+</div>
+<script src="aiapp.js"></script>
 </body>
 </html>
