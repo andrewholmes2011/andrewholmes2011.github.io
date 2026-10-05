@@ -1,58 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - LocationApp</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - LocationApp</title>
+<link rel="stylesheet" href="aistyles.css">
 </head>
 <body>
-
 <div class="auth-page">
-
-    <div class="auth-card">
-
-        <a href="aiindex.html" class="back">← Back</a>
-
-        <h1>Welcome back</h1>
-        <p class="muted">Login to your LocationApp account.</p>
-
-        <form id="loginForm">
-
-            <label>Username</label>
-            <input
-                type="text"
-                id="loginUsername"
-                placeholder="Enter your username"
-                required
-            >
-
-            <label>Password</label>
-            <input
-                type="password"
-                id="loginPassword"
-                placeholder="Enter your password"
-                required
-            >
-
-            <button type="submit" class="button primary full">
-                Login
-            </button>
-
-        </form>
-
-        <p id="loginMessage" class="message"></p>
-
-        <div class="auth-footer">
-            Don't have an account?
-            <a href="register.html">Create one</a>
-        </div>
-
-    </div>
-
+<div class="auth-card">
+<a href="aiindex.html" class="back">← Back</a>
+<div class="auth-brand">LocationApp</div>
+<h1>Welcome back</h1>
+<p class="muted">Sign in with your username and password.</p>
+<form id="loginForm" autocomplete="on">
+<label for="loginUsername">Username</label>
+<input type="text" id="loginUsername" autocomplete="username" placeholder="Enter your username" minlength="3" maxlength="20" required>
+<label for="loginPassword">Password</label>
+<input type="password" id="loginPassword" autocomplete="current-password" placeholder="Enter your password" required>
+<button type="submit" class="button primary full">Login</button>
+</form>
+<p id="loginMessage" class="message" role="alert"></p>
+<div class="auth-footer">Don't have an account? <a href="airegister.html">Create one</a></div>
 </div>
-
-<script src="app.js"></script>
-
+</div>
+<script src="aiapp.js"></script>
 </body>
 </html>
