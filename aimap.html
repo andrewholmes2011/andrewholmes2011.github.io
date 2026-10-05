@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Map - LocationApp</title>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body class="app-body">
+
+<header class="app-navbar">
+
+    <div class="logo">LocationApp</div>
+
+    <nav>
+        <a href="map.html">Map</a>
+        <a href="profile.html">Profile</a>
+        <a href="privacy.html">Privacy</a>
+        <button onclick="logout()" class="logout-button">
+            Logout
+        </button>
+    </nav>
+
+</header>
+
+<main class="map-page">
+
+    <div class="map-header">
+
+        <div>
+            <h1>Nearby People</h1>
+            <p id="welcomeText">Loading...</p>
+        </div>
+
+        <div class="status-pill">
+            <span class="status-dot"></span>
+            Location protected
+        </div>
+
+    </div>
+
+    <div id="map"></div>
+
+    <div class="map-panel">
+
+        <h2>Your Location</h2>
+
+        <p id="locationStatus">
+            Location sharing is currently off.
+        </p>
+
+        <button
+            id="locationButton"
+            onclick="toggleLocation()"
+            class="button primary">
+            Turn On Location
+        </button>
+
+    </div>
+
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+
+<script>
+    requireLogin();
+    initializeMap();
+</script>
+
+</body>
+</html>
