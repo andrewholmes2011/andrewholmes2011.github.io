@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xtensr Code Decoder</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #0b1020;
+  --panel: #141c30;
+  --border: #293650;
+  --text: #f1f5f9;
+  --muted: #9eabc1;
+  --accent: #65a5ff;
+  --green: #4ade80;
+  --red: #fb7185;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 28px 16px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+}
+main { max-width: 850px; margin: auto; }
+header { margin-bottom: 24px; }
+h1 { margin: 0 0 8px; font-size: 30px; }
+p { line-height: 1.6; }
+.muted { color: var(--muted); }
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px;
+  margin-bottom: 18px;
+}
+label {
+  display: block;
+  font-weight: 650;
+  margin: 16px 0 8px;
+}
+label:first-child { margin-top: 0; }
+textarea, input {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  background: #0b1222;
+  color: var(--text);
+  font: inherit;
+}
+textarea { min-height: 130px; resize: vertical; }
+input:focus, textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+button, .link {
+  display: inline-block;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+button.primary { background: var(--accent); color: #071326; }
+button.secondary, .link {
+  background: #25334c;
+  color: var(--text);
+}
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.result {
+  border: 1px solid var(--border);
+  background: #0b1222;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+.match { color: var(--green); font-weight: 750; }
+.no-match { color: var(--red); font-weight: 750; }
+.code { font-family: ui-monospace, monospace; }
+.small { font-size: 13px; }
+footer { margin-top: 26px; text-align: center; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Xtensr Code Decoder</h1>
+    <p class="muted">
+      Check generated codes against a list of possible names using the
+      original Xtensr Incident Desk code algorithm.
+    </p>
+  </header>
+
+  <section class="panel">
+    <label for="codes">Code or codes</label>
+    <textarea id="codes" placeholder="Enter one code per line&#10;X1-1007-7ZEVJ5"></textarea>
+
+    <label for="names">Possible names</label>
+    <textarea id="names" placeholder="Enter one possible name per line&#10;Test Student&#10;Andy&#10;Alex Smith"></textarea>
+
+    <p class="muted small">
+      Each code is checked against every name you provide. The code contains
+      a chapter and month/day, so the decoder uses those values automatically.
+    </p>
+
+    <div class="actions">
+      <button class="primary" id="decodeButton">Find Matching Names</button>
+      <button class="secondary" id="clearButton">Clear</button>
+      <button class="secondary" id="copyButton">Copy Results</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Results</h2>
+    <p id="summary" class="muted">Enter codes and possible names to begin.</p>
+    <div id="results" aria-live="polite"></div>
+  </section>
+
+  <p class="muted small">
+    This page does not connect to a database or send names anywhere.
+    Matching is performed locally in your browser. A code cannot reveal a
+    name that was not included in the candidate list.
+  </p>
+
+  <footer>
+    <a class="link" href="index.html">Back to Incident Desk</a>
+    <a class="link" href="generate.html">Open Code Generator</a>
+  </footer>
+</main>
+
+<script>
+"use strict";
+
+const SALT = "xtensr-incident-desk-2026";
+const ALPHA = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+
+const normName = (s) =>
+  String(s)
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase()
+    .replace(/[^\p{L}]/gu, "");
+
+function fnv1a(str) {
+  let h = 0x811c9dc5;
+
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+
+  return h >>> 0;
+}
+
+function chapterCode(name, ch, mmdd) {
+  let h = fnv1a(`${SALT}|${normName(name)}|${ch}|${mmdd}`);
+  let s = "";
+
+  for (let i = 0; i < 6; i++) {
+    s += ALPHA[h & 31];
+    h >>>= 5;
+  }
+
+  return `X${ch}-${mmdd}-${s}`;
+}
+
+function parseCode(raw) {
+  const cleaned = String(raw)
+    .trim()
+    .toUpperCase()
+    .replace(/[\s-]/g, "");
+
+  const match = /^X([123])(\d{4})([2-9A-HJ-NP-Z]{6})$/.exec(cleaned);
+
+  if (!match) return null;
+
+  return {
+    original: String(raw).trim(),
+    normalized: cleaned,
+    chapter: Number(match[1]),
+    mmdd: match[2]
+  };
+}
+
+function findMatches(code, names) {
+  const matches = [];
+
+  for (const name of names) {
+    if (!normName(name)) continue;
+
+    const generated = chapterCode(name, code.chapter, code.mmdd)
+      .replace(/-/g, "");
+
+    if (generated === code.normalized) {
+      matches.push(name);
+    }
+  }
+
+  return matches;
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function decode() {
+  const rawCodes = document.getElementById("codes").value
+    .split(/\r?\n/)
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  const names = [...new Set(
+    document.getElementById("names").value
+      .split(/\r?\n/)
+      .map(s => s.trim())
+      .filter(Boolean)
+  )];
+
+  const results = document.getElementById("results");
+  const summary = document.getElementById("summary");
+
+  results.replaceChildren();
+
+  if (rawCodes.length === 0 || names.length === 0) {
+    summary.textContent = "Enter at least one code and one possible name.";
+    return;
+  }
+
+  let found = 0;
+  let invalid = 0;
+
+  for (const rawCode of rawCodes) {
+    const code = parseCode(rawCode);
+    const card = document.createElement("div");
+    card.className = "result";
+
+    if (!code) {
+      invalid++;
+
+      card.innerHTML = `
+        <div class="code">${escapeHTML(rawCode)}</div>
+        <p class="no-match">Invalid code format</p>
+        <p class="muted small">
+          Expected format: X1-1007-ABC234
+        </p>
+      `;
+
+      results.appendChild(card);
+      continue;
+    }
+
+    const matches = findMatches(code, names);
+
+    if (matches.length > 0) found++;
+
+    const matchHTML = matches.length
+      ? `<p class="match">${matches.length} matching name(s)</p>
+         <ul>${matches.map(name =>
+           `<li>${escapeHTML(name)}</li>`
+         ).join("")}</ul>`
+      : `<p class="no-match">No matching name found</p>
+         <p class="muted small">
+           None of the supplied names generated this code.
+         </p>`;
+
+    card.innerHTML = `
+      <div class="code">${escapeHTML(rawCode)}</div>
+      <p class="muted small">
+        Chapter X${code.chapter} · Date ${code.mmdd.slice(0, 2)}/${code.mmdd.slice(2)}
+      </p>
+      ${matchHTML}
+    `;
+
+    results.appendChild(card);
+  }
+
+  summary.textContent =
+    `Checked ${rawCodes.length} code(s) against ${names.length} possible name(s). ` +
+    `Matches: ${found}. Invalid codes: ${invalid}.`;
+}
+
+document.getElementById("decodeButton").addEventListener("click", decode);
+
+document.getElementById("clearButton").addEventListener("click", () => {
+  document.getElementById("codes").value = "";
+  document.getElementById("names").value = "";
+  document.getElementById("results").replaceChildren();
+  document.getElementById("summary").textContent =
+    "Enter codes and possible names to begin.";
+});
+
+document.getElementById("copyButton").addEventListener("click", async () => {
+  const summary = document.getElementById("summary").textContent;
+  const cards = [...document.querySelectorAll("#results .result")]
+    .map(card => card.innerText)
+    .join("\n\n");
+
+  const text = [summary, cards].filter(Boolean).join("\n\n");
+
+  if (!cards) {
+    alert("Run a code check before copying results.");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(text);
+    alert("Results copied.");
+  } catch {
+    const field = document.createElement("textarea");
+    field.value = text;
+    document.body.appendChild(field);
+    field.select();
+
+    const copied = document.execCommand("copy");
+    field.remove();
+
+    alert(copied ? "Results copied." : "Could not copy results.");
+  }
+});
+
+// Self-test against the original generator examples.
+console.assert(
+  chapterCode("Test Student", 1, "1007") === "X1-1007-7ZEVJ5",
+  "X1 compatibility test failed"
+);
+console.assert(
+  chapterCode("Test Student", 2, "1007") === "X2-1007-4RWUEV",
+  "X2 compatibility test failed"
+);
+console.assert(
+  chapterCode("Test Student", 3, "1007") === "X3-1007-5NMBT6",
+  "X3 compatibility test failed"
+);
+</script>
+</body>
+</html>
