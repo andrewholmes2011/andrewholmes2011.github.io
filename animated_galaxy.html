@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinematic Animated Galaxy</title>
+    <style>
+        body, html { margin: 0; padding: 0; overflow: hidden; background-color: #03020A; }
+        canvas { display: block; position: absolute; top: 0; left: 0; }
+    </style>
+</head>
+<body>
+    <canvas id="galaxyCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('galaxyCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        // Simulation parameters
+        const PARTICLE_COUNT = 5000;
+        const ARMS = 2;              
+        const BASE_SPEED = 0.0012;
+        const particles = [];
+        
+        // Animated Camera States
+        let cameraTime = 0;
+        let currentTilt = 72 * (Math.PI / 180);
+        let cameraRotation = 0;
+
+        class GalacticParticle {
+            constructor() {
+                this.isCore = Math.random() < 0.35; 
+                this.twinklePhase = Math.random() * Math.PI * 2;
+                this.twinkleSpeed = 0.02 + Math.random() * 0.04;
+                
+                if (this.isCore) {
+                    this.distance = Math.pow(Math.random(), 2) * (Math.min(width, height) * 0.14);
+                    this.angle = Math.random() * Math.PI * 2;
+                    this.baseAlpha = 0.4 + Math.random() * 0.6;
+                    this.r = 255;
+                    this.g = Math.floor(210 + Math.random() * 45);
+                    this.b = Math.floor(150 + Math.random() * 60);
+                    this.size = Math.random() * 2.0 + 0.6;
+                } else {
+                    this.distance = 30 + Math.pow(Math.random(), 1.8) * (Math.min(width, height) * 0.55);
+                    const armBaseAngle = (Math.floor(Math.random() * ARMS)) * (2 * Math.PI / ARMS);
+                    const spiralTightness = 0.014; 
+                    this.angle = armBaseAngle + (this.distance * spiralTightness);
+                    
+                    const dispersion = 40 * (1 - (this.distance / (Math.min(width, height) * 0.6)));
+                    this.angle += (Math.random() - 0.5) * (dispersion / (this.distance * 0.1 + 1));
+
+                    this.baseAlpha = 0.2 + Math.random() * 0.5;
+                    this.r = Math.floor(80 + Math.random() * 60);
+                    this.g = Math.floor(130 + Math.random() * 85);
+                    this.b = 255;
+                    this.size = Math.random() * 1.5 + 0.2;
+                }
+            }
+
+            update() {
+                // Orbital Physics: Inner stars travel faster than outer stars
+                const orbitalFriction = 14 / (this.distance * 0.07 + 4);
+                this.angle += BASE_SPEED * orbitalFriction;
+                
+                // Animate individual star twinkling
+                this.twinklePhase += this.twinkleSpeed;
+            }
+
+            draw(globalTilt, globalCamRot) {
+                // Combine the star's own orbital rotation with the moving camera rotation
+                let finalAngle = this.angle + globalCamRot;
+
+                // Calculate 2D coordinates before disk tilt
+                let x3d = Math.cos(finalAngle) * this.distance;
+                let y3d = Math.sin(finalAngle) * this.distance;
+
+                // Apply the dynamically changing 3D tilt
+                let x = x3d;
+                let y = y3d * Math.cos(globalTilt);
+
+                const screenX = width / 2 + x;
+                const screenY = height / 2 + y;
+
+                if (screenX < 0 || screenX > width || screenY < 0 || screenY > height) return;
+
+                // Calculate shifting alpha for cinematic twinkling
+                let currentAlpha = this.baseAlpha * (0.7 + Math.sin(this.twinklePhase) * 0.3);
+
+                ctx.beginPath();
+                ctx.arc(screenX, screenY, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${this.r}, ${this.g}, ${this.b}, ${currentAlpha})`;
+                ctx.fill();
+            }
+        }
+
+        // Populate system
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push(new GalacticParticle());
+        }
+
+        // Rendering Engine Loop
+        function render() {
+            // Motion blur trail layer
+            ctx.fillStyle = 'rgba(3, 2, 10, 0.08)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Advance cinematic camera variables over time
+            cameraTime += 0.002;
+            // Slowly swing tilt angle up and down between 68 and 76 degrees
+            currentTilt = (72 + Math.sin(cameraTime) * 4) * (Math.PI / 180);
+            // Slowly rotate the entire galaxy backdrop over time
+            cameraRotation += 0.0004;
+
+            // Dynamic core glow breathing value
+            let corePulse = 1.0 + Math.sin(cameraTime * 4) * 0.05;
+
+            // 1. Render Cinematic Nebula Dust
+            const gasGlow = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, Math.min(width, height) * 0.5);
+            gasGlow.addColorStop(0, 'rgba(35, 15, 70, 0.16)');  
+            gasGlow.addColorStop(0.4, 'rgba(10, 30, 60, 0.09)'); 
+            gasGlow.addColorStop(1, 'rgba(3, 2, 10, 0)');
+            ctx.fillStyle = gasGlow;
+            ctx.fillRect(0, 0, width, height);
+
+            // 2. Render Supermassive Pulsing Core Glow
+            ctx.save();
+            ctx.scale(1, Math.cos(currentTilt)); 
+            const coreGlow = ctx.createRadialGradient(width/2, (height/2) / Math.cos(currentTilt), 0, width/2, (height/2) / Math.cos(currentTilt), 65 * corePulse);
+            coreGlow.addColorStop(0, 'rgba(255, 252, 235, 0.85)');
+            coreGlow.addColorStop(0.25, 'rgba(255, 185, 60, 0.35)');
+            coreGlow.addColorStop(0.65, 'rgba(230, 90, 160, 0.12)');
+            coreGlow.addColorStop(1, 'rgba(3, 2, 10, 0)');
+            ctx.fillStyle = coreGlow;
+            ctx.beginPath();
+            ctx.arc(width/2, (height/2) / Math.cos(currentTilt), 65 * corePulse, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+
+            // 3. Render Simulated Space Stars
+            for (let particle of particles) {
+                particle.update();
+                particle.draw(currentTilt, cameraRotation);
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        render();
+    </script>
+</body>
+</html>
