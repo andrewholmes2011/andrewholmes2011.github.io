@@ -1,0 +1,787 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holiday Escape Room Printouts</title>
+
+<style>
+:root {
+  --green: #194b38;
+  --gold: #d2a94b;
+  --a: #c62828;
+  --b: #24834b;
+  --c: #2474c7;
+  --d: #c89b22;
+  --e: #8051b4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #edf1ed;
+  color: #252b27;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.25;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  background: #173f30;
+  color: white;
+}
+
+.toolbar label {
+  font-weight: bold;
+}
+
+.toolbar select,
+.toolbar button,
+.toolbar a {
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.toolbar select,
+.toolbar button {
+  cursor: pointer;
+}
+
+.toolbar button {
+  background: #f2d77b;
+  color: #222;
+  font-weight: bold;
+}
+
+.toolbar a {
+  background: white;
+  color: #173f30;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.page {
+  width: min(850px, calc(100% - 24px));
+  margin: 22px auto;
+  padding: 26px 32px;
+  background: white;
+  box-shadow: 0 4px 18px #0001;
+}
+
+.topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  border-bottom: 3px solid var(--green);
+  padding-bottom: 8px;
+}
+
+.small {
+  color: var(--green);
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+h1 {
+  margin: 3px 0;
+  color: var(--green);
+  font-size: 25px;
+}
+
+h2 {
+  margin: 7px 0 4px;
+  color: var(--green);
+  font-size: 16px;
+}
+
+h3 {
+  margin: 1px 0 3px;
+  font-size: 12px;
+}
+
+p {
+  margin: 4px 0;
+  font-size: 11px;
+}
+
+.name-line {
+  display: inline-block;
+  min-width: 100px;
+  height: 16px;
+  border-bottom: 1px solid #68766d;
+  vertical-align: bottom;
+}
+
+.instructions {
+  margin: 7px 0;
+  padding: 6px 8px;
+  border-left: 4px solid var(--gold);
+  background: #faf7eb;
+  font-size: 10px;
+}
+
+.section {
+  margin: 8px 0;
+}
+
+.puzzle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #d9dfd7;
+  border-radius: 5px;
+  padding: 5px 7px;
+  margin: 4px 0;
+  break-inside: avoid;
+  font-size: 11px;
+}
+
+.puzzle-content {
+  min-width: 0;
+}
+
+.scramble {
+  display: inline-block;
+  margin: 2px 4px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.answer-line {
+  display: inline-block;
+  min-width: 80px;
+  height: 16px;
+  border-bottom: 1px solid #68766d;
+  vertical-align: bottom;
+}
+
+.checkoff {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  white-space: nowrap;
+  font-size: 9px;
+}
+
+.check-box {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 1px solid #333;
+  flex-shrink: 0;
+}
+
+.initial-line {
+  display: inline-block;
+  width: 27px;
+  height: 14px;
+  border-bottom: 1px solid #333;
+  flex-shrink: 0;
+}
+
+.team-box {
+  padding: 4px 7px;
+  margin: 4px 0;
+  border-left: 4px solid var(--team);
+  background: #faf9f5;
+  break-inside: avoid;
+  font-size: 10px;
+}
+
+.team-box p {
+  margin: 2px 0;
+}
+
+.team-a { --team: var(--a); }
+.team-b { --team: var(--b); }
+.team-c { --team: var(--c); }
+.team-d { --team: var(--d); }
+.team-e { --team: var(--e); }
+
+.team-answer-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin-top: 3px;
+  font-size: 10px;
+}
+
+.final-scramble {
+  margin: 4px 0;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 4px;
+}
+
+.host-signature {
+  margin-top: 8px;
+  padding: 6px 8px;
+  border: 1.5px solid var(--green);
+  border-radius: 5px;
+  break-inside: avoid;
+  font-size: 10px;
+}
+
+.host-signature strong {
+  color: var(--green);
+  font-size: 12px;
+}
+
+.signature-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  margin-top: 5px;
+  font-size: 10px;
+}
+
+.signature-line {
+  display: inline-block;
+  width: 150px;
+  height: 15px;
+  border-bottom: 1px solid #333;
+}
+
+.date-line {
+  width: 60px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 7px;
+  padding-top: 4px;
+  border-top: 1px solid #ddd;
+  color: #6e786f;
+  font-size: 9px;
+}
+
+/* Teacher answer key */
+
+.teacher-page {
+  border: 2px solid var(--green);
+}
+
+.teacher-banner {
+  background: #173f30;
+  color: white;
+  padding: 7px 10px;
+  margin: 8px 0;
+  font-weight: bold;
+  font-size: 11px;
+  text-align: center;
+}
+
+.teacher-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.teacher-card {
+  border: 1px solid #d7dfd8;
+  border-radius: 5px;
+  padding: 7px 9px;
+  break-inside: avoid;
+}
+
+.teacher-card h2 {
+  font-size: 14px;
+  border-bottom: 1px solid #d9dfd7;
+  padding-bottom: 3px;
+}
+
+.answer-key {
+  margin: 4px 0;
+  font-size: 11px;
+}
+
+.answer-key strong {
+  color: var(--green);
+}
+
+.teacher-team {
+  border-left: 4px solid var(--team);
+  padding: 4px 7px;
+  margin: 4px 0;
+  background: #faf9f5;
+  font-size: 10px;
+}
+
+.teacher-team strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.teacher-warning {
+  font-size: 9px;
+  color: #7b2626;
+  text-align: center;
+  margin-top: 6px;
+}
+
+.team-box[hidden],
+.teacher-page[hidden],
+.student-page[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 20px 16px;
+  }
+
+  .toolbar {
+    flex-wrap: wrap;
+  }
+
+  .teacher-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@page {
+  size: letter portrait;
+  margin: 0.35in;
+}
+
+@media print {
+  html,
+  body {
+    width: 100%;
+    background: white;
+  }
+
+  .toolbar {
+    display: none !important;
+  }
+
+  .page {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .puzzle,
+  .team-box,
+  .host-signature,
+  .teacher-card {
+    break-inside: avoid;
+  }
+
+  .teacher-page {
+    border: 1.5px solid var(--green);
+  }
+
+  body.print-student .teacher-page {
+    display: none !important;
+  }
+
+  body.print-teacher .student-page {
+    display: none !important;
+  }
+
+  body.print-teacher .teacher-page {
+    display: block !important;
+  }
+
+  .teacher-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+</style>
+</head>
+
+<body class="print-student">
+
+<div class="toolbar">
+  <a href="slideshow.html">← Back to Slideshow</a>
+
+  <label for="teamChoice">Student worksheet:</label>
+
+  <select id="teamChoice">
+    <option value="all">All Teams</option>
+    <option value="A">Team A</option>
+    <option value="B">Team B</option>
+    <option value="C">Team C</option>
+    <option value="D">Team D</option>
+    <option value="E">Team E</option>
+  </select>
+
+  <button id="printStudent" type="button">
+    Print Student Worksheet
+  </button>
+
+  <button id="printTeacher" type="button">
+    Print Teacher Copy (1 Page)
+  </button>
+</div>
+
+<!-- STUDENT WORKSHEET -->
+
+<section class="page student-page" id="studentPage">
+
+  <div class="topline">
+    <div>
+      <div class="small">Classroom Holiday Adventure</div>
+      <h1>Holiday Escape Room</h1>
+    </div>
+
+    <div style="text-align:right;font-size:10px">
+      Date: <span class="name-line" style="min-width:70px"></span>
+      <br>
+      Team: <span class="name-line" id="teamLabel"
+                  style="min-width:70px"></span>
+    </div>
+  </div>
+
+  <p>
+    <strong>Student name(s):</strong>
+    <span class="name-line" style="min-width:65%"></span>
+  </p>
+
+  <div class="instructions">
+    <strong>Instructions:</strong>
+    Solve each challenge with your team. Write each answer in the space
+    provided. Leave checkoff boxes and initials spaces blank for the host.
+  </div>
+
+  <div class="section">
+    <h2>Challenge 1 · Guess the Christmas Movie</h2>
+
+    <div class="puzzle">
+      <div class="puzzle-content">
+        <strong>Puzzle 1</strong> · 🏠 👦 🪤
+        <span class="scramble">E O N A E M L H O</span>
+        <br>
+        Answer: <span class="answer-line"></span>
+      </div>
+      <div class="checkoff">
+        Checked <span class="check-box"></span>
+        Initials <span class="initial-line"></span>
+      </div>
+    </div>
+
+    <div class="puzzle">
+      <div class="puzzle-content">
+        <strong>Puzzle 2</strong> · 🧝 🎅 🏙️
+        <span class="scramble">L E F</span>
+        <br>
+        Answer: <span class="answer-line"></span>
+      </div>
+      <div class="checkoff">
+        Checked <span class="check-box"></span>
+        Initials <span class="initial-line"></span>
+      </div>
+    </div>
+
+    <div class="puzzle">
+      <div class="puzzle-content">
+        <strong>Puzzle 3</strong> · 🚂 ❄️ 🎅
+        <span class="scramble">E L R E S P O R S P H E T A X</span>
+        <br>
+        Answer: <span class="answer-line"></span>
+      </div>
+      <div class="checkoff">
+        Checked <span class="check-box"></span>
+        Initials <span class="initial-line"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Challenge 2 · The Frozen Message</h2>
+
+    <div class="puzzle">
+      <div class="puzzle-content">
+        Unscramble
+        <strong class="scramble">R I T W N E</strong>
+        <br>
+        Secret word: <span class="answer-line"></span>
+      </div>
+      <div class="checkoff">
+        Checked <span class="check-box"></span>
+        Initials <span class="initial-line"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Challenge 3 · Holiday Story Clue</h2>
+    <p>Read the clue assigned to your team and identify the book or movie.</p>
+
+    <div class="team-box team-a">
+      <h3>Team A · A Holiday Classic</h3>
+      <p>An old-fashioned holiday story features a bitter, wealthy man who dislikes Christmas.</p>
+      <div class="team-answer-row">
+        Answer: <span class="answer-line"></span>
+        <span class="checkoff">
+          Checked <span class="check-box"></span>
+          Initials <span class="initial-line"></span>
+        </span>
+      </div>
+    </div>
+
+    <div class="team-box team-b">
+      <h3>Team B · The Lost Child</h3>
+      <p>A young boy is accidentally left behind when his family leaves for a holiday trip. He must protect his home.</p>
+      <div class="team-answer-row">
+        Answer: <span class="answer-line"></span>
+        <span class="checkoff">
+          Checked <span class="check-box"></span>
+          Initials <span class="initial-line"></span>
+        </span>
+      </div>
+    </div>
+
+    <div class="team-box team-c">
+      <h3>Team C · The Magical Train Ride</h3>
+      <p>A mysterious train carries children through a snowy night on a memorable Christmas journey.</p>
+      <div class="team-answer-row">
+        Answer: <span class="answer-line"></span>
+        <span class="checkoff">
+          Checked <span class="check-box"></span>
+          Initials <span class="initial-line"></span>
+        </span>
+      </div>
+    </div>
+
+    <div class="team-box team-d">
+      <h3>Team D · The Christmas Scrooge</h3>
+      <p>A grouchy character tries to stop a joyful Christmas celebration in a story full of holiday spirit.</p>
+      <div class="team-answer-row">
+        Answer: <span class="answer-line"></span>
+        <span class="checkoff">
+          Checked <span class="check-box"></span>
+          Initials <span class="initial-line"></span>
+        </span>
+      </div>
+    </div>
+
+    <div class="team-box team-e">
+      <h3>Team E · The Red-Nosed Reindeer</h3>
+      <p>A famous reindeer with a glowing nose helps guide Santa's sleigh through a foggy Christmas Eve.</p>
+      <div class="team-answer-row">
+        Answer: <span class="answer-line"></span>
+        <span class="checkoff">
+          Checked <span class="check-box"></span>
+          Initials <span class="initial-line"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Challenge 4 · Final Puzzle — Save the Holidays!</h2>
+
+    <div class="puzzle">
+      <div class="puzzle-content">
+        <div class="final-scramble">H L O N T E P R O</div>
+        <p>
+          Final location:
+          <span class="answer-line" style="min-width:130px"></span>
+        </p>
+      </div>
+      <div class="checkoff">
+        Checked <span class="check-box"></span>
+        Initials <span class="initial-line"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="host-signature">
+    <strong>Host Verification</strong>
+    <p>
+      Review each answer, check its box, and initial every response before
+      signing off.
+    </p>
+    <div class="signature-row">
+      Host signature: <span class="signature-line"></span>
+      Date: <span class="signature-line date-line"></span>
+    </div>
+    <div class="signature-row">
+      All answers checked: <span class="check-box"></span>
+      Team completed: <span class="check-box"></span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Holiday Escape Room · Student Worksheet</span>
+    <span>US Letter</span>
+  </div>
+</section>
+
+<!-- SEPARATE ONE-PAGE TEACHER COPY -->
+
+<section class="page teacher-page" id="teacherPage" hidden>
+
+  <div class="topline">
+    <div>
+      <div class="small">Host / Teacher Reference</div>
+      <h1>Holiday Escape Room — Answer Key</h1>
+    </div>
+    <div style="text-align:right;font-size:10px">
+      Date: <span class="name-line" style="min-width:70px"></span>
+      <br>
+      Teacher: <span class="name-line" style="min-width:70px"></span>
+    </div>
+  </div>
+
+  <div class="teacher-banner">
+    TEACHER COPY · ANSWERS INCLUDED · KEEP FROM STUDENTS
+  </div>
+
+  <div class="teacher-grid">
+
+    <div class="teacher-card">
+      <h2>Challenge 1 · Christmas Movies</h2>
+      <p class="answer-key"><strong>Puzzle 1:</strong> Home Alone</p>
+      <p class="answer-key"><strong>Puzzle 2:</strong> Elf</p>
+      <p class="answer-key"><strong>Puzzle 3:</strong> The Polar Express</p>
+    </div>
+
+    <div class="teacher-card">
+      <h2>Challenge 2 · Frozen Message</h2>
+      <p class="answer-key"><strong>Scrambled letters:</strong> R I T W N E</p>
+      <p class="answer-key"><strong>Answer:</strong> WINTER</p>
+    </div>
+
+    <div class="teacher-card" style="grid-column:1 / -1">
+      <h2>Challenge 3 · Team Story Clues</h2>
+
+      <div class="teacher-team" style="--team:var(--a)">
+        <strong>Team A — A Christmas Carol</strong>
+        Charles Dickens's holiday story about Ebenezer Scrooge.
+      </div>
+
+      <div class="teacher-team" style="--team:var(--b)">
+        <strong>Team B — Home Alone</strong>
+        A boy is accidentally left behind and protects his house.
+      </div>
+
+      <div class="teacher-team" style="--team:var(--c)">
+        <strong>Team C — The Polar Express</strong>
+        A magical train takes children on a Christmas Eve journey.
+      </div>
+
+      <div class="teacher-team" style="--team:var(--d)">
+        <strong>Team D — How the Grinch Stole Christmas</strong>
+        The Grinch tries to ruin Christmas for the Whos.
+      </div>
+
+      <div class="teacher-team" style="--team:var(--e)">
+        <strong>Team E — Rudolph the Red-Nosed Reindeer</strong>
+        Rudolph's glowing nose helps guide Santa's sleigh.
+      </div>
+    </div>
+
+    <div class="teacher-card">
+      <h2>Challenge 4 · Final Puzzle</h2>
+      <p class="answer-key"><strong>Scrambled letters:</strong> H L O N T E P R O</p>
+      <p class="answer-key"><strong>Answer:</strong> NORTH POLE</p>
+    </div>
+
+    <div class="teacher-card">
+      <h2>Checking & Completion</h2>
+      <p class="answer-key">
+        Check each team's responses individually on the student sheet.
+        Initial each checked answer and sign the verification area after
+        the team's work is reviewed.
+      </p>
+      <p class="answer-key">
+        <strong>Teacher initials:</strong>
+        <span class="name-line"></span>
+      </p>
+      <p class="answer-key">
+        <strong>Date:</strong>
+        <span class="name-line" style="min-width:100px"></span>
+      </p>
+    </div>
+
+  </div>
+
+  <p class="teacher-warning">
+    CONFIDENTIAL TEACHER COPY — ANSWERS ARE VISIBLE ON THIS PAGE.
+  </p>
+
+  <div class="footer">
+    <span>Holiday Escape Room · Teacher Answer Key</span>
+    <span>One-page reference · US Letter</span>
+  </div>
+</section>
+
+<script>
+const teamChoice = document.getElementById("teamChoice");
+const teamClues = [
+  ...document.querySelectorAll(".student-page .team-box")
+];
+const teamLabel = document.getElementById("teamLabel");
+const studentPage = document.getElementById("studentPage");
+const teacherPage = document.getElementById("teacherPage");
+
+function applyTeamSelection() {
+  const selected = teamChoice.value;
+
+  teamLabel.textContent =
+    selected === "all" ? "________" : "Team " + selected;
+
+  teamClues.forEach(clue => {
+    const letter = ["A", "B", "C", "D", "E"].find(team =>
+      clue.classList.contains("team-" + team.toLowerCase())
+    );
+
+    clue.hidden = selected !== "all" && letter !== selected;
+  });
+}
+
+teamChoice.addEventListener("change", applyTeamSelection);
+
+document.getElementById("printStudent").addEventListener("click", () => {
+  document.body.className = "print-student";
+  studentPage.hidden = false;
+  teacherPage.hidden = true;
+  window.print();
+});
+
+document.getElementById("printTeacher").addEventListener("click", () => {
+  document.body.className = "print-teacher";
+  studentPage.hidden = true;
+  teacherPage.hidden = false;
+  window.print();
+});
+
+window.addEventListener("afterprint", () => {
+  document.body.className = "print-student";
+  studentPage.hidden = false;
+  teacherPage.hidden = true;
+});
+
+applyTeamSelection();
+</script>
+
+</body>
+</html>

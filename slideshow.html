@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Holiday Escape Room</title>
+<style>
+:root{
+  --bg:#102b24;--green:#194b38;--red:#b93e4b;--gold:#f3ce83;
+  --cream:#fff8eb;--ink:#203c31;
+  --a:#b83c48;--b:#24805b;--c:#367ca9;--d:#a66a20;--e:#8061a7;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:var(--bg)}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--cream)}
+#slides{
+ height:100vh;height:100dvh;overflow-y:auto;scroll-snap-type:y mandatory;
+ scrollbar-width:none;scroll-behavior:smooth;overscroll-behavior-y:contain
+}
+#slides::-webkit-scrollbar{display:none}
+.slide{
+ min-height:100vh;min-height:100dvh;scroll-snap-align:start;
+ scroll-snap-stop:always;position:relative;display:flex;align-items:center;
+ justify-content:center;padding:clamp(24px,5vw,70px);overflow:hidden
+}
+.content{width:min(1150px,100%);margin:auto;position:relative;z-index:2}
+.center{text-align:center}
+h1,h2{font-family:Georgia,'Times New Roman',serif;font-weight:500}
+h1{font-size:clamp(45px,9vw,112px);line-height:1;margin:0 0 24px}
+h2{font-size:clamp(34px,5.5vw,65px);line-height:1.08;margin:0 0 20px}
+h3{font-size:clamp(17px,2vw,24px);margin:0 0 12px}
+p{font-size:clamp(15px,1.8vw,21px);line-height:1.65}
+.eyebrow{font-size:12px;letter-spacing:4px;text-transform:uppercase;font-weight:bold;color:var(--gold);margin-bottom:24px}
+.subtitle{max-width:780px;margin:0 auto;line-height:1.7}
+.gold{color:var(--gold)}
+.rule{width:75px;height:4px;border-radius:5px;background:var(--gold);margin:25px auto}
+.cover{background:radial-gradient(ellipse at 75% 40%,#34684c,transparent 38%),linear-gradient(140deg,#0c2921,#1c503a 60%,#102b24)}
+.cover:before{content:"❄";position:absolute;right:-3%;top:-18%;font-size:clamp(250px,55vw,650px);color:#ffffff08}
+.cover-icon{font-size:clamp(90px,15vw,160px);margin-bottom:18px}
+.cover h1 span{color:var(--gold)}
+.print-trigger{position:absolute;top:18px;left:18px;z-index:5;width:46px;height:46px;display:grid;place-items:center;text-decoration:none;border:1px solid #f3ce8377;border-radius:50%;background:#ffffff0a;color:var(--gold);font-size:22px;cursor:pointer}
+.host-trigger{position:absolute;top:18px;right:18px;z-index:5;width:46px;height:46px;border:1px solid #f3ce8377;border-radius:50%;background:#ffffff0a;color:var(--gold);font-size:22px;cursor:pointer}
+.intro{background:#a93443}
+.rules{background:var(--cream);color:var(--ink)}
+.teams{background:#164633}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.rules-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px;margin-top:35px}
+.team-card{border:1px solid #ffffff40;border-radius:16px;padding:22px;text-align:center;background:#ffffff09}
+.team-card .emoji{font-size:35px;margin-bottom:8px}
+.team-card h3{margin:0 0 12px}
+.team-members{font-size:14px;line-height:1.8;overflow-wrap:anywhere}
+.team-a{--team:var(--a)}
+.team-b{--team:var(--b)}
+.team-c{--team:var(--c)}
+.team-d{--team:var(--d)}
+.team-e{--team:var(--e)}
+.color-card{border-top:5px solid var(--team);background:#ffffff0b;border-radius:14px;padding:22px}
+.color-tag{display:inline-block;border-radius:99px;background:var(--team);color:white;padding:7px 12px;font-size:11px;font-weight:bold;letter-spacing:1px;margin-bottom:15px}
+.puzzles{background:radial-gradient(ellipse at center,#27573e,transparent 70%),#102b24}
+.puzzle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:32px}
+.puzzle-card{border:1px solid #ffffff38;background:#ffffff08;border-radius:18px;padding:23px 12px;text-align:center}
+.puzzle-number{font-size:11px;letter-spacing:2px;color:var(--gold)}
+.puzzle-emojis{font-size:clamp(40px,7vw,80px);margin:22px 0}
+.puzzle-card p{font-size:15px}
+.scrambled{font-family:Georgia,serif;font-size:clamp(14px,1.7vw,20px);letter-spacing:2px;line-height:1.8;overflow-wrap:anywhere;color:var(--gold);font-weight:bold;margin:14px 0}
+.book-card .scrambled{color:#45372a;font-size:15px;letter-spacing:1px}
+.frozen{background:#dceef5;color:#183c4d}
+.frozen .eyebrow{color:#347f9e}
+.message{background:#f7fcff;border:1px solid #b6d7e6;border-radius:18px;padding:clamp(20px,4vw,45px);margin:25px auto;max-width:850px}
+.cipher{font:clamp(25px,5vw,54px) Georgia,serif;letter-spacing:clamp(3px,1.5vw,13px);color:#246783;overflow-wrap:anywhere;line-height:1.8}
+.books{background:#eee4ce;color:#45372a}
+.book-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:30px}
+.book-card{border-radius:15px;background:#ffffffa3;border:1px solid #ffffff;padding:22px}
+.book-card .icon{font-size:48px;margin-bottom:12px}
+.book-card p{font-size:15px}
+.book-card .color-tag{color:white}
+.final-puzzle{background:radial-gradient(ellipse at center,#27533e,transparent 70%),#102b24}
+.code-boxes{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:32px 0}
+.code-box{width:clamp(52px,8vw,90px);height:clamp(65px,9vw,100px);border:2px solid var(--gold);border-radius:12px;display:grid;place-items:center;color:var(--gold);font:clamp(25px,4vw,45px) Georgia,serif}
+.winners{background:radial-gradient(ellipse at center,#376f4b,transparent 70%),#14392b}
+.trophy{font-size:clamp(90px,17vw,180px);margin:15px 0}
+.winners h1{color:var(--gold)}
+.answers{background:#f5eddf;color:#263d31}
+.answer-lock{max-width:600px;margin:25px auto;padding:25px;background:white;border-radius:15px;border:1px solid #ded7c8}
+.answer-lock input{width:100%;padding:14px;border:1px solid #c9d0c5;border-radius:9px;font-size:16px;margin:12px 0}
+.answer-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:25px}
+.answer-item{border-left:5px solid var(--team);padding:15px;background:white;border-radius:8px}
+.answer-item p{font-size:15px;margin:8px 0}
+button{font:inherit;cursor:pointer}
+.primary{background:var(--green);color:white;border:0;border-radius:9px;padding:13px 18px}
+.snow{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.flake{position:absolute;top:-20px;color:white;opacity:.4;animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+[hidden]{display:none!important}
+.host-overlay{position:fixed;inset:0;z-index:1000;background:#071b16eF;display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
+.host-modal{width:min(560px,100%);max-height:92vh;overflow-y:auto;background:var(--cream);color:var(--ink);border-radius:18px;padding:27px;position:relative}
+.host-close{position:absolute;right:12px;top:8px;background:none;border:0;font-size:30px;color:var(--green)}
+.host-modal h2{font-size:33px;margin:10px 0}
+.host-muted{font-size:13px;color:#68786c}
+.host-modal label{display:block;font-size:13px;font-weight:bold;margin:16px 0 7px}
+.host-modal input:not([type=checkbox]),.host-modal select{width:100%;padding:11px;border:1px solid #cbd4c7;border-radius:8px;font:inherit;background:white}
+.host-modal button:not(.host-close){border:1px solid #ccd5ca;border-radius:8px;padding:9px;background:white;color:var(--green)}
+.host-modal .primary{width:100%;margin-top:14px;background:var(--green)!important;color:white!important;border:0!important;padding:13px!important}
+.host-toolbar,.host-add{display:flex;gap:8px;margin:12px 0}
+.host-add input{flex:1;min-width:0}
+.host-roster{display:grid;gap:7px;max-height:230px;overflow:auto}
+.host-student{display:flex;align-items:center;gap:10px;background:white;border:1px solid #e0e4da;border-radius:8px;padding:9px}
+.host-student span{flex:1;overflow-wrap:anywhere}
+@media(max-width:650px){
+ .slide{padding:25px 19px}
+ .puzzle-grid{grid-template-columns:1fr}
+ .puzzle-card{padding:12px}
+ .puzzle-emojis{margin:10px 0}
+ .book-grid,.answer-list{grid-template-columns:1fr}
+ .team-card{padding:15px 8px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div id="slides">
+
+<section class="slide cover">
+ <div class="snow"></div>
+ <a class="print-trigger" href="slideshowprintout.html" aria-label="Open student printouts" title="Student printouts">🎄</a>
+ <button class="host-trigger" id="openHost" aria-label="Open host controls" title="Host controls">❄</button>
+ <div class="content center">
+  <div class="eyebrow">A Classroom Holiday Adventure</div>
+  <div class="cover-icon">🎄</div>
+  <h1>THE HOLIDAY<br><span>ESCAPE ROOM</span></h1>
+  <div class="rule"></div>
+  <p class="subtitle">One mission. Mysterious clues. A race to save the holidays.</p>
+  <p class="gold" style="letter-spacing:3px;margin-top:35px">THINK · SOLVE · ESCAPE</p>
+ </div>
+</section>
+
+<section class="slide intro">
+ <div class="content center">
+  <div class="eyebrow">Your Mission Begins</div>
+  <h2>Something Has Gone<br>Wrong at the North Pole.</h2>
+  <div style="font-size:clamp(70px,13vw,140px);margin:20px">🎁🔒</div>
+  <p class="subtitle">The holiday celebration is in danger! Solve the mysterious challenges, collect your answers, and complete the final puzzle.</p>
+  <p class="subtitle gold">Can your team save the holidays?</p>
+ </div>
+</section>
+
+<section class="slide rules">
+ <div class="content">
+  <div class="eyebrow" style="color:#a93443">Before You Begin</div>
+  <h2>THE RULES</h2><div class="rule" style="margin-left:0;background:#a93443"></div>
+  <div class="grid rules-grid">
+   <div><h3>01 · Work Together</h3><p>Share ideas and let everyone participate.</p></div>
+   <div><h3>02 · Think Carefully</h3><p>Read every clue before deciding on an answer.</p></div>
+   <div><h3>03 · Record Answers</h3><p>Keep track of your team's answers on your answer sheet.</p></div>
+   <div><h3>04 · Stay Respectful</h3><p>Do not shout answers to other teams.</p></div>
+   <div><h3>05 · Follow Directions</h3><p>Complete the challenges in the order given.</p></div>
+   <div><h3>06 · Have Fun!</h3><p>Be creative and enjoy the holiday adventure.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide teams" id="teamsSlide">
+ <div class="content center">
+  <div class="eyebrow">Choose Your Crew</div><h2>MEET YOUR TEAMS</h2>
+  <p class="subtitle">Find your name and get ready to solve the clues.</p>
+  <div class="grid" style="margin-top:30px">
+   <div class="team-card team-a" id="teamCardA"><div class="emoji">🎅</div><h3>TEAM A</h3><div class="team-members" id="membersA">The North Pole Crew</div></div>
+   <div class="team-card team-b" id="teamCardB"><div class="emoji">🦌</div><h3>TEAM B</h3><div class="team-members" id="membersB">The Reindeer Squad</div></div>
+   <div class="team-card team-c" id="teamCardC"><div class="emoji">⛄</div><h3>TEAM C</h3><div class="team-members" id="membersC">The Snowstorm Solvers</div></div>
+   <div class="team-card team-d" id="teamCardD"><div class="emoji">🎄</div><h3>TEAM D</h3><div class="team-members" id="membersD">The Evergreen Experts</div></div>
+   <div class="team-card team-e" id="teamCardE" hidden><div class="emoji">❄️</div><h3>TEAM E</h3><div class="team-members" id="membersE">The Frostbite Force</div></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide puzzles">
+ <div class="content center">
+  <div class="eyebrow">Challenge 01 · Three Puzzles</div>
+  <h2>GUESS THE CHRISTMAS MOVIE</h2>
+  <p class="subtitle">Solve all three emoji puzzles. No hints are provided.</p>
+  <div class="puzzle-grid">
+   <div class="puzzle-card"><div class="puzzle-number">PUZZLE 01</div><div class="puzzle-emojis">🏠 👦 🪤</div><div class="scrambled">E O N A E M L H O</div><p>Unscramble the title.</p></div>
+   <div class="puzzle-card"><div class="puzzle-number">PUZZLE 02</div><div class="puzzle-emojis">🧝 🎅 🏙️</div><div class="scrambled">L E F</div><p>Unscramble the title.</p></div>
+   <div class="puzzle-card"><div class="puzzle-number">PUZZLE 03</div><div class="puzzle-emojis">🚂 ❄️ 🎅</div><div class="scrambled">E L R E S P O R S P H E T A X</div><p>Unscramble the title.</p></div>
+  </div>
+  <p class="gold" style="margin-top:30px">Teams: discuss, decide, and record!</p>
+ </div>
+</section>
+
+<section class="slide frozen">
+ <div class="content center">
+  <div class="eyebrow">Challenge 02 · Secret Message</div>
+  <h2>THE FROZEN MESSAGE</h2>
+  <p class="subtitle">A mysterious message was found beneath the ice.</p>
+  <div class="message">
+   <div class="eyebrow" style="color:#347f9e">Encrypted Message</div>
+   <div class="cipher">R I T W N E</div>
+   <div class="rule" style="background:#347f9e"></div>
+   <p>Unscramble the letters to discover the hidden word.</p>
+  </div>
+  <p>Write your answer on your team's answer sheet.</p>
+ </div>
+</section>
+
+<section class="slide books">
+ <div class="content">
+  <div class="eyebrow" style="color:#91652e">Challenge 03 · Team Book & Movie Clues</div>
+  <h2>FIND THE BOOK OR MOVIE</h2>
+  <p>Each team receives a different holiday story clue. Identify the title without hints.</p>
+  <div class="book-grid">
+   <article class="book-card team-a" id="bookA">
+    <span class="color-tag">TEAM A</span><div class="icon">👻📖</div>
+    <h3>Fragment 01</h3><div class="scrambled">A A M O C R A T S C L R H I S</div>
+    <p>A lonely miser is visited by supernatural figures who force him to reconsider his past, present, and future.</p>
+    <p><strong>Task:</strong> Identify the story.</p>
+   </article>
+   <article class="book-card team-b" id="bookB">
+    <span class="color-tag">TEAM B</span><div class="icon">🏠🧒</div>
+    <h3>Fragment 02</h3><div class="scrambled">L N O M A H E O E</div>
+    <p>A child must outsmart two intruders after an unexpected family travel mishap.</p>
+    <p><strong>Task:</strong> Identify the movie.</p>
+   </article>
+   <article class="book-card team-c" id="bookC">
+    <span class="color-tag">TEAM C</span><div class="icon">🚂❄️</div>
+    <h3>Fragment 03</h3><div class="scrambled">E E L S P R A E O S T H R P X</div>
+    <p>A late-night journey tests a child's belief during a winter celebration.</p>
+    <p><strong>Task:</strong> Identify the story.</p>
+   </article>
+   <article class="book-card team-d" id="bookD">
+    <span class="color-tag">TEAM D</span><div class="icon">🎄💚</div>
+    <h3>Fragment 04</h3><div class="scrambled">S S T N H O O H L T R C H S E C R M W I G T A E H I</div>
+    <p>A bitter green outsider plans to ruin a village's celebration, but discovers something unexpected.</p>
+    <p><strong>Task:</strong> Identify the story.</p>
+   </article>
+   <article class="book-card team-e" id="bookE" hidden>
+    <span class="color-tag">TEAM E</span><div class="icon">🦌🌟</div>
+    <h3>Fragment 05</h3><div class="scrambled">E T R N P U D E N E E E E O D H L O D S I R R D R H</div>
+    <p>An overlooked member of Santa's team becomes essential when visibility is poor.</p>
+    <p><strong>Task:</strong> Identify the story.</p>
+   </article>
+  </div>
+ </div>
+</section>
+
+<section class="slide final-puzzle">
+ <div class="content center">
+  <div class="eyebrow">Challenge 04 · Final Puzzle</div>
+  <h2>SOLVE THE PUZZLE</h2>
+  <p class="subtitle">Rearrange every letter to discover the holiday location. Use each letter exactly once.</p>
+  <div class="code-boxes"><div class="code-box">H</div><div class="code-box">L</div><div class="code-box">O</div><div class="code-box">N</div><div class="code-box">T</div><div class="code-box">E</div><div class="code-box">P</div><div class="code-box">R</div><div class="code-box">O</div></div>
+  <p class="gold">Present your team's completed answers to the host.</p>
+ </div>
+</section>
+
+<section class="slide winners">
+ <div class="content center">
+  <div class="eyebrow">Mission Complete</div>
+  <div class="trophy">🏆</div>
+  <h1>THE<br>WINNERS!</h1>
+  <div style="font-size:35px;letter-spacing:8px">✦ 🎄 ✦</div>
+  <p class="subtitle">The clues have been solved. The holiday mystery is complete!</p>
+  <div class="rule"></div>
+  <p class="gold" style="font-size:clamp(22px,4vw,38px)">Congratulations, Escape Artists!</p>
+  <p>Happy Holidays!</p>
+ </div>
+</section>
+
+<section class="slide answers" id="answerSlide">
+ <div class="content center">
+  <div class="eyebrow" style="color:#a16e2e">Host Only · Restricted</div>
+  <h2>ANSWER KEY</h2>
+  <p class="subtitle">This slide is locked. Enter the host passcode to reveal the answers.</p>
+  <div class="answer-lock" id="answerLock">
+   <div style="font-size:45px">🔐</div>
+   <label for="answerCode">Host passcode</label>
+   <input id="answerCode" type="password" placeholder="Enter passcode" autocomplete="off">
+   <button class="primary" id="unlockAnswers">Reveal Answer Key</button>
+   <p id="answerMessage" role="status" class="host-muted"></p>
+  </div>
+  <div id="answerContent" hidden>
+   <p><strong>Host answer key</strong></p>
+   <div class="answer-list">
+    <div class="answer-item team-a"><strong>Emoji Puzzle 1</strong><p>Home Alone</p></div>
+    <div class="answer-item team-b"><strong>Emoji Puzzle 2</strong><p>Elf</p></div>
+    <div class="answer-item team-c"><strong>Emoji Puzzle 3</strong><p>The Polar Express</p></div>
+    <div class="answer-item team-d"><strong>Frozen Message</strong><p>WINTER — unscramble R I T W N E.</p></div>
+    <div class="answer-item team-a"><strong>Team A</strong><p>A Christmas Carol</p></div>
+    <div class="answer-item team-b"><strong>Team B</strong><p>Home Alone</p></div>
+    <div class="answer-item team-c"><strong>Team C</strong><p>The Polar Express</p></div>
+    <div class="answer-item team-d"><strong>Team D</strong><p>How the Grinch Stole Christmas</p></div>
+    <div class="answer-item team-e" id="answerE" hidden><strong>Team E</strong><p>Rudolph the Red-Nosed Reindeer</p></div>
+    <div class="answer-item" style="--team:#b83c48"><strong>Final Puzzle</strong><p>NORTH POLE</p></div>
+   </div>
+   <p class="host-muted">Final puzzle: unscramble H L O N T E P R O to make NORTH POLE.</p>
+  </div>
+ </div>
+</section>
+
+</div>
+
+<div class="host-overlay" id="hostPanel" hidden>
+ <div class="host-modal">
+  <button class="host-close" id="closeHost" aria-label="Close">×</button>
+  <div class="eyebrow" style="color:#a16e2e">Host Controls</div>
+  <h2>Team Generator</h2>
+  <p class="host-muted">Select the students who are participating, then randomize teams.</p>
+  <div id="hostLogin">
+   <label for="hostCode">Host passcode</label>
+   <input id="hostCode" type="password" placeholder="Enter passcode" autocomplete="off">
+   <button class="primary" id="unlockHost">Unlock Settings</button>
+   <p id="hostMessage" class="host-muted" role="status"></p>
+  </div>
+  <div id="hostSettings" hidden>
+   <p id="rosterCount" class="host-muted"></p>
+   <div class="host-toolbar"><button id="selectAll">Select All</button><button id="deselectAll">Deselect All</button></div>
+   <div id="hostRoster" class="host-roster"></div>
+   <div class="host-add"><input id="newStudent" maxlength="80" placeholder="Student name"><button id="addStudent">Add</button></div>
+   <label for="teamCount">Number of teams</label>
+   <select id="teamCount">
+    <option value="2">2 teams (A–B)</option>
+    <option value="3">3 teams (A–C)</option>
+    <option value="4" selected>4 teams (A–D)</option>
+    <option value="5">5 teams (A–E)</option>
+   </select>
+   <button class="primary" id="randomize">❄ Randomize Teams</button>
+   <p id="teamMessage" class="host-muted" role="status"></p>
+  </div>
+ </div>
+</div>
+
+<script>
+const HOST_CODE="HOLIDAY2026";
+const letters=["A","B","C","D","E"];
+let roster=[
+ "Jo Smith","Jase Mace","Alex Johnson","Taylor Williams",
+ "Jordan Brown","Morgan Davis","Riley Miller","Casey Wilson",
+ "Avery Moore","Jamie Taylor","Cameron Anderson","Parker Thomas",
+ "Quinn Jackson","Reese White","Skyler Harris","Drew Martin",
+ "Emerson Thompson","Rowan Garcia","Finley Martinez","Dakota Robinson",
+ "Harper Clark","Logan Lewis","Payton Lee","Blake Walker"
+].map((name,i)=>({id:i+1,name,selected:true}));
+let nextId=roster.length+1;
+let unlocked=false;
+const $=id=>document.getElementById(id);
+
+function openHost(){
+ $("hostPanel").hidden=false;
+ $("hostLogin").hidden=unlocked;
+ $("hostSettings").hidden=!unlocked;
+ if(unlocked)renderRoster();
+}
+$("openHost").addEventListener("click",openHost);
+$("closeHost").addEventListener("click",()=>$("hostPanel").hidden=true);
+$("hostPanel").addEventListener("click",e=>{if(e.target===$("hostPanel"))$("hostPanel").hidden=true});
+$("unlockHost").addEventListener("click",()=>{
+ if($("hostCode").value!==HOST_CODE){$("hostMessage").textContent="Incorrect passcode. Access denied.";return}
+ unlocked=true;
+ $("hostLogin").hidden=true;
+ $("hostSettings").hidden=false;
+ renderRoster();
+});
+$("hostCode").addEventListener("keydown",e=>{if(e.key==="Enter")$("unlockHost").click()});
+
+function renderRoster(){
+ const box=$("hostRoster");
+ box.replaceChildren();
+ $("rosterCount").textContent=roster.filter(s=>s.selected).length+" selected · "+roster.length+" students total";
+ roster.forEach(student=>{
+  const row=document.createElement("div");row.className="host-student";
+  const check=document.createElement("input");check.type="checkbox";check.checked=student.selected;
+  check.addEventListener("change",()=>{student.selected=check.checked;renderRoster()});
+  const name=document.createElement("span");name.textContent=student.name;
+  const remove=document.createElement("button");remove.textContent="×";remove.title="Remove "+student.name;
+  remove.addEventListener("click",()=>{roster=roster.filter(s=>s.id!==student.id);renderRoster()});
+  row.append(check,name,remove);box.append(row);
+ });
+}
+$("selectAll").addEventListener("click",()=>{roster.forEach(s=>s.selected=true);renderRoster()});
+$("deselectAll").addEventListener("click",()=>{roster.forEach(s=>s.selected=false);renderRoster()});
+function addStudent(){
+ const input=$("newStudent"),name=input.value.trim();
+ if(!name){$("teamMessage").textContent="Enter a student name first.";return}
+ if(roster.some(s=>s.name.toLowerCase()===name.toLowerCase())){$("teamMessage").textContent="That student is already listed.";return}
+ roster.push({id:nextId++,name,selected:true});input.value="";renderRoster();
+}
+$("addStudent").addEventListener("click",addStudent);
+$("newStudent").addEventListener("keydown",e=>{if(e.key==="Enter")addStudent()});
+
+$("randomize").addEventListener("click",()=>{
+ if(!unlocked)return;
+ const chosen=roster.filter(s=>s.selected);
+ const count=Number($("teamCount").value);
+ if(chosen.length<count){$("teamMessage").textContent="Select at least "+count+" students.";return}
+ for(let i=chosen.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[chosen[i],chosen[j]]=[chosen[j],chosen[i]]}
+ const groups=Array.from({length:count},()=>[]);
+ chosen.forEach((s,i)=>groups[i%count].push(s.name));
+ letters.forEach((letter,i)=>{
+  const card=$("teamCard"+letter);
+  card.hidden=i>=count;
+  if(i<count)$("members"+letter).textContent=groups[i].join(" · ");
+  const book=$("book"+letter);
+  if(book)book.hidden=i>=count;
+ });
+ $("answerE").hidden=count<5;
+ $("teamMessage").textContent=chosen.length+" students assigned to "+count+" teams.";
+ $("hostPanel").hidden=true;
+ $("teamsSlide").scrollIntoView({behavior:"smooth"});
+});
+
+$("unlockAnswers").addEventListener("click",()=>{
+ if($("answerCode").value!==HOST_CODE){
+  $("answerMessage").textContent="Incorrect passcode. The answers remain locked.";
+  $("answerContent").hidden=true;
+  return;
+ }
+ $("answerLock").hidden=true;
+ $("answerContent").hidden=false;
+});
+$("answerCode").addEventListener("keydown",e=>{if(e.key==="Enter")$("unlockAnswers").click()});
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape"){$("hostPanel").hidden=true}
+});
+
+document.querySelectorAll(".snow").forEach(layer=>{
+ for(let i=0;i<32;i++){
+  const f=document.createElement("span");f.className="flake";f.textContent=["❄","✳","·"][i%3];
+  f.style.left=Math.random()*100+"%";
+  f.style.fontSize=(10+Math.random()*17)+"px";
+  f.style.animationDuration=(10+Math.random()*17)+"s";
+  f.style.animationDelay=(-Math.random()*20)+"s";
+  layer.append(f);
+ }
+});
+
+document.addEventListener("dblclick",async e=>{
+ if(e.target.closest(".host-modal,.host-trigger,.print-trigger"))return;
+ try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen()}catch{}
+});
+</script>
+</body>
+</html>
