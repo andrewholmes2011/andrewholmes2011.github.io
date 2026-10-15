@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Holiday Escape Room</title>
+
 <style>
 :root{
   --bg:#102b24;--green:#194b38;--red:#b93e4b;--gold:#f3ce83;
@@ -39,8 +40,14 @@ p{font-size:clamp(15px,1.8vw,21px);line-height:1.65}
 .cover:before{content:"❄";position:absolute;right:-3%;top:-18%;font-size:clamp(250px,55vw,650px);color:#ffffff08}
 .cover-icon{font-size:clamp(90px,15vw,160px);margin-bottom:18px}
 .cover h1 span{color:var(--gold)}
-.print-trigger{position:absolute;top:18px;left:18px;z-index:5;width:46px;height:46px;display:grid;place-items:center;text-decoration:none;border:1px solid #f3ce8377;border-radius:50%;background:#ffffff0a;color:var(--gold);font-size:22px;cursor:pointer}
-.host-trigger{position:absolute;top:18px;right:18px;z-index:5;width:46px;height:46px;border:1px solid #f3ce8377;border-radius:50%;background:#ffffff0a;color:var(--gold);font-size:22px;cursor:pointer}
+.print-trigger,.host-trigger{
+ position:absolute;top:18px;z-index:5;width:46px;height:46px;
+ display:grid;place-items:center;text-decoration:none;
+ border:1px solid #f3ce8377;border-radius:50%;
+ background:#ffffff0a;color:var(--gold);font-size:22px;cursor:pointer
+}
+.print-trigger{left:18px}
+.host-trigger{right:18px}
 .intro{background:#a93443}
 .rules{background:var(--cream);color:var(--ink)}
 .teams{background:#164633}
@@ -93,13 +100,26 @@ button{font:inherit;cursor:pointer}
 .flake{position:absolute;top:-20px;color:white;opacity:.4;animation:fall linear infinite}
 @keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
 [hidden]{display:none!important}
-.host-overlay{position:fixed;inset:0;z-index:1000;background:#071b16eF;display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
-.host-modal{width:min(560px,100%);max-height:92vh;overflow-y:auto;background:var(--cream);color:var(--ink);border-radius:18px;padding:27px;position:relative}
+
+/* Host controls */
+.host-overlay{
+ position:fixed;inset:0;z-index:1000;background:#071b16ef;
+ display:flex;align-items:center;justify-content:center;
+ padding:16px;overflow-y:auto
+}
+.host-modal{
+ width:min(560px,100%);max-height:92vh;overflow-y:auto;
+ background:var(--cream);color:var(--ink);border-radius:18px;
+ padding:27px;position:relative
+}
 .host-close{position:absolute;right:12px;top:8px;background:none;border:0;font-size:30px;color:var(--green)}
 .host-modal h2{font-size:33px;margin:10px 0}
 .host-muted{font-size:13px;color:#68786c}
 .host-modal label{display:block;font-size:13px;font-weight:bold;margin:16px 0 7px}
-.host-modal input:not([type=checkbox]),.host-modal select{width:100%;padding:11px;border:1px solid #cbd4c7;border-radius:8px;font:inherit;background:white}
+.host-modal input:not([type=checkbox]),.host-modal select{
+ width:100%;padding:11px;border:1px solid #cbd4c7;border-radius:8px;
+ font:inherit;background:white
+}
 .host-modal button:not(.host-close){border:1px solid #ccd5ca;border-radius:8px;padding:9px;background:white;color:var(--green)}
 .host-modal .primary{width:100%;margin-top:14px;background:var(--green)!important;color:white!important;border:0!important;padding:13px!important}
 .host-toolbar,.host-add{display:flex;gap:8px;margin:12px 0}
@@ -107,6 +127,19 @@ button{font:inherit;cursor:pointer}
 .host-roster{display:grid;gap:7px;max-height:230px;overflow:auto}
 .host-student{display:flex;align-items:center;gap:10px;background:white;border:1px solid #e0e4da;border-radius:8px;padding:9px}
 .host-student span{flex:1;overflow-wrap:anywhere}
+
+/* Pause and winner overlays */
+.shortcut-overlay{
+ position:fixed;inset:0;z-index:2000;
+ display:flex;align-items:center;justify-content:center;
+ padding:24px;text-align:center;background:#071b16f5;color:var(--cream)
+}
+.shortcut-overlay[hidden]{display:none!important}
+.overlay-content{width:min(900px,100%)}
+.overlay-icon{font-size:clamp(70px,14vw,150px);margin-bottom:20px}
+.shortcut-overlay h1{font-size:clamp(48px,10vw,110px);color:var(--gold);margin-bottom:20px}
+.shortcut-overlay p{font-size:clamp(18px,3vw,28px)}
+.overlay-hint{margin-top:40px;font-size:13px;letter-spacing:2px;color:#ffffffa8}
 @media(max-width:650px){
  .slide{padding:25px 19px}
  .puzzle-grid{grid-template-columns:1fr}
@@ -115,9 +148,12 @@ button{font:inherit;cursor:pointer}
  .book-grid,.answer-list{grid-template-columns:1fr}
  .team-card{padding:15px 8px}
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;scroll-behavior:auto!important}}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.01ms!important;scroll-behavior:auto!important}
+}
 </style>
 </head>
+
 <body>
 <div id="slides">
 
@@ -299,23 +335,55 @@ button{font:inherit;cursor:pointer}
 
 </div>
 
+<!-- PAUSE SCREEN -->
+<div class="shortcut-overlay" id="pauseOverlay" hidden>
+ <div class="overlay-content">
+  <div class="overlay-icon">⏸️</div>
+  <div class="eyebrow">Holiday Escape Room</div>
+  <h1>PAUSED</h1>
+  <p>The game is temporarily paused.</p>
+  <div class="overlay-hint">PRESS R TO RESUME</div>
+ </div>
+</div>
+
+<!-- WINNER ANNOUNCEMENT -->
+<div class="shortcut-overlay" id="winnerOverlay" hidden>
+ <div class="overlay-content">
+  <div class="overlay-icon">🏆</div>
+  <div class="eyebrow">Mission Complete</div>
+  <h1>WE HAVE A WINNER!</h1>
+  <p>Congratulations to our Holiday Escape Room champions!</p>
+  <div class="overlay-icon" style="font-size:clamp(35px,7vw,75px)">🎄 ❄️ 🎁</div>
+  <div class="overlay-hint">PRESS R TO RETURN TO THE SLIDESHOW</div>
+ </div>
+</div>
+
+<!-- HOST SETTINGS -->
 <div class="host-overlay" id="hostPanel" hidden>
  <div class="host-modal">
   <button class="host-close" id="closeHost" aria-label="Close">×</button>
   <div class="eyebrow" style="color:#a16e2e">Host Controls</div>
   <h2>Team Generator</h2>
   <p class="host-muted">Select the students who are participating, then randomize teams.</p>
+
   <div id="hostLogin">
    <label for="hostCode">Host passcode</label>
    <input id="hostCode" type="password" placeholder="Enter passcode" autocomplete="off">
    <button class="primary" id="unlockHost">Unlock Settings</button>
    <p id="hostMessage" class="host-muted" role="status"></p>
   </div>
+
   <div id="hostSettings" hidden>
    <p id="rosterCount" class="host-muted"></p>
-   <div class="host-toolbar"><button id="selectAll">Select All</button><button id="deselectAll">Deselect All</button></div>
+   <div class="host-toolbar">
+    <button id="selectAll">Select All</button>
+    <button id="deselectAll">Deselect All</button>
+   </div>
    <div id="hostRoster" class="host-roster"></div>
-   <div class="host-add"><input id="newStudent" maxlength="80" placeholder="Student name"><button id="addStudent">Add</button></div>
+   <div class="host-add">
+    <input id="newStudent" maxlength="80" placeholder="Student name">
+    <button id="addStudent">Add</button>
+   </div>
    <label for="teamCount">Number of teams</label>
    <select id="teamCount">
     <option value="2">2 teams (A–B)</option>
@@ -330,9 +398,10 @@ button{font:inherit;cursor:pointer}
 </div>
 
 <script>
-const HOST_CODE="HOLIDAY2026";
-const letters=["A","B","C","D","E"];
-let roster=[
+const HOST_CODE = "HOLIDAY2026";
+const letters = ["A","B","C","D","E"];
+
+let roster = [
  "Jo Smith","Jase Mace","Alex Johnson","Taylor Williams",
  "Jordan Brown","Morgan Davis","Riley Miller","Casey Wilson",
  "Avery Moore","Jamie Taylor","Cameron Anderson","Parker Thomas",
@@ -340,102 +409,276 @@ let roster=[
  "Emerson Thompson","Rowan Garcia","Finley Martinez","Dakota Robinson",
  "Harper Clark","Logan Lewis","Payton Lee","Blake Walker"
 ].map((name,i)=>({id:i+1,name,selected:true}));
-let nextId=roster.length+1;
-let unlocked=false;
-const $=id=>document.getElementById(id);
 
+let nextId = roster.length + 1;
+let unlocked = false;
+
+const $ = id => document.getElementById(id);
+
+/* Host controls */
 function openHost(){
- $("hostPanel").hidden=false;
- $("hostLogin").hidden=unlocked;
- $("hostSettings").hidden=!unlocked;
- if(unlocked)renderRoster();
+ $("hostPanel").hidden = false;
+ $("hostLogin").hidden = unlocked;
+ $("hostSettings").hidden = !unlocked;
+ if(unlocked) renderRoster();
 }
+
 $("openHost").addEventListener("click",openHost);
 $("closeHost").addEventListener("click",()=>$("hostPanel").hidden=true);
-$("hostPanel").addEventListener("click",e=>{if(e.target===$("hostPanel"))$("hostPanel").hidden=true});
+
+$("hostPanel").addEventListener("click",e=>{
+ if(e.target === $("hostPanel")) $("hostPanel").hidden = true;
+});
+
 $("unlockHost").addEventListener("click",()=>{
- if($("hostCode").value!==HOST_CODE){$("hostMessage").textContent="Incorrect passcode. Access denied.";return}
- unlocked=true;
- $("hostLogin").hidden=true;
- $("hostSettings").hidden=false;
+ if($("hostCode").value !== HOST_CODE){
+  $("hostMessage").textContent = "Incorrect passcode. Access denied.";
+  return;
+ }
+
+ unlocked = true;
+ $("hostLogin").hidden = true;
+ $("hostSettings").hidden = false;
  renderRoster();
 });
-$("hostCode").addEventListener("keydown",e=>{if(e.key==="Enter")$("unlockHost").click()});
+
+$("hostCode").addEventListener("keydown",e=>{
+ if(e.key === "Enter") $("unlockHost").click();
+});
 
 function renderRoster(){
- const box=$("hostRoster");
+ const box = $("hostRoster");
  box.replaceChildren();
- $("rosterCount").textContent=roster.filter(s=>s.selected).length+" selected · "+roster.length+" students total";
- roster.forEach(student=>{
-  const row=document.createElement("div");row.className="host-student";
-  const check=document.createElement("input");check.type="checkbox";check.checked=student.selected;
-  check.addEventListener("change",()=>{student.selected=check.checked;renderRoster()});
-  const name=document.createElement("span");name.textContent=student.name;
-  const remove=document.createElement("button");remove.textContent="×";remove.title="Remove "+student.name;
-  remove.addEventListener("click",()=>{roster=roster.filter(s=>s.id!==student.id);renderRoster()});
-  row.append(check,name,remove);box.append(row);
- });
-}
-$("selectAll").addEventListener("click",()=>{roster.forEach(s=>s.selected=true);renderRoster()});
-$("deselectAll").addEventListener("click",()=>{roster.forEach(s=>s.selected=false);renderRoster()});
-function addStudent(){
- const input=$("newStudent"),name=input.value.trim();
- if(!name){$("teamMessage").textContent="Enter a student name first.";return}
- if(roster.some(s=>s.name.toLowerCase()===name.toLowerCase())){$("teamMessage").textContent="That student is already listed.";return}
- roster.push({id:nextId++,name,selected:true});input.value="";renderRoster();
-}
-$("addStudent").addEventListener("click",addStudent);
-$("newStudent").addEventListener("keydown",e=>{if(e.key==="Enter")addStudent()});
 
-$("randomize").addEventListener("click",()=>{
- if(!unlocked)return;
- const chosen=roster.filter(s=>s.selected);
- const count=Number($("teamCount").value);
- if(chosen.length<count){$("teamMessage").textContent="Select at least "+count+" students.";return}
- for(let i=chosen.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[chosen[i],chosen[j]]=[chosen[j],chosen[i]]}
- const groups=Array.from({length:count},()=>[]);
- chosen.forEach((s,i)=>groups[i%count].push(s.name));
- letters.forEach((letter,i)=>{
-  const card=$("teamCard"+letter);
-  card.hidden=i>=count;
-  if(i<count)$("members"+letter).textContent=groups[i].join(" · ");
-  const book=$("book"+letter);
-  if(book)book.hidden=i>=count;
+ $("rosterCount").textContent =
+  roster.filter(s=>s.selected).length + " selected · " +
+  roster.length + " students total";
+
+ roster.forEach(student=>{
+  const row = document.createElement("div");
+  row.className = "host-student";
+
+  const check = document.createElement("input");
+  check.type = "checkbox";
+  check.checked = student.selected;
+  check.addEventListener("change",()=>{
+   student.selected = check.checked;
+   renderRoster();
+  });
+
+  const name = document.createElement("span");
+  name.textContent = student.name;
+
+  const remove = document.createElement("button");
+  remove.textContent = "×";
+  remove.title = "Remove " + student.name;
+  remove.addEventListener("click",()=>{
+   roster = roster.filter(s=>s.id !== student.id);
+   renderRoster();
+  });
+
+  row.append(check,name,remove);
+  box.append(row);
  });
- $("answerE").hidden=count<5;
- $("teamMessage").textContent=chosen.length+" students assigned to "+count+" teams.";
- $("hostPanel").hidden=true;
+}
+
+$("selectAll").addEventListener("click",()=>{
+ roster.forEach(s=>s.selected=true);
+ renderRoster();
+});
+
+$("deselectAll").addEventListener("click",()=>{
+ roster.forEach(s=>s.selected=false);
+ renderRoster();
+});
+
+function addStudent(){
+ const input = $("newStudent");
+ const name = input.value.trim();
+
+ if(!name){
+  $("teamMessage").textContent = "Enter a student name first.";
+  return;
+ }
+
+ if(roster.some(s=>s.name.toLowerCase()===name.toLowerCase())){
+  $("teamMessage").textContent = "That student is already listed.";
+  return;
+ }
+
+ roster.push({id:nextId++,name,selected:true});
+ input.value = "";
+ renderRoster();
+ $("teamMessage").textContent = "";
+}
+
+$("addStudent").addEventListener("click",addStudent);
+
+$("newStudent").addEventListener("keydown",e=>{
+ if(e.key === "Enter") addStudent();
+});
+
+/* Randomize teams */
+$("randomize").addEventListener("click",()=>{
+ if(!unlocked) return;
+
+ const chosen = roster.filter(s=>s.selected);
+ const count = Number($("teamCount").value);
+
+ if(chosen.length < count){
+  $("teamMessage").textContent = "Select at least " + count + " students.";
+  return;
+ }
+
+ for(let i=chosen.length-1;i>0;i--){
+  const j = Math.floor(Math.random()*(i+1));
+  [chosen[i],chosen[j]] = [chosen[j],chosen[i]];
+ }
+
+ const groups = Array.from({length:count},()=>[]);
+ chosen.forEach((student,i)=>{
+  groups[i%count].push(student.name);
+ });
+
+ letters.forEach((letter,i)=>{
+  const card = $("teamCard"+letter);
+  card.hidden = i >= count;
+
+  if(i < count){
+   $("members"+letter).textContent = groups[i].join(" · ");
+  }
+
+  const book = $("book"+letter);
+  if(book) book.hidden = i >= count;
+ });
+
+ $("answerE").hidden = count < 5;
+ $("teamMessage").textContent =
+  chosen.length + " students assigned to " + count + " teams.";
+
+ $("hostPanel").hidden = true;
  $("teamsSlide").scrollIntoView({behavior:"smooth"});
 });
 
+/* Answer key */
 $("unlockAnswers").addEventListener("click",()=>{
- if($("answerCode").value!==HOST_CODE){
-  $("answerMessage").textContent="Incorrect passcode. The answers remain locked.";
-  $("answerContent").hidden=true;
+ if($("answerCode").value !== HOST_CODE){
+  $("answerMessage").textContent =
+   "Incorrect passcode. The answers remain locked.";
+  $("answerContent").hidden = true;
   return;
  }
- $("answerLock").hidden=true;
- $("answerContent").hidden=false;
-});
-$("answerCode").addEventListener("keydown",e=>{if(e.key==="Enter")$("unlockAnswers").click()});
-document.addEventListener("keydown",e=>{
- if(e.key==="Escape"){$("hostPanel").hidden=true}
+
+ $("answerLock").hidden = true;
+ $("answerContent").hidden = false;
 });
 
+$("answerCode").addEventListener("keydown",e=>{
+ if(e.key === "Enter") $("unlockAnswers").click();
+});
+
+/* Keyboard shortcuts */
+function resumePresentation(){
+ $("pauseOverlay").hidden = true;
+ $("winnerOverlay").hidden = true;
+}
+
+function pausePresentation(){
+ $("winnerOverlay").hidden = true;
+ $("pauseOverlay").hidden = false;
+}
+
+function announceWinner(){
+ $("pauseOverlay").hidden = true;
+ $("winnerOverlay").hidden = false;
+}
+
+function goToSlide(slideNumber){
+ const slides = [...document.querySelectorAll("#slides > .slide")];
+
+ if(slideNumber < 1 || slideNumber > slides.length) return;
+
+ resumePresentation();
+
+ slides[slideNumber-1].scrollIntoView({
+  behavior:"smooth",
+  block:"start"
+ });
+}
+
+document.addEventListener("keydown",e=>{
+ const target = e.target;
+
+ const typing = target instanceof HTMLElement && (
+  target.isContentEditable ||
+  ["INPUT","TEXTAREA","SELECT"].includes(target.tagName)
+ );
+
+ if(typing || e.ctrlKey || e.altKey || e.metaKey) return;
+
+ if(e.key === "Escape"){
+  $("hostPanel").hidden = true;
+  return;
+ }
+
+ // Avoid triggering presentation shortcuts while the host menu is open.
+ if(!$("hostPanel").hidden) return;
+
+ if(/^[1-9]$/.test(e.key)){
+  e.preventDefault();
+  goToSlide(Number(e.key));
+  return;
+ }
+
+ switch(e.key.toLowerCase()){
+  case "p":
+   e.preventDefault();
+   pausePresentation();
+   break;
+
+  case "r":
+   e.preventDefault();
+   resumePresentation();
+   break;
+
+  case "w":
+   e.preventDefault();
+   announceWinner();
+   break;
+
+  case "s":
+   e.preventDefault();
+   resumePresentation();
+   openHost();
+   break;
+ }
+});
+
+/* Snow animation */
 document.querySelectorAll(".snow").forEach(layer=>{
  for(let i=0;i<32;i++){
-  const f=document.createElement("span");f.className="flake";f.textContent=["❄","✳","·"][i%3];
-  f.style.left=Math.random()*100+"%";
-  f.style.fontSize=(10+Math.random()*17)+"px";
-  f.style.animationDuration=(10+Math.random()*17)+"s";
-  f.style.animationDelay=(-Math.random()*20)+"s";
+  const f = document.createElement("span");
+  f.className = "flake";
+  f.textContent = ["❄","✳","·"][i%3];
+  f.style.left = Math.random()*100+"%";
+  f.style.fontSize = (10+Math.random()*17)+"px";
+  f.style.animationDuration = (10+Math.random()*17)+"s";
+  f.style.animationDelay = (-Math.random()*20)+"s";
   layer.append(f);
  }
 });
 
+/* Double-click to enter or leave fullscreen */
 document.addEventListener("dblclick",async e=>{
- if(e.target.closest(".host-modal,.host-trigger,.print-trigger"))return;
- try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen()}catch{}
+ if(e.target.closest(".host-modal,.host-trigger,.print-trigger")) return;
+
+ try{
+  if(!document.fullscreenElement){
+   await document.documentElement.requestFullscreen();
+  }else{
+   await document.exitFullscreen();
+  }
+ }catch{}
 });
 </script>
 </body>
