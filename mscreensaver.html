@@ -1,10 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#090716">
-<title>Halloween Screensaver</title>
+<title>Halloween Media Screensaver</title>
+
 <style>
 :root {
   --night: #090716;
@@ -12,209 +14,544 @@
   --orange: #ff7a18;
   --gold: #ffc15a;
   --moon: #fff0c9;
+  --panel: rgba(15, 10, 29, .84);
 }
-* { box-sizing: border-box; }
+
+* {
+  box-sizing: border-box;
+}
+
 html, body {
-  width: 100%; height: 100%; margin: 0; overflow: hidden;
-  background: var(--night); color: #fff5e6;
-  font-family: "Trebuchet MS", Arial, sans-serif;
+  width: 100%;
+  height: 100%;
+  margin: 0;
 }
+
 body {
-  position: relative;
+  overflow: hidden;
+  color: #fff5e6;
+  font-family: "Trebuchet MS", Arial, sans-serif;
   background:
     radial-gradient(ellipse at 50% 100%, #4b1d48 0%, transparent 54%),
     linear-gradient(180deg, #080716 0%, #17102d 48%, #311638 100%);
 }
+
 .sky-glow {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 75% 23%, #5b347722 0%, transparent 35%);
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 75% 23%, #5b347744 0%, transparent 38%);
+}
+
+.stars {
+  position: fixed;
+  inset: 0;
   pointer-events: none;
 }
-.stars { position: absolute; inset: 0; pointer-events: none; }
+
 .star {
-  position: absolute; border-radius: 50%; background: #fff4d6;
+  position: absolute;
+  border-radius: 50%;
+  background: #fff4d6;
   animation: twinkle var(--duration, 3s) ease-in-out infinite alternate;
 }
+
 .moon {
-  position: absolute; top: 9%; right: 14%;
-  width: clamp(90px, 13vw, 170px); aspect-ratio: 1;
-  border-radius: 50%; background: var(--moon);
+  position: fixed;
+  top: 8%;
+  right: 13%;
+  width: clamp(90px, 13vw, 165px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--moon);
   box-shadow: 0 0 35px #ffdf9a55, 0 0 95px #ffb75b22;
 }
+
 .moon::after {
-  content: ""; position: absolute; width: 100%; height: 100%;
-  border-radius: 50%; background: #090716;
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--night);
   transform: translate(-22%, -8%);
 }
-.moon-crater {
-  position: absolute; z-index: 1; border-radius: 50%;
-  background: #d8c99f55;
-}
-.moon-crater.one { width: 13%; height: 13%; top: 30%; left: 30%; }
-.moon-crater.two { width: 8%; height: 8%; top: 56%; left: 47%; }
-.moon-crater.three { width: 6%; height: 6%; top: 24%; left: 57%; }
+
 .scene-title {
-  position: absolute; top: 10%; left: 7%; z-index: 2;
-  max-width: 58%; text-shadow: 0 4px 24px #0008;
+  position: fixed;
+  top: 8%;
+  left: 6%;
+  z-index: 2;
+  max-width: 65%;
+  text-shadow: 0 4px 24px #0008;
 }
+
 .kicker {
-  color: #ffb45f; font-size: clamp(10px, 1.3vw, 15px);
-  font-weight: bold; letter-spacing: .42em; text-transform: uppercase;
+  color: #ffb45f;
+  font-size: clamp(10px, 1.3vw, 15px);
+  font-weight: bold;
+  letter-spacing: .35em;
+  text-transform: uppercase;
 }
+
 h1 {
-  margin: 15px 0 10px; color: #ff9a32;
+  margin: 14px 0;
+  color: #ff9a32;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(42px, 8.5vw, 112px); line-height: .92;
-  font-weight: 700; letter-spacing: -.045em;
-  text-shadow: 0 0 22px #ff6b1c33, 0 5px 0 #7a2c18;
+  font-size: clamp(42px, 7vw, 100px);
+  line-height: .9;
+  letter-spacing: -.04em;
 }
+
 .subtitle {
-  margin: 20px 0 0; color: #e8d9f1;
-  font-size: clamp(12px, 1.6vw, 19px); letter-spacing: .12em;
+  color: #e5c6e9;
+  font-size: clamp(12px, 1.5vw, 18px);
 }
+
 .clock {
-  position: absolute; z-index: 4; left: 50%; top: 52%;
-  transform: translate(-50%, -50%); text-align: center;
-  width: 100%; pointer-events: none;
+  position: fixed;
+  top: 37%;
+  left: 6%;
+  z-index: 2;
+  text-shadow: 0 4px 25px #0009;
 }
+
 .time {
+  color: #fff0d5;
+  font-size: clamp(30px, 5vw, 65px);
+  font-weight: bold;
   font-variant-numeric: tabular-nums;
-  font-size: clamp(48px, 11vw, 132px); font-weight: 700;
-  letter-spacing: .04em; color: #fff2d6;
-  text-shadow: 0 0 22px #ff8b2a55, 0 4px 25px #0008;
 }
+
 .date {
-  margin-top: 10px; font-size: clamp(11px, 1.7vw, 18px);
-  color: #ffc16f; letter-spacing: .32em; text-transform: uppercase;
+  margin-top: 8px;
+  color: #ffc15a;
+  font-size: clamp(11px, 1.4vw, 16px);
+  letter-spacing: .2em;
+  text-transform: uppercase;
 }
-.hill {
-  position: absolute; bottom: -15%; width: 120%; height: 38%;
-  left: -10%; border-radius: 50% 50% 0 0 / 22% 22% 0 0;
-  background: linear-gradient(180deg, #20132d, #100c1e);
-}
-.hill.back {
-  bottom: -20%; left: -30%; width: 100%; height: 36%;
-  background: #281532; transform: rotate(5deg);
-}
-.house {
-  position: absolute; bottom: 13%; left: 13%; width: clamp(90px, 13vw, 170px);
-  height: clamp(90px, 13vw, 170px); z-index: 2;
-}
-.house-body {
-  position: absolute; bottom: 0; width: 100%; height: 66%;
-  background: #0b0917; border: 2px solid #44304d;
-}
-.roof {
-  position: absolute; top: 0; left: -12%; width: 124%; height: 45%;
-  background: #0a0815; clip-path: polygon(50% 0, 100% 100%, 0 100%);
-  border-bottom: 2px solid #44304d;
-}
-.window {
-  position: absolute; top: 22%; width: 19%; height: 27%;
-  background: #ffae4a; box-shadow: 0 0 18px #ff8a2a88;
-}
-.window.left { left: 19%; }
-.window.right { right: 19%; }
-.door {
-  position: absolute; bottom: 0; left: 42%; width: 20%; height: 42%;
-  background: #20102b; border: 1px solid #50334d;
-}
-.tree {
-  position: absolute; z-index: 2; bottom: 13%; right: 17%;
-  width: clamp(70px, 11vw, 130px); height: clamp(120px, 21vw, 250px);
-}
-.tree-part {
-  position: absolute; left: 50%; transform: translateX(-50%);
-  width: 0; height: 0; border-left: var(--w) solid transparent;
-  border-right: var(--w) solid transparent; border-bottom: var(--h) solid #101f20;
-  filter: drop-shadow(0 0 2px #5c753b);
-}
-.tree-part.p1 { top: 0; --w: 30px; --h: 65px; }
-.tree-part.p2 { top: 24%; --w: 43px; --h: 78px; }
-.tree-part.p3 { top: 48%; --w: 57px; --h: 90px; }
-.tree-trunk { position: absolute; bottom: 0; left: 43%; width: 14%; height: 22%; background: #25151c; }
-.tree-light { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: #ffc75e; box-shadow: 0 0 12px #ffc75e; animation: twinkle 1.4s infinite alternate; }
-.tree-light.l1 { top: 30%; left: 43%; }
-.tree-light.l2 { top: 51%; left: 61%; animation-delay: .5s; }
-.tree-light.l3 { top: 70%; left: 29%; animation-delay: .8s; }
-.pumpkin {
-  position: absolute; z-index: 3; bottom: 8%; width: clamp(55px, 7vw, 90px);
-  aspect-ratio: 1.15; border-radius: 46% 46% 42% 42%;
-  background: radial-gradient(ellipse at 50% 30%, #ffb344, #f36c12 65%, #a9340a);
-  box-shadow: 0 0 28px #ff781e44;
-  animation: pumpkinGlow 2.8s ease-in-out infinite alternate;
-}
-.pumpkin::before {
-  content: ""; position: absolute; width: 13%; height: 18%;
-  background: #31502a; border-radius: 5px 5px 0 0;
-  left: 45%; top: -10%; transform: rotate(8deg);
-}
-.pumpkin::after {
-  content: "▲  ▲"; position: absolute; top: 28%; left: 14%;
-  width: 72%; color: #271124; font-size: clamp(11px, 1.7vw, 21px);
-  letter-spacing: .12em; text-align: center;
-}
-.pumpkin .mouth {
-  position: absolute; left: 30%; top: 57%; width: 40%; height: 17%;
-  background: #271124; clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
-}
-.pumpkin.p1 { left: 34%; }
-.pumpkin.p2 { right: 31%; bottom: 5%; transform: scale(.72); animation-delay: .7s; }
+
 .ghost {
-  position: absolute; z-index: 3; font-size: clamp(28px, 4.4vw, 58px);
-  opacity: .8; animation: ghostFloat var(--duration, 8s) ease-in-out infinite;
-  filter: drop-shadow(0 0 12px #ffffff22);
+  position: fixed;
+  z-index: 1;
+  font-size: clamp(25px, 4vw, 55px);
+  opacity: .75;
+  animation: float 5s ease-in-out infinite alternate;
 }
-.ghost.g1 { left: 9%; top: 42%; --duration: 7s; }
-.ghost.g2 { right: 9%; top: 48%; --duration: 9s; animation-delay: -3s; }
-.ghost.g3 { left: 45%; top: 20%; --duration: 11s; animation-delay: -6s; opacity: .55; }
+
+.g1 {
+  left: 10%;
+  bottom: 22%;
+}
+
+.g2 {
+  left: 43%;
+  bottom: 25%;
+  animation-delay: -2s;
+}
+
+.g3 {
+  right: 12%;
+  top: 35%;
+  animation: batFly 20s linear infinite;
+}
+
+.ground {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 20%;
+  background: linear-gradient(180deg, transparent, #080610 35%);
+  pointer-events: none;
+}
+
+.house {
+  position: fixed;
+  left: 43%;
+  bottom: 11%;
+  width: clamp(100px, 15vw, 190px);
+  height: clamp(100px, 15vw, 190px);
+  opacity: .88;
+}
+
+.roof {
+  position: absolute;
+  left: -10%;
+  top: 0;
+  width: 120%;
+  height: 43%;
+  background: #100b1b;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.house-body {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  width: 80%;
+  height: 65%;
+  background: #100b1b;
+}
+
+.window {
+  position: absolute;
+  top: 20%;
+  width: 23%;
+  height: 25%;
+  background: #ffad3e;
+  box-shadow: 0 0 18px #ff8c2a88;
+}
+
+.window.left {
+  left: 13%;
+}
+
+.window.right {
+  right: 13%;
+}
+
+.door {
+  position: absolute;
+  bottom: 0;
+  left: 39%;
+  width: 24%;
+  height: 48%;
+  background: #24102b;
+  border: 2px solid #51314a;
+}
+
+.tree {
+  position: fixed;
+  right: 5%;
+  bottom: 8%;
+  width: 110px;
+  height: 210px;
+  opacity: .9;
+}
+
+.tree::before {
+  content: "";
+  position: absolute;
+  left: 48%;
+  bottom: 0;
+  width: 12px;
+  height: 65px;
+  background: #100b1b;
+}
+
+.tree::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 110px;
+  height: 160px;
+  background: #100b1b;
+  clip-path: polygon(50% 0, 70% 30%, 60% 30%, 90% 60%, 70% 57%, 100% 85%, 0 85%, 30% 57%, 10% 60%, 40% 30%, 30% 30%);
+}
+
 .bat {
-  position: absolute; z-index: 3; font-size: clamp(22px, 3vw, 38px);
-  animation: batFly var(--duration, 12s) linear infinite;
-  left: -10%; top: var(--top, 30%);
+  position: fixed;
+  top: var(--top);
+  left: -10%;
+  font-size: 25px;
+  animation: batFly var(--duration) linear infinite;
+  pointer-events: none;
 }
-.fog {
-  position: absolute; bottom: 5%; left: -20%; width: 140%; height: 18%;
-  background: linear-gradient(90deg, transparent, #d6b9e51a, #ffffff12, transparent);
-  filter: blur(25px); animation: fogDrift 18s ease-in-out infinite alternate;
-  pointer-events: none; z-index: 4;
+
+.pumpkin {
+  position: fixed;
+  bottom: 7%;
+  z-index: 2;
+  font-size: clamp(35px, 5vw, 65px);
+  filter: drop-shadow(0 0 15px #ff7a1855);
+  animation: pumpkinGlow 2s ease-in-out infinite alternate;
 }
+
+.p1 {
+  left: 28%;
+}
+
+.p2 {
+  right: 25%;
+  animation-delay: -1s;
+}
+
+.player {
+  position: fixed;
+  z-index: 10;
+  right: 24px;
+  bottom: 24px;
+  width: min(390px, calc(100vw - 32px));
+  padding: 20px;
+  border: 1px solid #ffb45f55;
+  border-radius: 18px;
+  background: var(--panel);
+  box-shadow: 0 12px 45px #0008;
+  backdrop-filter: blur(14px);
+}
+
+.player-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.player-title {
+  color: #ffb45f;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.status {
+  color: #cbbbd9;
+  font-size: 11px;
+}
+
+.track-name {
+  overflow: hidden;
+  margin-bottom: 5px;
+  color: #fff4e5;
+  font-size: 19px;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-status {
+  min-height: 18px;
+  margin-bottom: 12px;
+  color: #cdbedb;
+  font-size: 12px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+button {
+  color: #fff4e5;
+  cursor: pointer;
+  border: 1px solid #ffffff24;
+  background: #ffffff0d;
+  transition: background .2s, transform .2s;
+}
+
+button:hover {
+  background: #ff9a3230;
+  border-color: #ffb45f88;
+}
+
+button:active {
+  transform: scale(.96);
+}
+
+.control {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+.play {
+  width: 54px;
+  height: 54px;
+  color: #1b1020;
+  background: #ffad42;
+  border: none;
+  font-size: 22px;
+}
+
+.play:hover {
+  background: #ffc15a;
+}
+
+.progress-row {
+  display: grid;
+  grid-template-columns: 42px 1fr 42px;
+  align-items: center;
+  gap: 8px;
+  color: #cdbedb;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: #ff9a32;
+  cursor: pointer;
+}
+
+.volume-row {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.playlist {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 120px;
+  margin-top: 14px;
+  overflow-y: auto;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 8px;
+  text-align: left;
+  font-size: 12px;
+}
+
+.track.active {
+  color: #ffc15a;
+  background: #ff9a3220;
+  border-color: #ffb45f66;
+}
+
+.track-number {
+  width: 18px;
+  color: #cdbedb;
+}
+
+.track-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-footer {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.small-button {
+  flex: 1;
+  padding: 10px 8px;
+  border-radius: 9px;
+  font-size: 11px;
+}
+
+#fileInput {
+  display: none;
+}
+
+.hide-player {
+  position: fixed;
+  z-index: 11;
+  right: 24px;
+  bottom: 24px;
+  display: none;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #1a1029e8;
+  border-color: #ffb45f66;
+}
+
 .hint {
-  position: absolute; z-index: 5; bottom: 24px; left: 50%;
-  transform: translateX(-50%); color: #d4bddc99;
-  font-size: 10px; letter-spacing: .18em; text-align: center;
-  white-space: nowrap; transition: opacity .5s;
+  position: fixed;
+  left: 18px;
+  bottom: 15px;
+  z-index: 12;
+  color: #d5bed8;
+  font-size: 11px;
+  opacity: .75;
 }
-body.controls-hidden .hint { opacity: 0; }
-@keyframes twinkle { from { opacity: .3; transform: scale(.85); } to { opacity: 1; transform: scale(1.1); } }
-@keyframes ghostFloat { 0%,100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-28px) rotate(6deg); } }
-@keyframes batFly { 0% { transform: translateX(0) translateY(0) scale(.8); } 50% { transform: translateX(60vw) translateY(-35px) scale(1.1); } 100% { transform: translateX(120vw) translateY(12px) scale(.8); } }
-@keyframes fogDrift { from { transform: translateX(-6%); opacity: .35; } to { transform: translateX(6%); opacity: .8; } }
-@keyframes pumpkinGlow { from { filter: brightness(.9); } to { filter: brightness(1.15); } }
-@media (max-width: 600px) {
-  .scene-title { top: 7%; left: 6%; max-width: 75%; }
-  .moon { top: 12%; right: 8%; }
-  .clock { top: 49%; }
-  .house { left: 5%; bottom: 12%; }
-  .tree { right: 6%; bottom: 12%; }
-  .pumpkin.p1 { left: 38%; }
-  .pumpkin.p2 { right: 25%; }
-  .subtitle { max-width: 90%; line-height: 1.5; }
+
+@keyframes twinkle {
+  from { opacity: .25; transform: scale(.8); }
+  to { opacity: 1; transform: scale(1.2); }
 }
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+
+@keyframes float {
+  from { transform: translateY(0) rotate(-5deg); }
+  to { transform: translateY(-22px) rotate(5deg); }
+}
+
+@keyframes batFly {
+  from { transform: translateX(0) translateY(0); }
+  to { transform: translateX(120vw) translateY(-25px); }
+}
+
+@keyframes pumpkinGlow {
+  from { filter: brightness(.9) drop-shadow(0 0 5px #ff7a1855); }
+  to { filter: brightness(1.15) drop-shadow(0 0 20px #ff7a18aa); }
+}
+
+@media (max-width: 700px) {
+  .scene-title {
+    top: 5%;
+    left: 5%;
+    max-width: 80%;
+  }
+
+  .moon {
+    top: 10%;
+    right: 5%;
+    width: 90px;
+  }
+
+  .clock {
+    top: 32%;
+    left: 5%;
+  }
+
+  .player {
+    right: 12px;
+    bottom: 42px;
+    width: min(360px, calc(100vw - 24px));
+    padding: 15px;
+  }
+
+  .house {
+    left: 8%;
+    bottom: 13%;
+  }
+
+  .tree {
+    right: 2%;
+    transform: scale(.7);
+    transform-origin: bottom right;
+  }
+
+  .p1 {
+    left: 35%;
+  }
+
+  .p2 {
+    right: 17%;
+  }
+
+  .hint {
+    bottom: 10px;
+    left: 10px;
+  }
 }
 </style>
 </head>
+
 <body>
 <div class="sky-glow"></div>
 <div class="stars" id="stars"></div>
-
-<div class="moon" aria-hidden="true">
-  <span class="moon-crater one"></span>
-  <span class="moon-crater two"></span>
-  <span class="moon-crater three"></span>
-</div>
+<div class="moon"></div>
 
 <header class="scene-title">
   <div class="kicker">October • Spooky Season</div>
@@ -222,20 +559,20 @@ body.controls-hidden .hint { opacity: 0; }
   <p class="subtitle">A little spooky. A lot of magic.</p>
 </header>
 
-<div class="clock" aria-label="Current date and time">
+<div class="clock">
   <div class="time" id="time">12:00:00 AM</div>
   <div class="date" id="date">HALLOWEEN NIGHT</div>
 </div>
 
-<div class="ghost g1" aria-hidden="true">👻</div>
-<div class="ghost g2" aria-hidden="true">👻</div>
-<div class="ghost g3" aria-hidden="true">🦇</div>
+<div class="ghost g1">👻</div>
+<div class="ghost g2">👻</div>
+<div class="ghost g3">🦇</div>
 
-<div class="bat" style="--top:33%;--duration:17s" aria-hidden="true">🦇</div>
-<div class="bat" style="--top:60%;--duration:22s;animation-delay:-8s" aria-hidden="true">🦇</div>
-<div class="bat" style="--top:15%;--duration:25s;animation-delay:-14s" aria-hidden="true">🦇</div>
+<div class="bat" style="--top:33%;--duration:17s">🦇</div>
+<div class="bat" style="--top:60%;--duration:22s;animation-delay:-8s">🦇</div>
+<div class="bat" style="--top:15%;--duration:25s;animation-delay:-14s">🦇</div>
 
-<div class="house" aria-hidden="true">
+<div class="house">
   <div class="roof"></div>
   <div class="house-body">
     <div class="window left"></div>
@@ -244,72 +581,366 @@ body.controls-hidden .hint { opacity: 0; }
   </div>
 </div>
 
-<div class="tree" aria-hidden="true">
-  <div class="tree-part p1"></div>
-  <div class="tree-part p2"></div>
-  <div class="tree-part p3"></div>
-  <div class="tree-trunk"></div>
-  <div class="tree-light l1"></div>
-  <div class="tree-light l2"></div>
-  <div class="tree-light l3"></div>
-</div>
+<div class="tree"></div>
+<div class="pumpkin p1">🎃</div>
+<div class="pumpkin p2">🎃</div>
+<div class="ground"></div>
 
-<div class="pumpkin p1" aria-hidden="true"><div class="mouth"></div></div>
-<div class="pumpkin p2" aria-hidden="true"><div class="mouth"></div></div>
-<div class="hill back"></div>
-<div class="hill"></div>
-<div class="fog"></div>
+<section class="player" id="player">
+  <div class="player-header">
+    <div class="player-title">Spooky Soundtrack</div>
+    <div class="status" id="status">READY</div>
+  </div>
 
-<div class="hint" id="hint">DOUBLE-CLICK FOR FULLSCREEN · PRESS H TO HIDE THIS MESSAGE</div>
+  <div class="track-name" id="trackName">Song 1</div>
+  <div class="track-status" id="trackStatus">Press play to start your music.</div>
+
+  <audio id="audio" preload="metadata"></audio>
+
+  <div class="progress-row">
+    <span id="currentTime">0:00</span>
+    <input id="progress" type="range" min="0" max="1000" value="0" aria-label="Track progress">
+    <span id="duration">0:00</span>
+  </div>
+
+  <div class="controls">
+    <button class="control" id="previous" title="Previous track" aria-label="Previous track">⏮</button>
+    <button class="control play" id="playPause" title="Play" aria-label="Play">▶</button>
+    <button class="control" id="next" title="Next track" aria-label="Next track">⏭</button>
+  </div>
+
+  <div class="volume-row">
+    <span aria-hidden="true">🔊</span>
+    <input id="volume" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="Volume">
+  </div>
+
+  <div class="playlist" id="playlist"></div>
+
+  <div class="player-footer">
+    <button class="small-button" id="chooseFiles">＋ Add Audio Files</button>
+    <button class="small-button" id="hideButton">Hide Player</button>
+  </div>
+
+  <input id="fileInput" type="file" accept="audio/*" multiple>
+</section>
+
+<button class="hide-player" id="showButton">♫ Show Music Player</button>
+<div class="hint" id="hint">F: Fullscreen • H: Hide hints • M: Hide/show player</div>
 
 <script>
-const stars = document.getElementById("stars");
-for (let i = 0; i < 100; i++) {
-  const star = document.createElement("span");
-  star.className = "star";
-  const size = Math.random() * 2.5 + 1;
-  star.style.width = size + "px";
-  star.style.height = size + "px";
-  star.style.left = Math.random() * 100 + "%";
-  star.style.top = Math.random() * 76 + "%";
-  star.style.setProperty("--duration", (1.5 + Math.random() * 4) + "s");
-  star.style.animationDelay = (-Math.random() * 5) + "s";
-  stars.appendChild(star);
-}
+const audio = document.getElementById("audio");
+const playPause = document.getElementById("playPause");
+const progress = document.getElementById("progress");
+const volume = document.getElementById("volume");
+const trackName = document.getElementById("trackName");
+const trackStatus = document.getElementById("trackStatus");
+const statusText = document.getElementById("status");
+const playlistElement = document.getElementById("playlist");
+const fileInput = document.getElementById("fileInput");
+const player = document.getElementById("player");
+const showButton = document.getElementById("showButton");
+const hint = document.getElementById("hint");
+
+let tracks = [
+  { name: "Song 1", src: "./audio1.mp3", local: false },
+  { name: "Song 2", src: "./audio2.mp3", local: false },
+  { name: "Song 3", src: "./audio3.mp3", local: false }
+];
+
+let currentTrack = 0;
+let isSeeking = false;
 
 function updateClock() {
   const now = new Date();
-  document.getElementById("time").textContent = now.toLocaleTimeString([], {
-    hour: "2-digit", minute: "2-digit", second: "2-digit"
-  });
-  document.getElementById("date").textContent = now.toLocaleDateString([], {
-    weekday: "long", month: "long", day: "numeric", year: "numeric"
+
+  document.getElementById("time").textContent =
+    now.toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+
+  document.getElementById("date").textContent =
+    now.toLocaleDateString([], {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    });
+}
+
+function makeStars() {
+  const stars = document.getElementById("stars");
+
+  for (let i = 0; i < 100; i++) {
+    const star = document.createElement("span");
+    star.className = "star";
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 85 + "%";
+    star.style.width = (Math.random() * 2 + 1) + "px";
+    star.style.height = star.style.width;
+    star.style.setProperty("--duration", (Math.random() * 3 + 2) + "s");
+    star.style.animationDelay = (Math.random() * 4) + "s";
+    stars.appendChild(star);
+  }
+}
+
+function formatTime(seconds) {
+  if (!Number.isFinite(seconds) || seconds < 0) {
+    return "0:00";
+  }
+
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = Math.floor(seconds % 60);
+
+  return minutes + ":" + String(remainingSeconds).padStart(2, "0");
+}
+
+function renderPlaylist() {
+  playlistElement.innerHTML = "";
+
+  tracks.forEach((track, index) => {
+    const button = document.createElement("button");
+    button.className = "track" + (index === currentTrack ? " active" : "");
+
+    const number = document.createElement("span");
+    number.className = "track-number";
+    number.textContent = index === currentTrack && !audio.paused ? "♫" : String(index + 1);
+
+    const label = document.createElement("span");
+    label.className = "track-label";
+    label.textContent = track.name;
+
+    button.append(number, label);
+    button.addEventListener("click", () => loadTrack(index, true));
+    playlistElement.appendChild(button);
   });
 }
-updateClock();
-setInterval(updateClock, 1000);
+
+function loadTrack(index, shouldPlay) {
+  if (!tracks.length) return;
+
+  currentTrack = (index + tracks.length) % tracks.length;
+
+  audio.pause();
+  audio.src = tracks[currentTrack].src;
+  audio.load();
+
+  trackName.textContent = tracks[currentTrack].name;
+  trackStatus.textContent = "Loading audio...";
+  statusText.textContent = "READY";
+  progress.value = 0;
+  document.getElementById("currentTime").textContent = "0:00";
+  document.getElementById("duration").textContent = "0:00";
+  playPause.textContent = "▶";
+  playPause.title = "Play";
+
+  renderPlaylist();
+
+  if (shouldPlay) {
+    playAudio();
+  }
+}
+
+async function playAudio() {
+  try {
+    await audio.play();
+    playPause.textContent = "❚❚";
+    playPause.title = "Pause";
+    trackStatus.textContent = "Now playing";
+    statusText.textContent = "PLAYING";
+    renderPlaylist();
+  } catch (error) {
+    playPause.textContent = "▶";
+    playPause.title = "Play";
+    statusText.textContent = "NOT PLAYING";
+    trackStatus.textContent =
+      "Couldn't play this file. Check its filename and folder, then try Play again.";
+    console.error("Audio playback error:", error);
+  }
+}
+
+function pauseAudio() {
+  audio.pause();
+  playPause.textContent = "▶";
+  playPause.title = "Play";
+  statusText.textContent = "PAUSED";
+  trackStatus.textContent = "Music paused.";
+  renderPlaylist();
+}
+
+playPause.addEventListener("click", () => {
+  if (audio.paused) {
+    playAudio();
+  } else {
+    pauseAudio();
+  }
+});
+
+document.getElementById("previous").addEventListener("click", () => {
+  loadTrack(currentTrack - 1, true);
+});
+
+document.getElementById("next").addEventListener("click", () => {
+  loadTrack(currentTrack + 1, true);
+});
+
+audio.addEventListener("loadedmetadata", () => {
+  document.getElementById("duration").textContent = formatTime(audio.duration);
+  trackStatus.textContent = "Ready to play.";
+});
+
+audio.addEventListener("timeupdate", () => {
+  if (!isSeeking && Number.isFinite(audio.duration) && audio.duration > 0) {
+    progress.value = Math.round((audio.currentTime / audio.duration) * 1000);
+  }
+
+  document.getElementById("currentTime").textContent =
+    formatTime(audio.currentTime);
+});
+
+audio.addEventListener("play", () => {
+  playPause.textContent = "❚❚";
+  statusText.textContent = "PLAYING";
+  renderPlaylist();
+});
+
+audio.addEventListener("pause", () => {
+  playPause.textContent = "▶";
+
+  if (audio.ended) return;
+
+  statusText.textContent = "PAUSED";
+  renderPlaylist();
+});
+
+audio.addEventListener("ended", () => {
+  loadTrack(currentTrack + 1, true);
+});
+
+audio.addEventListener("error", () => {
+  const track = tracks[currentTrack];
+
+  if (!track) return;
+
+  statusText.textContent = "AUDIO ERROR";
+  trackStatus.textContent =
+    "Unable to load " + track.name +
+    ". Make sure the MP3 exists and its filename matches exactly.";
+});
+
+progress.addEventListener("input", () => {
+  isSeeking = true;
+  document.getElementById("currentTime").textContent =
+    formatTime((Number(progress.value) / 1000) * (audio.duration || 0));
+});
+
+progress.addEventListener("change", () => {
+  if (Number.isFinite(audio.duration) && audio.duration > 0) {
+    audio.currentTime = (Number(progress.value) / 1000) * audio.duration;
+  }
+
+  isSeeking = false;
+});
+
+volume.addEventListener("input", () => {
+  audio.volume = Number(volume.value);
+});
+
+document.getElementById("chooseFiles").addEventListener("click", () => {
+  fileInput.click();
+});
+
+fileInput.addEventListener("change", () => {
+  const files = Array.from(fileInput.files || [])
+    .filter(file => file.type.startsWith("audio/"));
+
+  if (!files.length) return;
+
+  const newTracks = files.map(file => ({
+    name: file.name,
+    src: URL.createObjectURL(file),
+    local: true
+  }));
+
+  tracks.push(...newTracks);
+  renderPlaylist();
+  trackStatus.textContent = files.length + " audio file(s) added.";
+  fileInput.value = "";
+});
+
+document.getElementById("hideButton").addEventListener("click", () => {
+  player.style.display = "none";
+  showButton.style.display = "block";
+});
+
+showButton.addEventListener("click", () => {
+  player.style.display = "block";
+  showButton.style.display = "none";
+});
+
+document.addEventListener("keydown", async event => {
+  const tag = document.activeElement.tagName;
+
+  if (tag === "INPUT" || tag === "TEXTAREA") return;
+
+  if (event.key.toLowerCase() === "f") {
+    if (!document.fullscreenElement) {
+      try {
+        await document.documentElement.requestFullscreen();
+      } catch (error) {
+        console.log("Fullscreen was not available.");
+      }
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  if (event.key.toLowerCase() === "h") {
+    hint.style.display = hint.style.display === "none" ? "block" : "none";
+  }
+
+  if (event.key.toLowerCase() === "m") {
+    const hidden = player.style.display === "none";
+    player.style.display = hidden ? "block" : "none";
+    showButton.style.display = hidden ? "none" : "block";
+  }
+
+  if (event.code === "Space") {
+    event.preventDefault();
+
+    if (audio.paused) {
+      playAudio();
+    } else {
+      pauseAudio();
+    }
+  }
+
+  if (event.key === "ArrowRight") {
+    loadTrack(currentTrack + 1, true);
+  }
+
+  if (event.key === "ArrowLeft") {
+    loadTrack(currentTrack - 1, true);
+  }
+});
 
 document.addEventListener("dblclick", async () => {
-  try {
-    if (!document.fullscreenElement) {
+  if (!document.fullscreenElement) {
+    try {
       await document.documentElement.requestFullscreen();
-    } else {
-      await document.exitFullscreen();
+    } catch (error) {
+      console.log("Fullscreen was not available.");
     }
-  } catch (error) {}
+  }
 });
 
-document.addEventListener("keydown", async (event) => {
-  if (event.key.toLowerCase() === "h") {
-    document.body.classList.toggle("controls-hidden");
-  }
-  if (event.key === "Escape") {
-    document.body.classList.remove("controls-hidden");
-  }
-  if (event.key.toLowerCase() === "f" && !document.fullscreenElement) {
-    try { await document.documentElement.requestFullscreen(); } catch (error) {}
-  }
-});
+audio.volume = Number(volume.value);
+makeStars();
+updateClock();
+setInterval(updateClock, 1000);
+renderPlaylist();
+loadTrack(0, false);
 </script>
 </body>
 </html>
