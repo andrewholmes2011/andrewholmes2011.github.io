@@ -1,0 +1,900 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10243a">
+<title>Holiday Escape Room</title>
+<style>
+:root {
+  --navy: #10243a;
+  --blue: #183f5b;
+  --ice: #dff5ff;
+  --white: #ffffff;
+  --gold: #ffd166;
+  --red: #c93c4b;
+  --green: #23866a;
+  --muted: #b9cbd9;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--white);
+  background: radial-gradient(circle at top, #285875, #10243a 68%);
+  overflow: hidden;
+}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+#snow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 20;
+}
+.snowflake {
+  position: absolute;
+  top: -30px;
+  color: white;
+  opacity: .8;
+  animation: snowfall linear infinite;
+  user-select: none;
+}
+@keyframes snowfall {
+  to { transform: translateY(110vh) translateX(35px) rotate(360deg); }
+}
+#app { height: 100vh; width: 100%; position: relative; }
+.slide {
+  display: none;
+  position: absolute;
+  inset: 0;
+  padding: 55px 7vw 90px;
+  overflow-y: auto;
+  align-items: center;
+  justify-content: center;
+}
+.slide.active { display: flex; }
+.content {
+  width: min(1100px, 100%);
+  margin: auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.eyebrow {
+  color: var(--gold);
+  font-weight: 800;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  font-size: .85rem;
+}
+h1 { font-size: clamp(2.8rem, 7vw, 6rem); line-height: 1.02; margin: 18px 0; }
+h2 { font-size: clamp(2rem, 4.5vw, 3.8rem); margin: 0 0 25px; }
+h3 { margin-top: 0; }
+p { font-size: clamp(1rem, 2vw, 1.35rem); line-height: 1.6; }
+.subtitle { color: var(--ice); font-size: clamp(1.1rem, 2.5vw, 1.7rem); }
+.big-icon { font-size: clamp(4rem, 10vw, 8rem); margin: 15px; }
+.panel {
+  background: rgba(255,255,255,.09);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 22px;
+  padding: clamp(20px, 4vw, 38px);
+  box-shadow: 0 18px 50px rgba(0,0,0,.16);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  gap: 18px;
+  text-align: left;
+}
+.card {
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.19);
+  border-radius: 18px;
+  padding: 22px;
+}
+.card h3 { color: var(--gold); font-size: 1.35rem; }
+.card p { font-size: 1rem; }
+.rules-list {
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: left;
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  line-height: 1.8;
+}
+.rules-list li { padding: 7px 0; }
+.team-card { text-align: center; border-top: 5px solid var(--gold); }
+.team-names { line-height: 1.8; font-size: 1rem; overflow-wrap: anywhere; }
+.puzzle { font-size: clamp(1.5rem, 4vw, 3rem); letter-spacing: .12em; font-weight: 900; color: var(--gold); margin: 24px 0; }
+.clue { max-width: 850px; margin: 20px auto; }
+.pill {
+  display: inline-block;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 999px;
+  padding: 8px 15px;
+  margin: 5px;
+  color: var(--ice);
+}
+#bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: rgba(8,24,39,.88);
+  backdrop-filter: blur(10px);
+}
+.nav-buttons { display: flex; gap: 10px; }
+.nav-btn, .action-btn {
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 17px;
+  color: var(--navy);
+  background: var(--ice);
+  font-weight: 800;
+}
+.nav-btn.primary, .action-btn.primary { background: var(--gold); }
+.nav-btn:disabled { opacity: .35; cursor: not-allowed; }
+#slideCounter { font-weight: 700; color: var(--ice); white-space: nowrap; }
+#hostButton {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 50;
+  border: 1px solid rgba(255,255,255,.35);
+  background: rgba(16,36,58,.8);
+  color: white;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 1.25rem;
+}
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(4,14,25,.88);
+  padding: 22px;
+  overflow-y: auto;
+  align-items: center;
+  justify-content: center;
+}
+.overlay.open { display: flex; }
+.dialog {
+  width: min(1000px, 100%);
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 28px;
+  border-radius: 22px;
+  background: #f7fbff;
+  color: #142b3d;
+  box-shadow: 0 20px 80px #0008;
+}
+.dialog h2, .dialog h3 { color: #173f5a; }
+.dialog p, .dialog label, .dialog li { font-size: 1rem; line-height: 1.5; }
+.dialog input, .dialog select, .dialog textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #aabac7;
+  border-radius: 9px;
+  margin: 5px 0 12px;
+  background: white;
+  color: #142b3d;
+}
+.dialog button { margin: 4px; }
+.dialog .action-btn { background: #dff5ff; }
+.dialog .action-btn.primary { background: #ffd166; }
+.dialog .danger { background: #ffe2e5; color: #7f1c2a; }
+.dialog .success { background: #d9f8e9; color: #155b41; }
+.dialog .muted { color: #526575; font-size: .9rem; }
+.dialog .section { border-top: 1px solid #d7e0e7; padding-top: 18px; margin-top: 18px; }
+.roster-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e7ec;
+}
+.roster-item input[type="checkbox"] { width: auto; margin: 0; }
+.roster-item span { flex: 1; }
+.team-result {
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 10px;
+  background: #eaf4fa;
+}
+#announcement {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: radial-gradient(circle, #285875, #10243a 70%);
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  text-align: center;
+}
+#announcement.show { display: flex; }
+#announcement h1 { color: var(--gold); }
+#announcementMessage { max-width: 900px; margin: auto; }
+#announcementClose {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.winner-name { color: var(--gold); font-size: clamp(2.5rem, 7vw, 5.5rem); overflow-wrap: anywhere; }
+.answer { color: #155b41; font-weight: 800; }
+.hidden { display: none !important; }
+@media (max-width: 600px) {
+  .slide { padding: 60px 18px 90px; }
+  #bottomBar { padding: 9px 10px; }
+  .nav-btn { padding: 10px 12px; }
+  #slideCounter { font-size: .85rem; }
+  .dialog { padding: 18px; }
+}
+</style>
+</head>
+<body>
+<div id="snow" aria-hidden="true"></div>
+<button id="hostButton" title="Host controls" aria-label="Open host controls">❄</button>
+
+<main id="app">
+  <section class="slide active" data-title="Welcome">
+    <div class="content">
+      <div class="eyebrow">A Holiday Team Challenge</div>
+      <div class="big-icon">🎄❄️🎁</div>
+      <h1>Holiday<br>Escape Room</h1>
+      <p class="subtitle">Solve the puzzles. Crack the clues. Escape the holiday mystery.</p>
+      <p>Work together, think creatively, and see which team can solve the holiday challenges!</p>
+      <span class="pill">Teamwork</span><span class="pill">Puzzles</span><span class="pill">Holiday Fun</span>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Your Mission">
+    <div class="content">
+      <div class="eyebrow">Mission Briefing</div>
+      <h2>🎅 Your Mission</h2>
+      <div class="panel">
+        <p>The holiday celebration has been locked behind a series of puzzles.</p>
+        <p>Your team must solve each challenge, pay attention to the clues, and work together to reach the final answer.</p>
+        <p><strong>Can your team escape before time runs out?</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Rules">
+    <div class="content">
+      <div class="eyebrow">Before You Begin</div>
+      <h2>📜 Escape Room Rules</h2>
+      <div class="panel">
+        <ol class="rules-list">
+          <li>Work with your assigned team.</li>
+          <li>Everyone should contribute ideas.</li>
+          <li>Read each clue carefully before answering.</li>
+          <li>Keep answers with your team until asked to share.</li>
+          <li>Be respectful and let everyone participate.</li>
+          <li>No searching online for puzzle answers.</li>
+          <li>Have fun and keep the holiday spirit alive!</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Teams">
+    <div class="content">
+      <div class="eyebrow">Meet Your Team</div>
+      <h2>👥 Team Assignments</h2>
+      <p>Find your name and work together with your teammates.</p>
+      <div id="teamSlideGrid" class="grid"></div>
+      <p class="muted">The host can update the roster and randomize teams using the snowflake button.</p>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Challenge 1">
+    <div class="content">
+      <div class="eyebrow">Challenge 1 · Holiday Movies</div>
+      <h2>🎬 Guess the Holiday Movie</h2>
+      <p>Use the emojis to identify each holiday movie title.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Movie A</h3>
+          <div class="big-icon">🏠👦🪤🎄</div>
+          <p>What holiday movie do these emojis represent?</p>
+        </div>
+        <div class="card">
+          <h3>Movie B</h3>
+          <div class="big-icon">🚂❄️🎅🎁</div>
+          <p>A magical train ride takes children on a Christmas adventure.</p>
+        </div>
+        <div class="card">
+          <h3>Movie C</h3>
+          <div class="big-icon">💚😠🎄🎁</div>
+          <p>A grumpy character tries to steal Christmas.</p>
+        </div>
+        <div class="card">
+          <h3>Movie D</h3>
+          <div class="big-icon">🦌🔴👃🎅</div>
+          <p>A famous reindeer helps guide Santa's sleigh.</p>
+        </div>
+      </div>
+      <p class="muted">Write down your answers. The host will reveal the answer key later.</p>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Challenge 2">
+    <div class="content">
+      <div class="eyebrow">Challenge 2 · Frozen Message</div>
+      <h2>🧊 Decode the Frozen Message</h2>
+      <div class="panel">
+        <p>Someone froze this message before leaving the room. Rearrange the letters to reveal the holiday phrase.</p>
+        <div class="puzzle">Y R R E M · H C S T I M S A R</div>
+        <p class="clue">Hint: It's something people say or wish during the holiday season.</p>
+        <p>What is the correct message?</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Challenge 3">
+    <div class="content">
+      <div class="eyebrow">Challenge 3 · Movie Clues</div>
+      <h2>🍿 Identify the Holiday Movie</h2>
+      <p>Each team has a different movie clue. Find your team's card and identify the movie.</p>
+      <div id="challenge3Grid" class="grid"></div>
+      <p class="muted">Host: use the host controls to see and update team assignments.</p>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Final Puzzle">
+    <div class="content">
+      <div class="eyebrow">Final Challenge</div>
+      <h2>🔐 The Final Holiday Code</h2>
+      <div class="panel">
+        <p>Use the answers from the earlier challenges to unlock the final holiday message.</p>
+        <div class="grid">
+          <div class="card">
+            <h3>Clue 1</h3>
+            <p>How many letters are in the word <strong>SANTA</strong>?</p>
+          </div>
+          <div class="card">
+            <h3>Clue 2</h3>
+            <p>How many reindeer are traditionally named in Santa's team, not counting Rudolph?</p>
+          </div>
+          <div class="card">
+            <h3>Clue 3</h3>
+            <p>How many letters are in the word <strong>ELF</strong>?</p>
+          </div>
+        </div>
+        <p class="puzzle">_ _  ·  _ _  ·  _</p>
+        <p>Put your answers together in order. Be ready to explain your thinking!</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Winner">
+    <div class="content">
+      <div class="eyebrow">Holiday Escape Room Results</div>
+      <div class="big-icon">🏆🎄🏆</div>
+      <h2>And the Winning Team Is...</h2>
+      <div id="finalWinnerText" class="winner-name">Your Team Here!</div>
+      <p id="finalWinnerMessage" class="subtitle">Congratulations on solving the holiday mystery!</p>
+      <p>Thank you for participating and bringing your teamwork and holiday spirit.</p>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Answer Key">
+    <div class="content">
+      <div class="eyebrow">Host Reference</div>
+      <h2>🔑 Answer Key</h2>
+      <div class="panel" style="text-align:left">
+        <h3>Challenge 1 · Holiday Movies</h3>
+        <p><strong>A:</strong> Home Alone</p>
+        <p><strong>B:</strong> The Polar Express</p>
+        <p><strong>C:</strong> How the Grinch Stole Christmas</p>
+        <p><strong>D:</strong> Rudolph the Red-Nosed Reindeer</p>
+        <hr>
+        <h3>Challenge 2 · Frozen Message</h3>
+        <p><strong>Answer:</strong> Merry Christmas</p>
+        <hr>
+        <h3>Challenge 3 · Movie Clues</h3>
+        <p><strong>Team A:</strong> Elf</p>
+        <p><strong>Team B:</strong> Jingle All the Way</p>
+        <p><strong>Team C:</strong> Miracle on 34th Street</p>
+        <p><strong>Team D:</strong> A Christmas Story</p>
+        <p><strong>Team E:</strong> The Santa Clause</p>
+        <hr>
+        <h3>Final Puzzle</h3>
+        <p>Santa = 5 letters; traditional reindeer excluding Rudolph = 8; Elf = 3.</p>
+        <p><strong>Answer:</strong> 5 · 8 · 3</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="bottomBar">
+  <div id="slideCounter">Slide 1 of 10</div>
+  <div class="nav-buttons">
+    <button id="prevBtn" class="nav-btn" disabled>← Back</button>
+    <button id="nextBtn" class="nav-btn primary">Next →</button>
+  </div>
+</div>
+
+<div id="hostOverlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="hostTitle">
+  <div class="dialog">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <h2 id="hostTitle">❄ Host Dashboard</h2>
+      <button id="closeHostBtn" class="action-btn">Close ✕</button>
+    </div>
+    <div id="hostLogin">
+      <p>Enter the host passcode to manage teams and the winner announcement.</p>
+      <label for="hostPass">Host passcode</label>
+      <input id="hostPass" type="password" placeholder="Enter passcode" autocomplete="off">
+      <button id="hostLoginBtn" class="action-btn primary">Unlock Dashboard</button>
+      <p id="hostLoginError" class="hidden" style="color:#a51f32">Incorrect passcode. Please try again.</p>
+    </div>
+
+    <div id="hostDashboard" class="hidden">
+      <div class="section">
+        <h3>Teams & Roster</h3>
+        <p class="muted">Select the students who should be included, then randomize the selected students into five teams. The roster includes editable placeholders for any additional students.</p>
+        <input id="rosterSearch" type="search" placeholder="Search students...">
+        <div id="rosterList"></div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px">
+          <button id="selectAllBtn" class="action-btn">Select All</button>
+          <button id="deselectAllBtn" class="action-btn">Deselect All</button>
+          <button id="randomizeBtn" class="action-btn primary">Randomize Teams A–E</button>
+        </div>
+        <div class="section">
+          <h3>Add a Student</h3>
+          <label for="newStudentName">Student name</label>
+          <input id="newStudentName" type="text" placeholder="Enter student name">
+          <button id="addStudentBtn" class="action-btn">Add Student</button>
+        </div>
+        <div class="section">
+          <h3>Team Assignment Results</h3>
+          <div id="teamResults"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Winner Announcement</h3>
+        <label for="winnerInput">Winning team or name</label>
+        <input id="winnerInput" type="text" placeholder="Example: Team C">
+        <label for="winnerMessageInput">Announcement message</label>
+        <textarea id="winnerMessageInput" rows="3">Congratulations on solving the holiday mystery!</textarea>
+        <button id="saveWinnerBtn" class="action-btn primary">Save Winner</button>
+        <button id="showWinnerBtn" class="action-btn">Show Announcement</button>
+        <button id="hideWinnerBtn" class="action-btn">Hide Announcement</button>
+        <button id="resetWinnerBtn" class="action-btn danger">Reset Winner</button>
+      </div>
+
+      <div class="section">
+        <h3>Navigation Shortcuts</h3>
+        <p><strong>← / →</strong> Previous or next slide · <strong>Home / End</strong> First or last slide · <strong>S</strong> Host dashboard · <strong>W</strong> Winner announcement · <strong>P</strong> Pause snow · <strong>R</strong> Resume snow</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="answerOverlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="answerTitle">
+  <div class="dialog">
+    <h2 id="answerTitle">🔐 Answer Key Locked</h2>
+    <p>Enter the passcode to reveal the answer key.</p>
+    <label for="answerPass">Answer key passcode</label>
+    <input id="answerPass" type="password" placeholder="Enter passcode" autocomplete="off">
+    <button id="answerLoginBtn" class="action-btn primary">Unlock Answers</button>
+    <button id="closeAnswerBtn" class="action-btn">Close</button>
+    <p id="answerError" class="hidden" style="color:#a51f32">Incorrect passcode.</p>
+  </div>
+</div>
+
+<div id="announcement">
+  <button id="announcementClose" class="nav-btn">Close ✕</button>
+  <div id="announcementMessage">
+    <div class="big-icon">🏆🎄🏆</div>
+    <div class="eyebrow">Holiday Escape Room Champions</div>
+    <h1 id="announcementWinner">Your Team Here!</h1>
+    <p id="announcementText" class="subtitle">Congratulations on solving the holiday mystery!</p>
+    <div class="big-icon">🎉❄️🎉</div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+const HOST_PASSCODE = "HOLIDAY2026";
+const ANSWER_PASSCODE = "HOLIDAY2026";
+const TEAM_NAMES = ["A", "B", "C", "D", "E"];
+
+const students = [
+  "Saraey Acevedo",
+  "Lilly Antonissen",
+  "Kimberly Carrillo-Gonzalez",
+  "Avery Farrare",
+  "Mekayela Herman",
+  "Angel Hernandez",
+  "Tyler Hoffman",
+  "Andrew Holmes",
+  "Mason Homer",
+  "Evolet Infante Hernandez",
+  "Ethan Melvin",
+  "Miranda Mercado Ventura",
+  "Audrey Minn",
+  "Student 14",
+  "Student 15",
+  "Student 16",
+  "Student 17",
+  "Student 18",
+  "Student 19",
+  "Student 20",
+  "Student 21",
+  "Student 22"
+];
+
+let selectedStudents = new Set(students);
+let teams = { A: [], B: [], C: [], D: [], E: [] };
+let currentSlide = 0;
+let snowPaused = false;
+let answerUnlocked = false;
+
+const slides = [...document.querySelectorAll(".slide")];
+const slideCounter = document.getElementById("slideCounter");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const hostOverlay = document.getElementById("hostOverlay");
+const answerOverlay = document.getElementById("answerOverlay");
+
+const challenge3Cards = {
+  A: {
+    title: "Team A",
+    scramble: "F E L",
+    clue: "A human child is raised by Santa's elves and travels to New York to find his biological father.",
+    answer: "Elf"
+  },
+  B: {
+    title: "Team B",
+    scramble: "W A Y · L E J I N G · T H E · A L L",
+    clue: "A young boy wants a special toy for Christmas, but his father must compete with other parents to find the season's most popular gift.",
+    answer: "Jingle All the Way"
+  },
+  C: {
+    title: "Team C",
+    scramble: "S T R E E T · 3 4 T H · O N · M I R A C L E",
+    clue: "A man claims to be Santa Claus and must prove his identity after being hired to work at a department store.",
+    answer: "Miracle on 34th Street"
+  },
+  D: {
+    title: "Team D",
+    scramble: "A · C H R I S T M A S · S T O R Y",
+    clue: "A boy hopes to receive a special air rifle for Christmas, while his family experiences a series of holiday mishaps.",
+    answer: "A Christmas Story"
+  },
+  E: {
+    title: "Team E",
+    scramble: "T H E · S A N T A · C L A U S E",
+    clue: "An ordinary man unexpectedly takes on the job of Santa after a surprising Christmas Eve incident.",
+    answer: "The Santa Clause"
+  }
+};
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, character => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[character]);
+}
+
+function shortName(name) {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length < 2) return name;
+  return parts[0] + " " + parts[parts.length - 1][0] + ".";
+}
+
+function showSlide(index) {
+  if (!slides.length) return;
+  currentSlide = Math.max(0, Math.min(index, slides.length - 1));
+  slides.forEach((slide, i) => slide.classList.toggle("active", i === currentSlide));
+  slideCounter.textContent = `Slide ${currentSlide + 1} of ${slides.length}`;
+  prevBtn.disabled = currentSlide === 0;
+  nextBtn.disabled = currentSlide === slides.length - 1;
+  prevBtn.textContent = "← Back";
+  nextBtn.textContent = currentSlide === slides.length - 1 ? "End" : "Next →";
+  if (currentSlide === slides.length - 1 && !answerUnlocked) {
+    answerOverlay.classList.add("open");
+    document.getElementById("answerPass").focus();
+  }
+}
+
+function renderTeams() {
+  const grid = document.getElementById("teamSlideGrid");
+  const results = document.getElementById("teamResults");
+  grid.innerHTML = "";
+  results.innerHTML = "";
+
+  TEAM_NAMES.forEach(teamName => {
+    const members = teams[teamName] || [];
+    const card = document.createElement("div");
+    card.className = "card team-card";
+    card.innerHTML = `<h3>Team ${teamName}</h3><div class="team-names">${
+      members.length
+        ? members.map(name => escapeHTML(shortName(name))).join("<br>")
+        : "<span class='muted'>No students assigned yet</span>"
+    }</div>`;
+    grid.appendChild(card);
+
+    const result = document.createElement("div");
+    result.className = "team-result";
+    result.innerHTML = `<strong>Team ${teamName}</strong><br>${
+      members.length ? members.map(escapeHTML).join(", ") : "No students assigned"
+    }`;
+    results.appendChild(result);
+  });
+
+  renderChallenge3();
+}
+
+function renderChallenge3() {
+  const grid = document.getElementById("challenge3Grid");
+  grid.innerHTML = "";
+
+  TEAM_NAMES.forEach(teamName => {
+    const data = challenge3Cards[teamName];
+    const card = document.createElement("div");
+    card.className = "card";
+    const members = teams[teamName] || [];
+    card.innerHTML = `
+      <h3>${escapeHTML(data.title)}</h3>
+      <p class="muted">${members.length ? members.map(name => escapeHTML(shortName(name))).join(", ") : "Your team"}</p>
+      <div class="puzzle" style="font-size:1.2rem;letter-spacing:.06em">${escapeHTML(data.scramble)}</div>
+      <p>${escapeHTML(data.clue)}</p>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function renderRoster() {
+  const list = document.getElementById("rosterList");
+  const search = document.getElementById("rosterSearch").value.trim().toLowerCase();
+  list.innerHTML = "";
+
+  students.forEach((name, index) => {
+    if (!name.toLowerCase().includes(search)) return;
+    const row = document.createElement("label");
+    row.className = "roster-item";
+    row.innerHTML = `
+      <input type="checkbox" data-student-index="${index}" ${selectedStudents.has(name) ? "checked" : ""}>
+      <span>${escapeHTML(name)}</span>
+      <button type="button" class="action-btn danger" data-remove-index="${index}" aria-label="Remove ${escapeHTML(name)}">Remove</button>
+    `;
+    list.appendChild(row);
+  });
+
+  if (!list.children.length) {
+    list.innerHTML = "<p class='muted'>No students match your search.</p>";
+  }
+}
+
+function randomizeTeams() {
+  teams = { A: [], B: [], C: [], D: [], E: [] };
+  const roster = students.filter(name => selectedStudents.has(name));
+  for (let i = roster.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [roster[i], roster[j]] = [roster[j], roster[i]];
+  }
+  roster.forEach((name, index) => {
+    teams[TEAM_NAMES[index % TEAM_NAMES.length]].push(name);
+  });
+  renderTeams();
+}
+
+function openHost() {
+  hostOverlay.classList.add("open");
+  document.getElementById("hostPass").value = "";
+  document.getElementById("hostLoginError").classList.add("hidden");
+  document.getElementById("hostLogin").classList.remove("hidden");
+  document.getElementById("hostDashboard").classList.add("hidden");
+  document.getElementById("hostPass").focus();
+}
+
+function unlockHost() {
+  if (document.getElementById("hostPass").value === HOST_PASSCODE) {
+    document.getElementById("hostLogin").classList.add("hidden");
+    document.getElementById("hostDashboard").classList.remove("hidden");
+    document.getElementById("hostLoginError").classList.add("hidden");
+    renderRoster();
+    renderTeams();
+    document.getElementById("winnerInput").value = document.getElementById("finalWinnerText").textContent;
+    document.getElementById("winnerMessageInput").value = document.getElementById("finalWinnerMessage").textContent;
+  } else {
+    document.getElementById("hostLoginError").classList.remove("hidden");
+  }
+}
+
+function saveWinner() {
+  const winner = document.getElementById("winnerInput").value.trim() || "Your Team Here!";
+  const message = document.getElementById("winnerMessageInput").value.trim() || "Congratulations on solving the holiday mystery!";
+  document.getElementById("finalWinnerText").textContent = winner;
+  document.getElementById("finalWinnerMessage").textContent = message;
+  document.getElementById("announcementWinner").textContent = winner;
+  document.getElementById("announcementText").textContent = message;
+}
+
+function showAnnouncement() {
+  saveWinner();
+  document.getElementById("announcement").classList.add("show");
+}
+
+function hideAnnouncement() {
+  document.getElementById("announcement").classList.remove("show");
+}
+
+function createSnow() {
+  const container = document.getElementById("snow");
+  for (let i = 0; i < 55; i++) {
+    const flake = document.createElement("span");
+    flake.className = "snowflake";
+    flake.textContent = Math.random() > .5 ? "❄" : "•";
+    flake.style.left = `${Math.random() * 100}%`;
+    flake.style.fontSize = `${8 + Math.random() * 18}px`;
+    flake.style.animationDuration = `${7 + Math.random() * 14}s`;
+    flake.style.animationDelay = `${Math.random() * -20}s`;
+    container.appendChild(flake);
+  }
+}
+
+function pauseSnow(paused) {
+  snowPaused = paused;
+  document.querySelectorAll(".snowflake").forEach(flake => {
+    flake.style.animationPlayState = paused ? "paused" : "running";
+  });
+}
+
+prevBtn.addEventListener("click", () => showSlide(currentSlide - 1));
+nextBtn.addEventListener("click", () => showSlide(currentSlide + 1));
+document.getElementById("hostButton").addEventListener("click", openHost);
+document.getElementById("closeHostBtn").addEventListener("click", () => hostOverlay.classList.remove("open"));
+document.getElementById("hostLoginBtn").addEventListener("click", unlockHost);
+
+document.getElementById("hostPass").addEventListener("keydown", event => {
+  if (event.key === "Enter") unlockHost();
+});
+
+document.getElementById("rosterSearch").addEventListener("input", renderRoster);
+
+document.getElementById("rosterList").addEventListener("change", event => {
+  const index = event.target.dataset.studentIndex;
+  if (index === undefined) return;
+  const name = students[Number(index)];
+  if (event.target.checked) selectedStudents.add(name);
+  else selectedStudents.delete(name);
+});
+
+document.getElementById("rosterList").addEventListener("click", event => {
+  const index = event.target.dataset.removeIndex;
+  if (index === undefined) return;
+  event.preventDefault();
+  const name = students[Number(index)];
+  const confirmed = window.confirm(`Remove ${name} from the roster?`);
+  if (!confirmed) return;
+  students.splice(Number(index), 1);
+  selectedStudents.delete(name);
+  TEAM_NAMES.forEach(teamName => {
+    teams[teamName] = teams[teamName].filter(member => member !== name);
+  });
+  renderRoster();
+  renderTeams();
+});
+
+document.getElementById("selectAllBtn").addEventListener("click", () => {
+  students.forEach(name => selectedStudents.add(name));
+  renderRoster();
+});
+
+document.getElementById("deselectAllBtn").addEventListener("click", () => {
+  selectedStudents.clear();
+  renderRoster();
+});
+
+document.getElementById("randomizeBtn").addEventListener("click", randomizeTeams);
+
+document.getElementById("addStudentBtn").addEventListener("click", () => {
+  const input = document.getElementById("newStudentName");
+  const name = input.value.trim();
+  if (!name) {
+    input.focus();
+    return;
+  }
+  if (students.some(existing => existing.toLowerCase() === name.toLowerCase())) {
+    window.alert("That student is already on the roster.");
+    return;
+  }
+  students.push(name);
+  selectedStudents.add(name);
+  input.value = "";
+  renderRoster();
+  renderTeams();
+});
+
+document.getElementById("saveWinnerBtn").addEventListener("click", saveWinner);
+document.getElementById("showWinnerBtn").addEventListener("click", showAnnouncement);
+document.getElementById("hideWinnerBtn").addEventListener("click", hideAnnouncement);
+document.getElementById("announcementClose").addEventListener("click", hideAnnouncement);
+
+document.getElementById("resetWinnerBtn").addEventListener("click", () => {
+  if (!window.confirm("Reset the winner announcement?")) return;
+  document.getElementById("winnerInput").value = "";
+  document.getElementById("winnerMessageInput").value = "Congratulations on solving the holiday mystery!";
+  saveWinner();
+  hideAnnouncement();
+});
+
+document.getElementById("answerLoginBtn").addEventListener("click", () => {
+  if (document.getElementById("answerPass").value === ANSWER_PASSCODE) {
+    answerUnlocked = true;
+    answerOverlay.classList.remove("open");
+    document.getElementById("answerError").classList.add("hidden");
+  } else {
+    document.getElementById("answerError").classList.remove("hidden");
+  }
+});
+
+document.getElementById("answerPass").addEventListener("keydown", event => {
+  if (event.key === "Enter") document.getElementById("answerLoginBtn").click();
+});
+
+document.getElementById("closeAnswerBtn").addEventListener("click", () => {
+  answerOverlay.classList.remove("open");
+});
+
+document.addEventListener("keydown", event => {
+  const tag = document.activeElement?.tagName;
+  const typing = ["INPUT", "TEXTAREA", "SELECT"].includes(tag);
+  if (typing && event.key !== "Escape") return;
+
+  if (event.key === "ArrowRight") {
+    event.preventDefault();
+    showSlide(currentSlide + 1);
+  } else if (event.key === "ArrowLeft") {
+    event.preventDefault();
+    showSlide(currentSlide - 1);
+  } else if (event.key === "Home") {
+    showSlide(0);
+  } else if (event.key === "End") {
+    showSlide(slides.length - 1);
+  } else if (event.key.toLowerCase() === "s") {
+    if (!hostOverlay.classList.contains("open")) openHost();
+    else hostOverlay.classList.remove("open");
+  } else if (event.key.toLowerCase() === "w") {
+    if (document.getElementById("announcement").classList.contains("show")) hideAnnouncement();
+    else showAnnouncement();
+  } else if (event.key.toLowerCase() === "p") {
+    pauseSnow(true);
+  } else if (event.key.toLowerCase() === "r") {
+    pauseSnow(false);
+  } else if (event.key === "Escape") {
+    hostOverlay.classList.remove("open");
+    answerOverlay.classList.remove("open");
+    hideAnnouncement();
+  }
+});
+
+createSnow();
+randomizeTeams();
+showSlide(0);
+</script>
+</body>
+</html>
