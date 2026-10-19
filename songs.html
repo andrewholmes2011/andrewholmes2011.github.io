@@ -1,0 +1,842 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Songs | Custom Spotify Player</title>
+<meta name="theme-color" content="#101310">
+
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #101310;
+  --panel: #1b201c;
+  --panel2: #242b25;
+  --green: #1ed760;
+  --text: #f5f7f5;
+  --muted: #a5afa7;
+  --border: #303a32;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at top, #193722, var(--bg) 55%);
+  color: var(--text);
+  font-family: Inter, Arial, sans-serif;
+  min-height: 100vh;
+}
+button, input { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+header {
+  padding: 20px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid var(--border);
+}
+.brand { font-size: 22px; font-weight: 800; }
+.brand span { color: var(--green); }
+button {
+  border: 0;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-weight: 700;
+  background: var(--panel2);
+  color: var(--text);
+}
+button:disabled { opacity: .45; cursor: not-allowed; }
+.primary { background: var(--green); color: #071108; }
+button:hover:not(:disabled) { filter: brightness(1.12); }
+main { width: min(1050px, 92%); margin: 35px auto 180px; }
+h1 { font-size: clamp(30px, 5vw, 46px); margin: 0 0 10px; }
+h2 { font-size: 20px; }
+.muted { color: var(--muted); line-height: 1.6; }
+.card {
+  background: #171c18ed;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+  margin-top: 22px;
+}
+.row { display: flex; gap: 10px; }
+input {
+  width: 100%;
+  min-width: 0;
+  padding: 14px;
+  color: white;
+  background: #0e120f;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+}
+input:focus { border-color: var(--green); }
+#status {
+  min-height: 22px;
+  margin: 13px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+#status.error { color: #ff9999; }
+#status.good { color: var(--green); }
+.playlist-head {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 24px 0;
+}
+#cover {
+  width: 150px;
+  height: 150px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 12px;
+  background: var(--panel2);
+}
+#playlistName { overflow-wrap: anywhere; }
+#tracks { display: grid; gap: 4px; }
+.track {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 10px;
+  border-radius: 10px;
+  min-width: 0;
+}
+.track:hover, .track.active { background: var(--panel2); }
+.track img {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  background: var(--panel2);
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+.track-info { min-width: 0; flex: 1; }
+.track-name, .artist {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.track-name { font-weight: 700; margin-bottom: 5px; }
+.artist { font-size: 13px; color: var(--muted); }
+.track button { min-width: 43px; padding: 11px; }
+#moreTracks { display: block; margin: 16px auto 0; }
+.hidden { display: none !important; }
+#loginArea { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+#loginArea p { flex: 1; min-width: 180px; }
+#playerBar {
+  position: fixed;
+  z-index: 5;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #111612f5;
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border);
+  padding: 15px max(4%, calc((100% - 1050px)/2));
+}
+.player-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+}
+.now { display: flex; align-items: center; gap: 12px; min-width: 0; }
+#nowCover { width: 52px; height: 52px; object-fit: cover; border-radius: 5px; }
+.controls { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.controls button { border-radius: 50%; min-width: 42px; height: 42px; padding: 8px; }
+#playButton { background: var(--green); color: #071108; font-size: 19px; }
+.progress { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+input[type="range"] { accent-color: var(--green); padding: 0; cursor: pointer; }
+#progress { flex: 1; }
+.volume { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.volume input { max-width: 130px; }
+footer { padding: 24px; text-align: center; color: var(--muted); font-size: 12px; }
+@media (max-width: 650px) {
+  header { padding: 16px 4%; }
+  main { margin-top: 25px; }
+  .card { padding: 15px; }
+  .playlist-head { align-items: flex-start; gap: 13px; }
+  #cover { width: 105px; height: 105px; }
+  .player-layout { grid-template-columns: 1fr auto; gap: 10px; }
+  .now { grid-column: 1; }
+  .controls { grid-column: 2; grid-row: 1; }
+  .progress { grid-column: 1 / -1; grid-row: 2; }
+  .volume { display: none; }
+  #playerBar { padding: 12px 4%; }
+  .track { padding: 8px 3px; gap: 9px; }
+  .track img { width: 44px; height: 44px; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="brand"><span>♫</span> Songs</div>
+  <button id="loginButton" class="primary">Connect Spotify</button>
+</header>
+
+<main>
+  <h1>Your music, your player.</h1>
+  <p class="muted">
+    Load a playlist by link and play tracks using your own
+    custom music player.
+  </p>
+
+  <section class="card">
+    <div id="loginArea">
+      <p class="muted" id="loginText">
+        Connect your Spotify account to load playlists and play music.
+      </p>
+      <button id="logoutButton" class="hidden">Disconnect</button>
+    </div>
+    <p id="status" role="status" aria-live="polite">
+      Set up your Spotify Client ID to begin.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Load a playlist</h2>
+    <form id="playlistForm" class="row">
+      <input id="playlistUrl" type="url"
+        placeholder="Paste your Spotify playlist link"
+        required>
+      <button class="primary" type="submit">Load</button>
+    </form>
+    <p class="muted">
+      Example: https://open.spotify.com/playlist/...
+    </p>
+  </section>
+
+  <section id="playlistSection" class="card hidden">
+    <div class="playlist-head">
+      <img id="cover" alt="Playlist cover">
+      <div>
+        <p class="muted">PLAYLIST</p>
+        <h2 id="playlistName">Your playlist</h2>
+        <p class="muted" id="playlistInfo"></p>
+        <button id="playAllButton" class="primary">▶ Play playlist</button>
+      </div>
+    </div>
+    <div id="tracks"></div>
+    <button id="moreTracks" class="hidden">Load more tracks</button>
+  </section>
+
+  <footer>Playback powered by Spotify</footer>
+</main>
+
+<section id="playerBar">
+  <div class="player-layout">
+    <div class="now">
+      <img id="nowCover" alt="" class="hidden">
+      <div class="track-info">
+        <div id="nowTitle">Nothing playing</div>
+        <div id="nowArtist" class="artist">Connect Spotify to start</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="controls">
+        <button id="previousButton" title="Previous track">|◀</button>
+        <button id="playButton" title="Play or pause">▶</button>
+        <button id="nextButton" title="Next track">▶|</button>
+      </div>
+      <div class="progress">
+        <span id="currentTime">0:00</span>
+        <input id="progress" type="range" min="0" max="1000" value="0">
+        <span id="duration">0:00</span>
+      </div>
+    </div>
+
+    <div class="volume">
+      <span>Volume</span>
+      <input id="volume" type="range" min="0" max="100" value="50">
+    </div>
+  </div>
+</section>
+
+<script src="https://sdk.scdn.co/spotify-player.js"></script>
+<script>
+/*
+  SETUP:
+  1. Create an app at https://developer.spotify.com/dashboard
+  2. Put its Client ID below.
+  3. Add this exact redirect URI in the Spotify app settings:
+     https://andrewholmes2011.github.io/songs.html
+  4. Enable the Web Playback SDK product if the dashboard asks.
+*/
+
+const CLIENT_ID = "PASTE_YOUR_SPOTIFY_CLIENT_ID_HERE";
+const REDIRECT_URI = location.origin + location.pathname;
+
+const SCOPES = [
+  "streaming",
+  "user-read-email",
+  "user-read-private",
+  "playlist-read-private",
+  "playlist-read-collaborative",
+  "user-read-playback-state",
+  "user-modify-playback-state",
+  "user-read-currently-playing"
+].join(" ");
+
+const $ = id => document.getElementById(id);
+
+let accessToken = null;
+let refreshToken = null;
+let tokenExpiry = 0;
+let player = null;
+let deviceId = null;
+let currentPlaylistId = null;
+let tracks = [];
+let nextTracksUrl = null;
+let currentTrackUri = null;
+let currentDuration = 0;
+let currentPosition = 0;
+let isPlaying = false;
+let refreshTimer = null;
+
+function status(message, type = "") {
+  $("status").textContent = message;
+  $("status").className = type;
+}
+
+function randomString(length = 64) {
+  const bytes = crypto.getRandomValues(new Uint8Array(length));
+  return Array.from(bytes, b => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function sha256(value) {
+  const data = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  return btoa(String.fromCharCode(...new Uint8Array(digest)))
+    .replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+async function login() {
+  if (!CLIENT_ID || CLIENT_ID.startsWith("PASTE_")) {
+    status("First add your Spotify Client ID in the code.", "error");
+    return;
+  }
+
+  const verifier = randomString();
+  const challenge = await sha256(verifier);
+  const state = randomString(24);
+
+  sessionStorage.setItem("spotify_verifier", verifier);
+  sessionStorage.setItem("spotify_state", state);
+
+  const params = new URLSearchParams({
+    client_id: CLIENT_ID,
+    response_type: "code",
+    redirect_uri: REDIRECT_URI,
+    scope: SCOPES,
+    state,
+    code_challenge_method: "S256",
+    code_challenge: challenge
+  });
+
+  location.href = "https://accounts.spotify.com/authorize?" + params;
+}
+
+async function exchangeCode(code) {
+  const verifier = sessionStorage.getItem("spotify_verifier");
+  const expectedState = sessionStorage.getItem("spotify_state");
+  const params = new URLSearchParams(location.search);
+  const returnedState = params.get("state");
+
+  if (!verifier || !expectedState || returnedState !== expectedState) {
+    throw new Error("Login verification failed. Please connect again.");
+  }
+
+  const response = await fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      client_id: CLIENT_ID,
+      grant_type: "authorization_code",
+      code,
+      redirect_uri: REDIRECT_URI,
+      code_verifier: verifier
+    })
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.error_description || data.error || "Token exchange failed.");
+  }
+
+  sessionStorage.removeItem("spotify_verifier");
+  sessionStorage.removeItem("spotify_state");
+  history.replaceState({}, document.title, REDIRECT_URI);
+
+  saveTokens(data);
+}
+
+function saveTokens(data) {
+  accessToken = data.access_token;
+  if (data.refresh_token) refreshToken = data.refresh_token;
+  tokenExpiry = Date.now() + (data.expires_in || 3600) * 1000;
+
+  sessionStorage.setItem("spotify_access", accessToken);
+  sessionStorage.setItem("spotify_expiry", String(tokenExpiry));
+
+  if (refreshToken) sessionStorage.setItem("spotify_refresh", refreshToken);
+
+  clearTimeout(refreshTimer);
+  if (refreshToken) {
+    refreshTimer = setTimeout(refreshAccessToken, Math.max(10000, tokenExpiry - Date.now() - 60000));
+  }
+
+  $("loginButton").textContent = "Spotify Connected";
+  $("loginButton").disabled = true;
+  $("logoutButton").classList.remove("hidden");
+  $("loginText").textContent = "Connected. Paste a playlist link to load its songs.";
+}
+
+async function refreshAccessToken() {
+  if (!refreshToken) return;
+
+  try {
+    const response = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        client_id: CLIENT_ID,
+        grant_type: "refresh_token",
+        refresh_token: refreshToken
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Refresh failed.");
+    saveTokens(data);
+  } catch (error) {
+    status("Your Spotify session expired. Please connect again.", "error");
+  }
+}
+
+async function getToken() {
+  if (!accessToken) throw new Error("Connect Spotify first.");
+
+  if (Date.now() > tokenExpiry - 30000) {
+    if (refreshToken) {
+      await refreshAccessToken();
+    } else {
+      throw new Error("Your login expired. Connect Spotify again.");
+    }
+  }
+
+  if (!accessToken || Date.now() > tokenExpiry) {
+    throw new Error("Reconnect your Spotify account.");
+  }
+
+  return accessToken;
+}
+
+async function api(url, options = {}) {
+  const token = await getToken();
+  const response = await fetch(url, {
+    ...options,
+    headers: {
+      Authorization: "Bearer " + token,
+      ...(options.body ? { "Content-Type": "application/json" } : {}),
+      ...options.headers
+    }
+  });
+
+  if (response.status === 204) return null;
+
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(data.error?.message || data.error_description ||
+      `Spotify API returned ${response.status}.`);
+  }
+  return data;
+}
+
+function playlistIdFromUrl(value) {
+  let url;
+  try {
+    url = new URL(value.trim());
+  } catch {
+    throw new Error("Enter a valid Spotify playlist link.");
+  }
+
+  if (!["open.spotify.com", "www.open.spotify.com"].includes(url.hostname)) {
+    throw new Error("Use a standard open.spotify.com playlist link.");
+  }
+
+  const match = url.pathname.match(/^\/playlist\/([a-zA-Z0-9]+)\/?$/);
+  if (!match) throw new Error("That link does not appear to be a playlist link.");
+  return match[1];
+}
+
+function formatTime(ms) {
+  const total = Math.floor((ms || 0) / 1000);
+  return Math.floor(total / 60) + ":" + String(total % 60).padStart(2, "0");
+}
+
+function imageFor(item) {
+  return item?.album?.images?.[0]?.url || "";
+}
+
+async function loadPlaylist(id) {
+  status("Loading playlist...");
+  currentPlaylistId = id;
+  tracks = [];
+  nextTracksUrl = null;
+  $("tracks").replaceChildren();
+  $("playlistSection").classList.remove("hidden");
+
+  const playlist = await api(
+    "https://api.spotify.com/v1/playlists/" + encodeURIComponent(id) +
+    "?fields=name,images,tracks(total)"
+  );
+
+  $("playlistName").textContent = playlist.name || "Spotify Playlist";
+  $("cover").src = playlist.images?.[0]?.url || "";
+  $("playlistInfo").textContent =
+    (playlist.tracks?.total ?? "") + " tracks";
+
+  await loadTracksPage(
+    "https://api.spotify.com/v1/playlists/" + encodeURIComponent(id) +
+    "/tracks?limit=100&fields=items(added_at,track(id,name,uri,artists(name),album(name,images),duration_ms,is_playable)),next,total"
+  );
+
+  status("Playlist loaded. Select a track to start playback.", "good");
+}
+
+async function loadTracksPage(url) {
+  const data = await api(url);
+  nextTracksUrl = data.next;
+  const items = data.items || [];
+
+  for (const item of items) {
+    const track = item.track;
+    if (!track || !track.uri) continue;
+    tracks.push(track);
+    renderTrack(track, tracks.length - 1);
+  }
+
+  $("moreTracks").classList.toggle("hidden", !nextTracksUrl);
+}
+
+function renderTrack(track, index) {
+  const row = document.createElement("div");
+  row.className = "track";
+  row.dataset.uri = track.uri;
+
+  const image = document.createElement("img");
+  image.src = imageFor(track);
+  image.alt = "";
+  image.loading = "lazy";
+
+  const info = document.createElement("div");
+  info.className = "track-info";
+
+  const name = document.createElement("div");
+  name.className = "track-name";
+  name.textContent = track.name || "Unknown track";
+
+  const artist = document.createElement("div");
+  artist.className = "artist";
+  artist.textContent = (track.artists || []).map(a => a.name).join(", ");
+
+  info.append(name, artist);
+
+  const button = document.createElement("button");
+  button.type = "button";
+  button.textContent = "▶";
+  button.title = "Play " + track.name;
+  button.addEventListener("click", () => playTrack(track));
+
+  row.append(image, info, button);
+  $("tracks").append(row);
+}
+
+async function loadMore() {
+  if (!nextTracksUrl) return;
+  $("moreTracks").disabled = true;
+  try {
+    await loadTracksPage(nextTracksUrl);
+  } catch (error) {
+    status(error.message, "error");
+  } finally {
+    $("moreTracks").disabled = false;
+  }
+}
+
+async function playTrack(track) {
+  try {
+    if (!player || !deviceId) {
+      throw new Error("The browser player is not ready yet.");
+    }
+    if (track.is_playable === false) {
+      throw new Error("This track is not available to play.");
+    }
+
+    await player.activateElement();
+    await api(
+      "https://api.spotify.com/v1/me/player/play?device_id=" +
+      encodeURIComponent(deviceId),
+      {
+        method: "PUT",
+        body: JSON.stringify({ uris: [track.uri] })
+      }
+    );
+
+    currentTrackUri = track.uri;
+    status("Playing " + track.name, "good");
+  } catch (error) {
+    status(error.message + " Check your Premium account and player connection.", "error");
+  }
+}
+
+async function playPlaylist() {
+  if (!currentPlaylistId) return;
+
+  try {
+    if (!player || !deviceId) {
+      throw new Error("Wait for the browser player to connect.");
+    }
+
+    await player.activateElement();
+    await api(
+      "https://api.spotify.com/v1/me/player/play?device_id=" +
+      encodeURIComponent(deviceId),
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          context_uri: "spotify:playlist:" + currentPlaylistId
+        })
+      }
+    );
+    status("Playing playlist.", "good");
+  } catch (error) {
+    status(error.message + " Check your Premium account and player connection.", "error");
+  }
+}
+
+function updateCurrentTrack(track) {
+  if (!track) return;
+
+  currentTrackUri = track.uri;
+  $("nowTitle").textContent = track.name || "Unknown track";
+  $("nowArtist").textContent =
+    (track.artists || []).map(a => a.name).join(", ");
+
+  const cover = imageFor(track);
+  $("nowCover").classList.toggle("hidden", !cover);
+  if (cover) $("nowCover").src = cover;
+
+  document.querySelectorAll(".track").forEach(row => {
+    const active = row.dataset.uri === track.uri;
+    row.classList.toggle("active", active);
+    const button = row.querySelector("button");
+    if (button) button.textContent = active && isPlaying ? "Ⅱ" : "▶";
+  });
+}
+
+function updatePlayback(state) {
+  if (!state) return;
+
+  isPlaying = !state.paused;
+  currentPosition = state.position || 0;
+  currentDuration = state.duration || 0;
+
+  updateCurrentTrack(state.track_window?.current_track);
+
+  $("playButton").textContent = isPlaying ? "Ⅱ" : "▶";
+  $("currentTime").textContent = formatTime(currentPosition);
+  $("duration").textContent = formatTime(currentDuration);
+  $("progress").value = currentDuration
+    ? Math.round(currentPosition / currentDuration * 1000)
+    : 0;
+}
+
+window.onSpotifyWebPlaybackSDKReady = async function() {
+  if (!accessToken) return;
+
+  player = new Spotify.Player({
+    name: "My Custom Web Player",
+    volume: 0.5,
+    getOAuthToken: async callback => {
+      try {
+        callback(await getToken());
+      } catch (error) {
+        status(error.message, "error");
+      }
+    }
+  });
+
+  player.addListener("ready", async ({ device_id }) => {
+    deviceId = device_id;
+    status("Browser player ready. Load a playlist and press play.", "good");
+
+    try {
+      await api("https://api.spotify.com/v1/me/player", {
+        method: "PUT",
+        body: JSON.stringify({ device_ids: [deviceId], play: false })
+      });
+    } catch (error) {
+      status("Player ready. Press play to activate it.", "good");
+    }
+  });
+
+  player.addListener("not_ready", () => {
+    deviceId = null;
+    status("Browser player disconnected. Try refreshing the page.", "error");
+  });
+
+  player.addListener("player_state_changed", updatePlayback);
+
+  player.addListener("initialization_error", ({ message }) =>
+    status("Player initialization error: " + message, "error"));
+
+  player.addListener("authentication_error", ({ message }) =>
+    status("Player authentication error: " + message, "error"));
+
+  player.addListener("account_error", ({ message }) =>
+    status("Spotify account error: " + message + ". Premium is required.", "error"));
+
+  player.addListener("playback_error", ({ message }) =>
+    status("Playback error: " + message, "error"));
+
+  player.addListener("autoplay_failed", () =>
+    status("Press play to allow playback in your browser.", "error"));
+
+  await player.connect();
+};
+
+$("loginButton").addEventListener("click", login);
+
+$("logoutButton").addEventListener("click", async () => {
+  if (player) await player.disconnect();
+
+  accessToken = null;
+  refreshToken = null;
+  deviceId = null;
+  player = null;
+  clearTimeout(refreshTimer);
+
+  [
+    "spotify_access", "spotify_refresh", "spotify_expiry",
+    "spotify_verifier", "spotify_state"
+  ].forEach(key => sessionStorage.removeItem(key));
+
+  $("loginButton").textContent = "Connect Spotify";
+  $("loginButton").disabled = false;
+  $("logoutButton").classList.add("hidden");
+  $("loginText").textContent = "Connect your Spotify account to load playlists.";
+  status("Disconnected from Spotify.");
+});
+
+$("playlistForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  try {
+    const id = playlistIdFromUrl($("playlistUrl").value);
+    await loadPlaylist(id);
+  } catch (error) {
+    status(error.message, "error");
+  }
+});
+
+$("moreTracks").addEventListener("click", loadMore);
+$("playAllButton").addEventListener("click", playPlaylist);
+
+$("playButton").addEventListener("click", async () => {
+  try {
+    if (!player) throw new Error("Connect Spotify first.");
+    await player.activateElement();
+    await player.togglePlay();
+  } catch (error) {
+    status(error.message, "error");
+  }
+});
+
+$("nextButton").addEventListener("click", async () => {
+  try {
+    if (!player) throw new Error("Connect Spotify first.");
+    await player.nextTrack();
+  } catch (error) {
+    status(error.message, "error");
+  }
+});
+
+$("previousButton").addEventListener("click", async () => {
+  try {
+    if (!player) throw new Error("Connect Spotify first.");
+    await player.previousTrack();
+  } catch (error) {
+    status(error.message, "error");
+  }
+});
+
+$("progress").addEventListener("change", async event => {
+  try {
+    if (!player || !currentDuration) return;
+    await player.seek(Number(event.target.value) / 1000 * currentDuration);
+  } catch (error) {
+    status(error.message, "error");
+  }
+});
+
+$("volume").addEventListener("input", async event => {
+  if (player) {
+    await player.setVolume(Number(event.target.value) / 100).catch(() => {});
+  }
+});
+
+// Restore the session for this browser tab.
+async function initialize() {
+  if (!CLIENT_ID || CLIENT_ID.startsWith("PASTE_")) {
+    status("Add your Spotify Client ID in the code before connecting.");
+    return;
+  }
+
+  const params = new URLSearchParams(location.search);
+  const code = params.get("code");
+  const authError = params.get("error");
+
+  try {
+    if (authError) {
+      history.replaceState({}, document.title, REDIRECT_URI);
+      throw new Error("Spotify authorization was cancelled or denied.");
+    }
+
+    if (code) {
+      await exchangeCode(code);
+    } else {
+      accessToken = sessionStorage.getItem("spotify_access");
+      refreshToken = sessionStorage.getItem("spotify_refresh");
+      tokenExpiry = Number(sessionStorage.getItem("spotify_expiry") || 0);
+
+      if (accessToken && Date.now() > tokenExpiry - 30000 && refreshToken) {
+        await refreshAccessToken();
+      }
+
+      if (accessToken && Date.now() < tokenExpiry) {
+        $("loginButton").textContent = "Spotify Connected";
+        $("loginButton").disabled = true;
+        $("logoutButton").classList.remove("hidden");
+        $("loginText").textContent =
+          "Connected. Paste a playlist link to load its songs.";
+      }
+    }
+
+    if (accessToken && window.Spotify) {
+      window.onSpotifyWebPlaybackSDKReady();
+    }
+  } catch (error) {
+    status(error.message, "error");
+  }
+}
+
+initialize();
+</script>
+</body>
+</html>
