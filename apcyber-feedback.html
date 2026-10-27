@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c2617">
+<meta name="description" content="AP Cyber Tools feedback form sample.">
+<title>AP Cyber Tools | Feedback</title>
+<link rel="icon" type="image/png" href="AndrewHolmes_icon.png">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{--fb-ink:#112a18;--fb-navy:#123a2a;--fb-deep:#0c2617;--fb-green:#1d6d3f;--fb-bright:#39a867;--fb-soft:#eefcf2;--fb-line:#d4e9d8;--fb-muted:#49685a}
+body{background:linear-gradient(180deg,#f5fff7 0%,#eefcf2 100%);color:var(--fb-ink)}
+.feedback-hero{padding:58px 0 28px}
+.feedback-kicker{display:inline-flex;align-items:center;gap:9px;border:1px solid #cfeeda;background:#fff;border-radius:999px;padding:7px 12px;color:#1d6d3f;font-weight:800;font-size:.78rem;letter-spacing:.04em}
+.kicker-dot{width:8px;height:8px;border-radius:50%;background:#39a867;box-shadow:0 0 0 4px #dff8e8}
+.feedback-hero h1{font-size:clamp(2.35rem,5vw,3.8rem);line-height:1.05;letter-spacing:-.06em;color:#123a2a;margin:20px 0 14px;font-weight:900}
+.feedback-hero h1 span{color:#2c8c52}
+.feedback-hero p{max-width:720px;color:#49685a;font-size:1.05rem}
+.feedback-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:24px;align-items:start;padding-bottom:68px}
+.form-card,.side-card{background:#fff;border:1px solid #d4e9d8;border-radius:20px;box-shadow:0 18px 38px rgba(13,42,24,.08)}
+.form-card{padding:clamp(20px,4vw,36px)}
+.side-card{padding:23px;position:sticky;top:92px}
+.form-heading{display:flex;gap:14px;align-items:flex-start;margin-bottom:27px}
+.heading-icon{display:grid;place-items:center;flex:0 0 48px;height:48px;border-radius:14px;background:#dff8e8;color:#144d2b;font-size:1.35rem;font-weight:900}
+.form-heading h2{font-size:1.35rem;margin:0 0 4px;color:#123a2a}
+.form-heading p{margin:0;color:#49685a;font-size:.91rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:21px}
+.field{display:flex;flex-direction:column;gap:8px;min-width:0}
+.field.full{grid-column:1/-1}
+.field label,.group-label{font-size:.9rem;font-weight:800;color:#183c28}
+.required{color:#2c8c52}
+.field input,.field select,.field textarea{width:100%;font:inherit;font-size:.95rem;color:#112a18;background:#fbfefc;border:1px solid #cfe0d3;border-radius:11px;padding:12px 13px;outline:none;transition:border .2s,box-shadow .2s}
+.field textarea{min-height:132px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#2c8c52;box-shadow:0 0 0 4px rgba(57,168,103,.13)}
+.help{font-size:.79rem;color:#62796b;margin-top:-3px}
+.rating-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.rating-options label{display:flex;align-items:center;justify-content:center;text-align:center;min-height:45px;border:1px solid #d4e9d8;background:#fbfefc;border-radius:10px;padding:9px 6px;font-size:.83rem;font-weight:700;cursor:pointer}
+.rating-options input{accent-color:#1d6d3f;margin-right:6px}
+.rating-options label:has(input:checked){border-color:#2c8c52;background:#eefcf2;color:#144d2b}
+.form-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-top:26px;padding-top:22px;border-top:1px solid #e5f1e8}
+.submit-btn{border:0;border-radius:11px;background:linear-gradient(135deg,#1d6d3f,#39a867);color:#fff;padding:13px 20px;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 7px 16px rgba(29,109,63,.18)}
+.submit-btn:hover{filter:brightness(1.04);transform:translateY(-1px)}
+.reset-btn{border:1px solid #cfe0d3;background:#fff;color:#144d2b;border-radius:11px;padding:12px 17px;font:inherit;font-weight:750;cursor:pointer}
+.form-note{font-size:.78rem;color:#62796b;flex:1 1 180px}
+.status-message{display:none;border-radius:12px;padding:13px 15px;margin-bottom:20px;font-size:.91rem;font-weight:700}
+.status-message.show{display:block}
+.status-message.success{background:#eefcf2;color:#144d2b;border:1px solid #bfe7cc}
+.status-message.error{background:#fff4f1;color:#9a3412;border:1px solid #fed7c9}
+.side-card h3{margin:0 0 12px;color:#123a2a;font-size:1.05rem}
+.side-card p{font-size:.87rem;color:#49685a;margin-bottom:16px}
+.side-list{display:grid;gap:13px;margin:18px 0 0;padding:0;list-style:none}
+.side-list li{display:flex;gap:10px;align-items:flex-start;font-size:.84rem;color:#294b36}
+.step{display:grid;place-items:center;flex:0 0 26px;height:26px;border-radius:8px;background:#dff8e8;color:#144d2b;font-weight:900;font-size:.78rem}
+.privacy-box{background:#f4fbf5;border:1px solid #d4e9d8;border-radius:12px;padding:13px;margin-top:20px;font-size:.78rem;color:#49685a}
+.privacy-box strong{display:block;color:#183c28;margin-bottom:4px}
+.sample-tools{margin-top:20px;padding-top:18px;border-top:1px solid #e5f1e8}
+.sample-tools summary{font-size:.8rem;font-weight:800;color:#49685a;cursor:pointer}
+.sample-tools button{margin:10px 8px 0 0;border:1px solid #cfe0d3;background:#fff;color:#144d2b;border-radius:9px;padding:8px 10px;font:inherit;font-size:.78rem;font-weight:750;cursor:pointer}
+.entries{display:none;margin-top:16px}.entries.show{display:block}.entry{border:1px solid #d4e9d8;border-radius:10px;padding:12px;margin-top:9px;font-size:.8rem;overflow-wrap:anywhere}.entry strong{color:#123a2a}
+.site-footer{margin-top:0}
+@media(max-width:850px){.feedback-layout{grid-template-columns:1fr}.side-card{position:static}.feedback-layout{gap:17px}}
+@media(max-width:560px){.feedback-hero{padding-top:38px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.rating-options{grid-template-columns:1fr 1fr}.form-actions{align-items:stretch}.submit-btn,.reset-btn{width:100%}.form-note{flex-basis:100%}}
+</style>
+</head>
+<body>
+<header class="site-header">
+<nav class="nav shell" aria-label="Main navigation">
+<a class="brand" href="index.html" aria-label="Home"><img src="AndrewHolmes_icon.png" alt="" class="brand-logo"><span>Andrew <strong>Holmes</strong></span></a>
+<button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<div class="nav-links">
+<a href="index.html">Home</a><a href="faq.html">FAQ</a><a href="directory.html">Directory</a><a href="resources.html">Resources</a><a href="remote.html">Remote Access</a><a href="resume.html">Resume</a><a href="contact.html">Contact</a>
+</div>
+<form class="nav-search" action="search.html" method="get"><label class="sr-only" for="nav-search">Search the site</label><input id="nav-search" name="q" type="search" placeholder="Search" autocomplete="off"><button type="submit" aria-label="Search"><span aria-hidden="true">⌕</span></button></form>
+</nav>
+</header>
+<main>
+<section class="feedback-hero shell">
+<div class="feedback-kicker"><span class="kicker-dot"></span> AP CYBER TOOLS · FEEDBACK</div>
+<h1>Help make it <span>better.</span></h1>
+<p>Your feedback helps identify what is working, what needs improvement, and what questions still need answers. Share your thoughts below.</p>
+</section>
+<section class="feedback-layout shell">
+<div class="form-card">
+<div class="form-heading"><div class="heading-icon" aria-hidden="true">↗</div><div><h2>Feedback form</h2><p>Fields marked with <span class="required">*</span> are required.</p></div></div>
+<div id="status" class="status-message" role="status" aria-live="polite"></div>
+<form id="feedback-form">
+<div class="form-grid">
+<div class="field"><label for="activity-date">Date of activity <span class="required">*</span></label><input id="activity-date" name="date" type="date" required></div>
+<div class="field"><label for="activity">Which activity was it? <span class="required">*</span></label><select id="activity" name="activity" required><option value="">Choose an activity</option><option>Class activity</option><option>Cybersecurity lab</option><option>Hands-on exercise</option><option>Assignment or project</option><option>AP Cyber Tools website</option><option>Quiz or review</option><option>Other</option></select></div>
+<div class="field full"><label for="improvements">What could be better? <span class="required">*</span></label><textarea id="improvements" name="improvements" required maxlength="3000" placeholder="What would you change? Was anything confusing, too easy, too difficult, or missing?"></textarea><span class="help">Be specific if you can. Constructive suggestions are especially helpful.</span></div>
+<div class="field full"><span class="group-label">How was your overall experience?</span><div class="rating-options">
+<label><input type="radio" name="rating" value="Excellent">Excellent</label>
+<label><input type="radio" name="rating" value="Good">Good</label>
+<label><input type="radio" name="rating" value="Average">Average</label>
+<label><input type="radio" name="rating" value="Needs improvement">Needs work</label>
+</div></div>
+<div class="field full"><label for="questions">General questions or comments</label><textarea id="questions" name="questions" maxlength="3000" placeholder="Anything else you want to ask or share?"></textarea></div>
+<div class="field"><label for="name">Name <span class="help">(optional)</span></label><input id="name" name="name" type="text" maxlength="100" autocomplete="name" placeholder="Your name"></div>
+<div class="field"><label for="followup">Would you like a response?</label><select id="followup" name="followup"><option value="No response needed">No response needed</option><option value="Yes, please follow up">Yes, please follow up</option></select><span class="help">Don't include sensitive or private information.</span></div>
+</div>
+<div class="form-actions"><button class="submit-btn" type="submit">Submit feedback <span aria-hidden="true">→</span></button><button class="reset-btn" type="reset">Clear form</button><span class="form-note">Please keep comments respectful and focused on improving the experience.</span></div>
+</form>
+</div>
+<aside class="side-card">
+<h3>Your feedback makes a difference</h3>
+<p>A useful report tells us what happened and how the experience could be improved.</p>
+<ul class="side-list">
+<li><span class="step">1</span><span><strong>Choose the date and activity</strong><br>Help identify the lesson or tool.</span></li>
+<li><span class="step">2</span><span><strong>Describe your suggestion</strong><br>Explain what worked and what did not.</span></li>
+<li><span class="step">3</span><span><strong>Submit your thoughts</strong><br>Review your answers before sending.</span></li>
+</ul>
+<div class="privacy-box"><strong>Sample site notice</strong>This GitHub Pages demo stores submissions only in this browser. They are not sent to a teacher or shared database. Use the export option below to test the sample.</div>
+<details class="sample-tools">
+<summary>Sample submission tools</summary>
+<p style="font-size:.8rem;margin:10px 0 0">For testing only. Entries are stored in this browser, not in a central system.</p>
+<button type="button" id="view-entries">View saved samples</button><button type="button" id="export-entries">Export CSV</button><button type="button" id="clear-entries">Clear samples</button>
+<div class="entries" id="entries" aria-live="polite"></div>
+</details>
+</aside>
+</section>
+</main>
+<footer class="site-footer"><div class="shell footer-inner"><div><a class="footer-brand" href="index.html">Andrew Holmes</a><p>Student developer · technology · cybersecurity · IT</p></div><div class="footer-links"><a href="contact.html">Contact</a><a href="resume.html">Resume</a><a href="search.html">Search</a></div><p class="copyright">© 2026 Andrew Holmes</p></div></footer>
+<script>
+(function(){
+const form=document.getElementById('feedback-form');
+const status=document.getElementById('status');
+const entriesBox=document.getElementById('entries');
+const storageKey='apCyberFeedbackSamplesV1';
+const dateInput=document.getElementById('activity-date');
+dateInput.value=new Date().toLocaleDateString('en-CA');
+function readEntries(){try{return JSON.parse(localStorage.getItem(storageKey)||'[]')}catch(e){return []}}
+function showStatus(message,type){status.textContent=message;status.className='status-message show '+type;status.scrollIntoView({behavior:'smooth',block:'nearest'})}
+function escapeHtml(value){return String(value||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+form.addEventListener('submit',function(e){
+e.preventDefault();
+if(!form.reportValidity())return;
+const data=Object.fromEntries(new FormData(form).entries());
+data.submittedAt=new Date().toISOString();
+try{const entries=readEntries();entries.unshift(data);localStorage.setItem(storageKey,JSON.stringify(entries));form.reset();dateInput.value=new Date().toLocaleDateString('en-CA');showStatus('Thanks! Your sample feedback was saved in this browser. It has not been sent to a central server.','success')}
+catch(err){showStatus('This browser could not save the sample. Check browser storage settings and try again.','error')}
+});
+form.addEventListener('reset',()=>{setTimeout(()=>{status.className='status-message';dateInput.value=new Date().toLocaleDateString('en-CA')},0)});
+document.getElementById('view-entries').addEventListener('click',function(){
+const entries=readEntries();entriesBox.classList.add('show');
+if(!entries.length){entriesBox.innerHTML='<p>No saved sample submissions in this browser.</p>';return}
+entriesBox.innerHTML=entries.map((x,i)=>'<div class="entry"><strong>Sample '+(i+1)+' · '+escapeHtml(x.date)+'</strong><br>'+escapeHtml(x.activity)+' · '+escapeHtml(x.rating||'No rating')+'<br><strong>Could be better:</strong> '+escapeHtml(x.improvements)+'<br><strong>Questions:</strong> '+escapeHtml(x.questions||'None')+'<br><strong>Name:</strong> '+escapeHtml(x.name||'Not provided')+'</div>').join('');
+});
+document.getElementById('export-entries').addEventListener('click',function(){
+const entries=readEntries();if(!entries.length){showStatus('There are no saved samples to export yet.','error');return}
+const cols=['date','activity','improvements','rating','questions','name','followup','submittedAt'];
+const csv=[cols.join(','),...entries.map(row=>cols.map(k=>'"'+String(row[k]||'').replace(/"/g,'""')+'"').join(','))].join('\r\n');
+const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));const a=document.createElement('a');a.href=url;a.download='ap-cyber-feedback-samples.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+});
+document.getElementById('clear-entries').addEventListener('click',function(){
+if(!confirm('Clear all sample submissions saved in this browser?'))return;
+localStorage.removeItem(storageKey);entriesBox.classList.remove('show');entriesBox.innerHTML='';showStatus('Sample submissions saved in this browser were cleared.','success');
+});
+const toggle=document.querySelector('.menu-toggle'),links=document.querySelector('.nav-links');
+if(toggle&&links){toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!open));links.classList.toggle('open',!open)})}
+})();
+</script>
+</body>
+</html>
