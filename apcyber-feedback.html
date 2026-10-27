@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#0b0a14">
 <meta name="description" content="AP Cyber Tools feedback form sample.">
 <title>AP Cyber Tools | Feedback</title>
-<link rel="icon" type="image/png" href="AndrewHolmes_icon.png">
-<link rel="stylesheet" href="style.css">
+
+
 <style>
 :root{--ap-bg:#0b0a14;--ap-panel:#171629;--ap-panel2:#101923;--ap-border:#39364e;--ap-text:#f2efff;--ap-muted:#c4c1e3;--ap-cyan:#00e5f0;--ap-cyan2:#5bd2c5;--ap-gold:#ffb32c}
 *{box-sizing:border-box}
@@ -24,28 +24,28 @@ a{color:var(--ap-cyan)}
 .nav-search input{background:transparent;color:var(--ap-text);width:95px}
 .nav-search button{background:#232139;color:var(--ap-cyan)}
 .menu-toggle{color:#fff}
-.shell{width:min(688px,calc(100% - 32px))}
-.feedback-hero{padding:26px 0 16px}
-.feedback-kicker{border:0;background:transparent;border-radius:0;padding:0;color:var(--ap-gold);font-size:.72rem;letter-spacing:.08em;font-weight:700}
+.shell{width:min(900px,calc(100% - 32px))}
+.feedback-hero{padding:38px 0 20px}
+.feedback-kicker{display:block;border:0;background:transparent;border-radius:0;padding:0;color:var(--ap-gold);font-size:.72rem;letter-spacing:.12em;font-weight:700}
 .kicker-dot{display:none}
-.feedback-hero h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.8rem,4vw,2.35rem);line-height:1.2;letter-spacing:0;color:#fff;margin:8px 0}
+.feedback-hero h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2rem,4vw,2.8rem);line-height:1.15;letter-spacing:0;color:#fff;margin:8px 0}
 .feedback-hero h1 span{color:var(--ap-cyan)}
 .feedback-hero p{color:var(--ap-muted);font-size:.98rem;max-width:690px}
-.feedback-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding-bottom:48px}
+.feedback-layout{display:grid;grid-template-columns:minmax(0,1fr) 265px;gap:18px;align-items:start;padding-bottom:48px}
 .form-card,.side-card{background:var(--ap-panel);border:1px solid var(--ap-border);border-radius:12px;box-shadow:none}
-.form-card{padding:20px}
-.side-card{padding:18px;position:static}
+.form-card{padding:clamp(18px,3vw,30px);border-top:3px solid var(--ap-cyan)}
+.side-card{padding:18px;position:sticky;top:18px}
 .form-heading{gap:12px;margin-bottom:20px}
 .heading-icon{flex:0 0 38px;height:38px;border-radius:9px;background:#202b39;color:var(--ap-cyan);font-size:1.2rem}
 .form-heading h2,.side-card h3{font-family:Georgia,"Times New Roman",serif;color:#fff;font-size:1.15rem;letter-spacing:0}
 .form-heading p,.side-card p{color:var(--ap-muted)}
 .form-heading p{font-size:.88rem}
-.form-grid{grid-template-columns:1fr 1fr;gap:17px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .field label,.group-label{font-size:.9rem;font-weight:700;color:#f1efff}
 .required{color:var(--ap-gold)}
 .field input,.field select,.field textarea{width:100%;font:inherit;font-size:.9rem;color:var(--ap-text);background:#0f101b;border:1px solid #45435b;border-radius:8px;padding:11px 12px;outline:none}
 .field select option{background:#171629;color:#fff}
-.field textarea{min-height:112px;resize:vertical}
+.field textarea{min-height:118px;resize:vertical}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ap-cyan);box-shadow:0 0 0 2px #00e5f022}
 .help,.form-note{font-size:.78rem;color:#aaa8ca}
 .rating-options{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
@@ -76,21 +76,12 @@ a{color:var(--ap-cyan)}
 .footer-brand{color:var(--ap-cyan);font-weight:700}
 .footer-links{display:flex;gap:14px}
 .site-footer a{color:var(--ap-cyan)}
-@media(max-width:800px){.nav{flex-wrap:wrap;padding:8px 0}.menu-toggle{display:block;margin-left:auto;background:none;border:0;font-size:1.2rem}.nav-links{display:none;order:4;width:100%;padding:8px 0;justify-content:flex-start;flex-wrap:wrap}.nav-links.open{display:flex}.nav-search{margin-left:0}.feedback-layout{grid-template-columns:1fr}.side-card{position:static}}
+@media(max-width:850px){.feedback-layout{grid-template-columns:1fr}.side-card{position:static}}
 @media(max-width:560px){.shell{width:calc(100% - 24px)}.feedback-hero{padding-top:22px}.form-card{padding:15px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.rating-options{grid-template-columns:1fr 1fr}.form-actions{align-items:stretch}.submit-btn,.reset-btn{width:100%}.footer-inner{display:block}.footer-links{margin:10px 0}.form-note{flex-basis:100%}}
 </style>
 </head>
 <body>
-<header class="site-header">
-<nav class="nav shell" aria-label="Main navigation">
-<a class="brand" href="index.html" aria-label="Home"><img src="AndrewHolmes_icon.png" alt="" class="brand-logo"><span>Andrew <strong>Holmes</strong></span></a>
-<button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
-<div class="nav-links">
-<a href="index.html">Home</a><a href="faq.html">FAQ</a><a href="directory.html">Directory</a><a href="resources.html">Resources</a><a href="remote.html">Remote Access</a><a href="resume.html">Resume</a><a href="contact.html">Contact</a>
-</div>
-<form class="nav-search" action="search.html" method="get"><label class="sr-only" for="nav-search">Search the site</label><input id="nav-search" name="q" type="search" placeholder="Search" autocomplete="off"><button type="submit" aria-label="Search"><span aria-hidden="true">⌕</span></button></form>
-</nav>
-</header>
+
 <main>
 <section class="feedback-hero shell">
 <div class="feedback-kicker">AP CYBER · FEEDBACK</div>
@@ -142,7 +133,7 @@ a{color:var(--ap-cyan)}
 </aside>
 </section>
 </main>
-<footer class="site-footer"><div class="shell footer-inner"><div><a class="footer-brand" href="index.html">Andrew Holmes</a><p>Student developer · technology · cybersecurity · IT</p></div><div class="footer-links"><a href="contact.html">Contact</a><a href="resume.html">Resume</a><a href="search.html">Search</a></div><p class="copyright">© 2026 Andrew Holmes</p></div></footer>
+
 <script>
 (function(){
 const form=document.getElementById('feedback-form');
