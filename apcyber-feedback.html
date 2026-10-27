@@ -3,64 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0c2617">
+<meta name="theme-color" content="#0b0a14">
 <meta name="description" content="AP Cyber Tools feedback form sample.">
 <title>AP Cyber Tools | Feedback</title>
 <link rel="icon" type="image/png" href="AndrewHolmes_icon.png">
 <link rel="stylesheet" href="style.css">
 <style>
-:root{--fb-ink:#112a18;--fb-navy:#123a2a;--fb-deep:#0c2617;--fb-green:#1d6d3f;--fb-bright:#39a867;--fb-soft:#eefcf2;--fb-line:#d4e9d8;--fb-muted:#49685a}
-body{background:linear-gradient(180deg,#f5fff7 0%,#eefcf2 100%);color:var(--fb-ink)}
-.feedback-hero{padding:58px 0 28px}
-.feedback-kicker{display:inline-flex;align-items:center;gap:9px;border:1px solid #cfeeda;background:#fff;border-radius:999px;padding:7px 12px;color:#1d6d3f;font-weight:800;font-size:.78rem;letter-spacing:.04em}
-.kicker-dot{width:8px;height:8px;border-radius:50%;background:#39a867;box-shadow:0 0 0 4px #dff8e8}
-.feedback-hero h1{font-size:clamp(2.35rem,5vw,3.8rem);line-height:1.05;letter-spacing:-.06em;color:#123a2a;margin:20px 0 14px;font-weight:900}
-.feedback-hero h1 span{color:#2c8c52}
-.feedback-hero p{max-width:720px;color:#49685a;font-size:1.05rem}
-.feedback-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:24px;align-items:start;padding-bottom:68px}
-.form-card,.side-card{background:#fff;border:1px solid #d4e9d8;border-radius:20px;box-shadow:0 18px 38px rgba(13,42,24,.08)}
-.form-card{padding:clamp(20px,4vw,36px)}
-.side-card{padding:23px;position:sticky;top:92px}
-.form-heading{display:flex;gap:14px;align-items:flex-start;margin-bottom:27px}
-.heading-icon{display:grid;place-items:center;flex:0 0 48px;height:48px;border-radius:14px;background:#dff8e8;color:#144d2b;font-size:1.35rem;font-weight:900}
-.form-heading h2{font-size:1.35rem;margin:0 0 4px;color:#123a2a}
-.form-heading p{margin:0;color:#49685a;font-size:.91rem}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:21px}
-.field{display:flex;flex-direction:column;gap:8px;min-width:0}
-.field.full{grid-column:1/-1}
-.field label,.group-label{font-size:.9rem;font-weight:800;color:#183c28}
-.required{color:#2c8c52}
-.field input,.field select,.field textarea{width:100%;font:inherit;font-size:.95rem;color:#112a18;background:#fbfefc;border:1px solid #cfe0d3;border-radius:11px;padding:12px 13px;outline:none;transition:border .2s,box-shadow .2s}
-.field textarea{min-height:132px;resize:vertical}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:#2c8c52;box-shadow:0 0 0 4px rgba(57,168,103,.13)}
-.help{font-size:.79rem;color:#62796b;margin-top:-3px}
-.rating-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
-.rating-options label{display:flex;align-items:center;justify-content:center;text-align:center;min-height:45px;border:1px solid #d4e9d8;background:#fbfefc;border-radius:10px;padding:9px 6px;font-size:.83rem;font-weight:700;cursor:pointer}
-.rating-options input{accent-color:#1d6d3f;margin-right:6px}
-.rating-options label:has(input:checked){border-color:#2c8c52;background:#eefcf2;color:#144d2b}
-.form-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-top:26px;padding-top:22px;border-top:1px solid #e5f1e8}
-.submit-btn{border:0;border-radius:11px;background:linear-gradient(135deg,#1d6d3f,#39a867);color:#fff;padding:13px 20px;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 7px 16px rgba(29,109,63,.18)}
-.submit-btn:hover{filter:brightness(1.04);transform:translateY(-1px)}
-.reset-btn{border:1px solid #cfe0d3;background:#fff;color:#144d2b;border-radius:11px;padding:12px 17px;font:inherit;font-weight:750;cursor:pointer}
-.form-note{font-size:.78rem;color:#62796b;flex:1 1 180px}
-.status-message{display:none;border-radius:12px;padding:13px 15px;margin-bottom:20px;font-size:.91rem;font-weight:700}
-.status-message.show{display:block}
-.status-message.success{background:#eefcf2;color:#144d2b;border:1px solid #bfe7cc}
-.status-message.error{background:#fff4f1;color:#9a3412;border:1px solid #fed7c9}
-.side-card h3{margin:0 0 12px;color:#123a2a;font-size:1.05rem}
-.side-card p{font-size:.87rem;color:#49685a;margin-bottom:16px}
-.side-list{display:grid;gap:13px;margin:18px 0 0;padding:0;list-style:none}
-.side-list li{display:flex;gap:10px;align-items:flex-start;font-size:.84rem;color:#294b36}
-.step{display:grid;place-items:center;flex:0 0 26px;height:26px;border-radius:8px;background:#dff8e8;color:#144d2b;font-weight:900;font-size:.78rem}
-.privacy-box{background:#f4fbf5;border:1px solid #d4e9d8;border-radius:12px;padding:13px;margin-top:20px;font-size:.78rem;color:#49685a}
-.privacy-box strong{display:block;color:#183c28;margin-bottom:4px}
-.sample-tools{margin-top:20px;padding-top:18px;border-top:1px solid #e5f1e8}
-.sample-tools summary{font-size:.8rem;font-weight:800;color:#49685a;cursor:pointer}
-.sample-tools button{margin:10px 8px 0 0;border:1px solid #cfe0d3;background:#fff;color:#144d2b;border-radius:9px;padding:8px 10px;font:inherit;font-size:.78rem;font-weight:750;cursor:pointer}
-.entries{display:none;margin-top:16px}.entries.show{display:block}.entry{border:1px solid #d4e9d8;border-radius:10px;padding:12px;margin-top:9px;font-size:.8rem;overflow-wrap:anywhere}.entry strong{color:#123a2a}
-.site-footer{margin-top:0}
-@media(max-width:850px){.feedback-layout{grid-template-columns:1fr}.side-card{position:static}.feedback-layout{gap:17px}}
-@media(max-width:560px){.feedback-hero{padding-top:38px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.rating-options{grid-template-columns:1fr 1fr}.form-actions{align-items:stretch}.submit-btn,.reset-btn{width:100%}.form-note{flex-basis:100%}}
+:root{--ap-bg:#0b0a14;--ap-panel:#171629;--ap-panel2:#101923;--ap-border:#39364e;--ap-text:#f2efff;--ap-muted:#c4c1e3;--ap-cyan:#00e5f0;--ap-cyan2:#5bd2c5;--ap-gold:#ffb32c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ap-bg);color:var(--ap-text);font-family:Georgia,"Times New Roman",serif;line-height:1.6;letter-spacing:0}
+a{color:var(--ap-cyan)}
+.site-header{position:sticky;top:0;z-index:10;background:#151426;border-bottom:1px solid #39364e;box-shadow:none}
+.nav{min-height:38px;gap:18px}
+.brand,.brand span{color:#c9c4ff;font-family:Georgia,"Times New Roman",serif;font-size:.85rem}
+.brand-logo{display:none}
+.nav-links{gap:16px}
+.nav-links a{color:#d7d3f7;font-family:Georgia,"Times New Roman",serif;font-size:.78rem}
+.nav-links a:hover,.nav-links a.active{color:var(--ap-cyan);text-decoration-color:var(--ap-cyan)}
+.nav-search{border:1px solid #39364e;background:#0b0a14;border-radius:8px}
+.nav-search input{background:transparent;color:var(--ap-text);width:95px}
+.nav-search button{background:#232139;color:var(--ap-cyan)}
+.menu-toggle{color:#fff}
+.shell{width:min(688px,calc(100% - 32px))}
+.feedback-hero{padding:26px 0 16px}
+.feedback-kicker{border:0;background:transparent;border-radius:0;padding:0;color:var(--ap-gold);font-size:.72rem;letter-spacing:.08em;font-weight:700}
+.kicker-dot{display:none}
+.feedback-hero h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.8rem,4vw,2.35rem);line-height:1.2;letter-spacing:0;color:#fff;margin:8px 0}
+.feedback-hero h1 span{color:var(--ap-cyan)}
+.feedback-hero p{color:var(--ap-muted);font-size:.98rem;max-width:690px}
+.feedback-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding-bottom:48px}
+.form-card,.side-card{background:var(--ap-panel);border:1px solid var(--ap-border);border-radius:12px;box-shadow:none}
+.form-card{padding:20px}
+.side-card{padding:18px;position:static}
+.form-heading{gap:12px;margin-bottom:20px}
+.heading-icon{flex:0 0 38px;height:38px;border-radius:9px;background:#202b39;color:var(--ap-cyan);font-size:1.2rem}
+.form-heading h2,.side-card h3{font-family:Georgia,"Times New Roman",serif;color:#fff;font-size:1.15rem;letter-spacing:0}
+.form-heading p,.side-card p{color:var(--ap-muted)}
+.form-heading p{font-size:.88rem}
+.form-grid{grid-template-columns:1fr 1fr;gap:17px}
+.field label,.group-label{font-size:.9rem;font-weight:700;color:#f1efff}
+.required{color:var(--ap-gold)}
+.field input,.field select,.field textarea{width:100%;font:inherit;font-size:.9rem;color:var(--ap-text);background:#0f101b;border:1px solid #45435b;border-radius:8px;padding:11px 12px;outline:none}
+.field select option{background:#171629;color:#fff}
+.field textarea{min-height:112px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ap-cyan);box-shadow:0 0 0 2px #00e5f022}
+.help,.form-note{font-size:.78rem;color:#aaa8ca}
+.rating-options{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.rating-options label{justify-content:flex-start;min-height:42px;border:1px solid var(--ap-border);background:#10101d;border-radius:8px;padding:9px;color:var(--ap-text);font-size:.85rem}
+.rating-options input{accent-color:var(--ap-cyan)}
+.rating-options label:has(input:checked){border-color:var(--ap-cyan);background:#10272d;color:#fff}
+.form-actions{gap:10px;margin-top:22px;padding-top:18px;border-top:1px solid var(--ap-border)}
+.submit-btn{border:1px solid #80642e;border-radius:8px;background:#77592b;color:#101018;padding:11px 17px;font-family:Georgia,"Times New Roman",serif;font-weight:800;box-shadow:none}
+.submit-btn:hover{filter:brightness(1.12);transform:none}
+.reset-btn,.sample-tools button{border:1px solid var(--ap-border);background:#202035;color:var(--ap-text);border-radius:8px;padding:10px 14px;font:inherit;font-size:.85rem;font-weight:700}
+.form-note{flex:1 1 100%}
+.status-message{border-radius:8px;padding:12px;margin-bottom:16px;font-size:.9rem}
+.status-message.success{background:#102b27;color:#a4f4dc;border:1px solid #34796e}
+.status-message.error{background:#321c25;color:#ffd0d0;border:1px solid #79424d}
+.side-card h3{margin-bottom:8px}
+.side-card p{font-size:.88rem}
+.side-list{gap:10px}
+.side-list li{color:#e4e1fa;font-size:.85rem}
+.step{background:#202b39;color:var(--ap-cyan);border-radius:7px}
+.privacy-box{background:#101923;border:1px solid #33424e;border-radius:8px;color:#b8c7d5;font-size:.8rem}
+.privacy-box strong{color:#fff}
+.sample-tools{border-top:1px solid var(--ap-border)}
+.sample-tools summary{color:var(--ap-cyan)}
+.entries .entry{border-color:var(--ap-border);background:#10101d;color:var(--ap-text)}
+.entry strong{color:var(--ap-cyan)}
+.site-footer{margin-top:0;padding:20px 0;background:#151426;color:#c4c1e3;border-top:1px solid #39364e;font-size:.8rem}
+.footer-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.footer-brand{color:var(--ap-cyan);font-weight:700}
+.footer-links{display:flex;gap:14px}
+.site-footer a{color:var(--ap-cyan)}
+@media(max-width:800px){.nav{flex-wrap:wrap;padding:8px 0}.menu-toggle{display:block;margin-left:auto;background:none;border:0;font-size:1.2rem}.nav-links{display:none;order:4;width:100%;padding:8px 0;justify-content:flex-start;flex-wrap:wrap}.nav-links.open{display:flex}.nav-search{margin-left:0}.feedback-layout{grid-template-columns:1fr}.side-card{position:static}}
+@media(max-width:560px){.shell{width:calc(100% - 24px)}.feedback-hero{padding-top:22px}.form-card{padding:15px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.rating-options{grid-template-columns:1fr 1fr}.form-actions{align-items:stretch}.submit-btn,.reset-btn{width:100%}.footer-inner{display:block}.footer-links{margin:10px 0}.form-note{flex-basis:100%}}
 </style>
 </head>
 <body>
@@ -76,13 +93,13 @@ body{background:linear-gradient(180deg,#f5fff7 0%,#eefcf2 100%);color:var(--fb-i
 </header>
 <main>
 <section class="feedback-hero shell">
-<div class="feedback-kicker"><span class="kicker-dot"></span> AP CYBER TOOLS · FEEDBACK</div>
-<h1>Help make it <span>better.</span></h1>
-<p>Your feedback helps identify what is working, what needs improvement, and what questions still need answers. Share your thoughts below.</p>
+<div class="feedback-kicker">AP CYBER · FEEDBACK</div>
+<h1>AP Cybersecurity Feedback</h1>
+<p>Help improve the practice trainers. Share what worked, what was confusing, and what should change.</p>
 </section>
 <section class="feedback-layout shell">
 <div class="form-card">
-<div class="form-heading"><div class="heading-icon" aria-hidden="true">↗</div><div><h2>Feedback form</h2><p>Fields marked with <span class="required">*</span> are required.</p></div></div>
+<div class="form-heading"><div class="heading-icon" aria-hidden="true">✎</div><div><h2>Share your feedback</h2><p>Fields marked with <span class="required">*</span> are required.</p></div></div>
 <div id="status" class="status-message" role="status" aria-live="polite"></div>
 <form id="feedback-form">
 <div class="form-grid">
