@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Private browser-based remote access to a personal Windows computer.">
+  <meta name="theme-color" content="#0b1220">
+  <title>Remote Access | Student Portfolio</title>
+  <link rel="icon" type="image/png" href="AndrewHolmes_icon.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <style>
+    .remote-panel { max-width: 780px; margin: 3rem auto; padding: clamp(1.5rem, 4vw, 3rem); }
+    .remote-status { display: flex; align-items: flex-start; gap: .85rem; padding: 1rem; border: 1px solid var(--border, #334155); border-radius: 1rem; margin: 1.5rem 0; }
+    .remote-status-icon { font-size: 1.5rem; line-height: 1; }
+    .remote-button[aria-disabled="true"] { opacity: .55; cursor: not-allowed; pointer-events: none; }
+    .remote-note { color: var(--muted, #94a3b8); font-size: .95rem; line-height: 1.65; }
+    .remote-steps { padding-left: 1.25rem; line-height: 1.8; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav shell" aria-label="Main navigation">
+      <a class="brand" href="index.html" aria-label="Home">
+        <img src="AndrewHolmes_icon.png" alt="" class="brand-logo">
+        <span>Andrew <strong>Holmes</strong></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="faq.html">FAQ</a>
+        <a href="directory.html">Directory</a>
+        <a href="resources.html">Resources</a>
+        <a class="active" href="remote.html">Remote Access</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <form class="nav-search" action="search.html" method="get">
+        <label class="sr-only" for="nav-search">Search the site</label>
+        <input id="nav-search" name="q" type="search" placeholder="Search" autocomplete="off">
+        <button type="submit" aria-label="Search"><span aria-hidden="true">⌕</span></button>
+      </form>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section class="remote-panel">
+      <div class="hero-label"><span class="hero-dot"></span> Private connection</div>
+      <h1>Remote <span>Access</span></h1>
+      <p class="lead">Connect to your home Windows computer from a browser after the secure remote-access gateway has been configured.</p>
+
+      <div class="remote-status" role="status" aria-live="polite">
+        <span class="remote-status-icon" aria-hidden="true">🔒</span>
+        <div>
+          <h2 id="status-title">Connection not configured</h2>
+          <p id="status-message">This page is published, but it is not connected to a remote desktop yet. The secure Cloudflare Access address must be configured before the connection button can be enabled.</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a id="connect-button" class="button primary remote-button" href="#" aria-disabled="true" tabindex="-1">Connect to Home PC <span aria-hidden="true">→</span></a>
+        <a class="button secondary" href="index.html">Back to home</a>
+      </div>
+
+      <h2>Before connecting</h2>
+      <ol class="remote-steps">
+        <li>Configure a Cloudflare Tunnel to reach the Windows computer.</li>
+        <li>Protect the remote desktop application with Cloudflare Access and allow only your own verified account.</li>
+        <li>Use a supported Windows edition with Remote Desktop hosting enabled.</li>
+        <li>Keep Windows sign-in enabled and do not expose Remote Desktop directly through your router.</li>
+      </ol>
+
+      <p class="remote-note">Security note: this public GitHub Pages file must never contain passwords, access tokens, tunnel credentials, or private keys. Authentication belongs at the remote-access gateway, not in this page.</p>
+    </section>
+  </main>
+
+  <script>
+    // After configuring Cloudflare Access, set this to your real HTTPS App Launcher
+    // or protected browser-based RDP hostname. Never put credentials or tokens here.
+    const REMOTE_ACCESS_URL = "";
+
+    const connectButton = document.getElementById("connect-button");
+    const statusTitle = document.getElementById("status-title");
+    const statusMessage = document.getElementById("status-message");
+
+    if (REMOTE_ACCESS_URL) {
+      try {
+        const endpoint = new URL(REMOTE_ACCESS_URL);
+        if (endpoint.protocol === "https:") {
+          connectButton.href = endpoint.href;
+          connectButton.removeAttribute("aria-disabled");
+          connectButton.removeAttribute("tabindex");
+          statusTitle.textContent = "Ready to connect";
+          statusMessage.textContent = "The connection address is configured. You'll still need to sign in through the protected remote-access service.";
+        }
+      } catch (_) {
+        statusTitle.textContent = "Connection address is invalid";
+        statusMessage.textContent = "Configure a valid HTTPS Cloudflare Access address in this file.";
+      }
+    }
+  </script>
+</body>
+</html>
