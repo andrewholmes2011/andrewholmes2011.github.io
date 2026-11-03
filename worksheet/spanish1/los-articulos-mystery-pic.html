@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LOS ARTÍCULOS MYSTERY PIC</title>
+<style>
+:root{--navy:#211447;--purple:#56349b;--gold:#f2b632;--orange:#f28c28;--ink:#252238;--muted:#6b6878;--paper:#fff;--line:#e7e2ef}
+*{box-sizing:border-box}body{margin:0;background:#f4f1f9;color:var(--ink);font:16px/1.5 Inter,Arial,sans-serif}
+header{background:linear-gradient(120deg,var(--navy),var(--purple));color:white;padding:30px 22px}
+.wrap{max-width:1050px;margin:auto}h1{font-size:clamp(25px,4vw,38px);line-height:1.1;margin:0 0 9px;letter-spacing:.3px}.subtitle{margin:0;color:#eee8ff}
+main{max-width:1050px;margin:22px auto;padding:0 18px 38px}
+.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:18px;box-shadow:0 5px 18px #25134a0b}
+.instructions{font-weight:650;margin:0 0 14px}.meta{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px}.meta label{font-size:13px;color:var(--muted);font-weight:700}.meta input{display:block;width:100%;border:0;border-bottom:2px solid #cfc7dd;padding:8px 3px;font:inherit;outline:none}.meta input:focus{border-color:var(--purple)}
+.legend{display:flex;flex-wrap:wrap;gap:10px 20px;color:var(--muted);font-size:14px}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}.def{background:var(--orange)}.indef{background:#6b58b5}
+.columns{display:grid;grid-template-columns:1fr 1fr;gap:16px}.column{display:grid;gap:12px;align-content:start}.question{display:flex;align-items:center;gap:8px;min-height:66px;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:#fff}.number{font-size:12px;color:#8b8499;min-width:22px}.sentence{flex:1}.blank{width:66px;max-width:30%;height:36px;border:2px solid var(--orange);border-radius:7px;background:#fff8ef;text-align:center;font:700 16px Inter,Arial,sans-serif;color:var(--ink);text-transform:lowercase}.blank:focus{outline:3px solid #f2b63255;border-color:var(--orange)}.actions{display:flex;flex-wrap:wrap;gap:10px}.btn{border:0;border-radius:9px;padding:10px 15px;font-weight:700;cursor:pointer;background:var(--purple);color:white}.btn.secondary{background:#eee9f7;color:var(--navy)}.note{color:var(--muted);font-size:13px;margin:12px 0 0}
+@media(max-width:700px){.columns{grid-template-columns:1fr}.meta{grid-template-columns:1fr 1fr}.meta label:first-child{grid-column:1/-1}}
+@media print{body{background:white}.panel{box-shadow:none;break-inside:avoid}header{background:var(--navy)!important;print-color-adjust:exact}.actions{display:none}main{margin:10px auto}.question{break-inside:avoid}.blank{border-color:#777;background:white}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>LOS ARTÍCULOS MYSTERY PIC</h1><p class="subtitle">Spanish 1 · Definite and indefinite articles</p></div></header>
+<main>
+<section class="panel">
+<p class="instructions">Fill in the blank with the missing definite or indefinite article. Make sure you capitalize letters at the beginning of a sentence.</p>
+<div class="meta">
+<label>Nombre / Name<input type="text" aria-label="Nombre"></label>
+<label>Fecha / Date<input type="text" aria-label="Fecha" placeholder="____________"></label>
+<label>Hora / Hora<input type="text" aria-label="Hora" placeholder="____________"></label>
+</div>
+<p class="note">Use the correct article form: el, la, los, las, un, una, unos, or unas. Remember: capitalize the first letter when the blank begins a sentence.</p>
+<div class="legend"><span><i class="dot def"></i>Article answer box</span><span><i class="dot indef"></i>Accents: á é í ó ú ñ</span></div>
+</section>
+<section class="panel">
+<div class="columns" id="questions">
+<div class="column" id="left"></div><div class="column" id="right"></div>
+</div>
+</section>
+<section class="panel">
+<div class="actions"><button class="btn" onclick="window.print()">Print worksheet</button><button class="btn secondary" onclick="document.querySelectorAll('.blank').forEach(x=>x.value='')">Clear answers</button></div>
+<p class="note">Type your article in each box. Your answers stay in this page while it is open.</p>
+</section>
+</main>
+<script>
+const left = [
+"__ estudiante estudia mucho.","__ examen es difícil.",
+"Necesito __ cuaderno para la clase.","Ella quiere __ manzana.",
+"__ libros están en la mochila.","__ mochilas están debajo de la mesa.",
+"Compré __ camisa nueva.","Compramos __ pizzas grandes.",
+"__ maestros trabajan mucho.","Tengo __ amigos en mi clase.",
+"__ casa es grande.","__ profesor explica la lección.",
+"Busco __ lápiz azul.","Tengo __ idea buena.",
+"__ escuela es moderna.","__ relojes son caros.",
+"Hay __ perro en el parque.","__ chicas son simpáticas.",
+"__ cafetería está cerrada hoy.","Hay __ estudiantes nuevos en la escuela."
+];
+const right = [
+"Hay __ problema con la computadora.","__ tarea es larga.",
+"__ ciudad es muy bonita.","Hay __ silla en el salón.",
+"Necesito __ libros para estudiar.","__ flores son hermosas.",
+"__ ventana está abierta.","Ella necesita __ bolígrafo.",
+"Ella compra __ falda roja.","__ zapatos están sucios.",
+"__ perros corren en el parque.","Tengo __ preguntas importantes.",
+"Tengo __ clase hoy.","__ libro está en la mesa.",
+"Compramos __ entradas para el concierto.","Compré __ regalos para mi familia.",
+"__ estudiantes escuchan al profesor.","__ lección es interesante.",
+"Busco __ respuestas correctas.","Hay __ gato aquí."
+];
+function render(items,id,start){const root=document.getElementById(id);items.forEach((s,i)=>{const n=start+i+1;const q=document.createElement('div');q.className='question';const num=document.createElement('span');num.className='number';num.textContent=String(n).padStart(2,'0');const sentence=document.createElement('span');sentence.className='sentence';sentence.textContent=s.replace('__','');const input=document.createElement('input');input.className='blank';input.type='text';input.maxLength=4;input.autocomplete='off';input.setAttribute('aria-label','Article for question '+n);q.append(num,input,sentence);root.append(q);});}
+render(left,'left',0);render(right,'right',20);
+</script>
+</body>
+</html>
