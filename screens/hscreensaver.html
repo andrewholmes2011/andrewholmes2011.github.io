@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#160b2e">
+<meta name="description" content="A responsive purple and gold animated screensaver.">
+<title>Purple & Gold Screensaver</title>
+<style>
+:root{color-scheme:dark;--purple:#160b2e;--gold:#f5c451;--light:#fff4cf}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--purple);color:var(--light);min-height:100svh;min-height:100dvh}
+.scene{position:fixed;inset:0;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 45%,#48216d 0%,#24113f 42%,#10071f 100%)}
+.glow{position:absolute;width:min(70vw,70vh);width:min(70vw,70dvh);aspect-ratio:1;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(245,196,81,.19),rgba(190,128,255,.08) 42%,transparent 70%);filter:blur(8px);animation:breathe 9s ease-in-out infinite alternate}
+.orb{position:absolute;border-radius:50%;border:1px solid rgba(255,220,135,.38);background:radial-gradient(circle at 30% 25%,rgba(255,244,207,.5),rgba(245,196,81,.08) 35%,rgba(118,55,170,.12) 70%,transparent);box-shadow:inset 0 0 35px rgba(245,196,81,.08),0 0 45px rgba(180,120,255,.08);animation:float 22s ease-in-out infinite alternate}
+.orb.one{width:clamp(130px,25vw,360px);aspect-ratio:1;left:-6vw;top:10%;animation-duration:25s}
+.orb.two{width:clamp(90px,16vw,240px);aspect-ratio:1;right:4vw;top:12%;animation-delay:-6s;animation-duration:19s}
+.orb.three{width:clamp(180px,32vw,460px);aspect-ratio:1;right:-10vw;bottom:-15%;animation-delay:-10s;animation-duration:27s}
+.orb.four{width:clamp(80px,12vw,170px);aspect-ratio:1;left:17%;bottom:7%;animation-delay:-4s;animation-duration:21s}
+.ring{position:absolute;width:min(75vw,75dvh);aspect-ratio:1;border:1px solid rgba(245,196,81,.15);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);animation:spin 70s linear infinite}
+.ring:before,.ring:after{content:"";position:absolute;border:1px solid rgba(205,160,255,.18);border-radius:50%;inset:9%}
+.ring:after{inset:20%;border-color:rgba(245,196,81,.13)}
+.stars{position:absolute;inset:0;background-image:radial-gradient(2px 2px at 14% 25%,rgba(255,235,174,.85) 50%,transparent 100%),radial-gradient(1px 1px at 72% 20%,rgba(255,255,255,.7) 50%,transparent 100%),radial-gradient(2px 2px at 83% 68%,rgba(245,196,81,.8) 50%,transparent 100%),radial-gradient(1px 1px at 28% 77%,rgba(255,255,255,.6) 50%,transparent 100%),radial-gradient(1px 1px at 58% 86%,rgba(255,226,160,.8) 50%,transparent 100%);opacity:.7}
+.center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(18px,5vw,64px);padding-top:max(24px,env(safe-area-inset-top));padding-bottom:max(24px,env(safe-area-inset-bottom))}
+.brand{font-size:clamp(.65rem,1.5vw,1rem);letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin:0 0 clamp(14px,3vh,32px);font-weight:650}
+.clock{font-size:clamp(3.2rem,15vw,13rem);font-weight:250;letter-spacing:-.075em;line-height:.95;font-variant-numeric:tabular-nums;text-shadow:0 0 50px rgba(245,196,81,.16);white-space:nowrap}
+.date{margin-top:clamp(18px,3vh,30px);font-size:clamp(.9rem,2.3vw,1.5rem);font-weight:350;letter-spacing:.06em;color:rgba(255,244,207,.85)}
+.rule{height:2px;width:clamp(55px,9vw,120px);margin:clamp(20px,4vh,40px) auto;background:linear-gradient(90deg,transparent,var(--gold),transparent);border:0}
+.tagline{font-size:clamp(.65rem,1.5vw,.95rem);letter-spacing:.24em;text-transform:uppercase;color:rgba(255,244,207,.65)}
+.controls{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));display:flex;gap:8px;z-index:5;opacity:.28;transition:opacity .25s}
+.controls:hover,.controls:focus-within{opacity:1}
+button{font:inherit;color:var(--light);background:rgba(28,13,48,.72);border:1px solid rgba(245,196,81,.4);border-radius:999px;padding:10px 14px;cursor:pointer;backdrop-filter:blur(12px);font-size:.8rem}
+button:hover,button:focus-visible{background:rgba(89,49,122,.9);outline:2px solid var(--gold);outline-offset:3px}
+@keyframes float{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(5vw,-3vh,0) scale(1.08)}}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes breathe{to{opacity:.55;transform:translate(-50%,-50%) scale(1.18)}}
+@media(orientation:portrait){.ring{width:min(105vw,68dvh)}.clock{letter-spacing:-.06em}.brand{letter-spacing:.3em}}
+@media(max-height:420px){.brand{margin-bottom:10px}.date{margin-top:12px}.rule{margin:12px auto}.tagline{font-size:.6rem}.center{padding:12px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="scene" aria-label="Purple and gold animated screensaver">
+  <div class="stars" aria-hidden="true"></div><div class="glow" aria-hidden="true"></div>
+  <div class="ring" aria-hidden="true"></div>
+  <div class="orb one" aria-hidden="true"></div><div class="orb two" aria-hidden="true"></div>
+  <div class="orb three" aria-hidden="true"></div><div class="orb four" aria-hidden="true"></div>
+  <section class="center">
+    <p class="brand">Purple &amp; Gold</p>
+    <time class="clock" id="clock" aria-label="Current time">00:00</time>
+    <time class="date" id="date">Loading date…</time>
+    <hr class="rule">
+    <div class="tagline">Stay curious · Keep creating</div>
+  </section>
+</main>
+<div class="controls">
+  <button id="fullscreen" type="button" aria-label="Toggle fullscreen">Enter fullscreen</button>
+  <button id="format" type="button" aria-label="Switch time format">12 / 24 h</button>
+</div>
+<script>
+(() => {
+  const clock = document.getElementById('clock');
+  const date = document.getElementById('date');
+  const fullBtn = document.getElementById('fullscreen');
+  const formatBtn = document.getElementById('format');
+  let use24Hour = false;
+  const update = () => {
+    const now = new Date();
+    clock.textContent = new Intl.DateTimeFormat(undefined, {
+      hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: !use24Hour
+    }).format(now);
+    date.textContent = new Intl.DateTimeFormat(undefined, {
+      weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'
+    }).format(now);
+    clock.dateTime = now.toISOString();
+    date.dateTime = now.toISOString();
+  };
+  const updateFullscreenLabel = () => {
+    fullBtn.textContent = document.fullscreenElement ? 'Exit fullscreen' : 'Enter fullscreen';
+  };
+  fullBtn.addEventListener('click', async () => {
+    try {
+      if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+      else await document.exitFullscreen();
+    } catch (error) {
+      fullBtn.textContent = 'Fullscreen unavailable';
+    }
+    updateFullscreenLabel();
+  });
+  document.addEventListener('fullscreenchange', updateFullscreenLabel);
+  formatBtn.addEventListener('click', () => { use24Hour = !use24Hour; update(); });
+  update();
+  setInterval(update, 1000);
+})();
+</script>
+</body>
+</html>
