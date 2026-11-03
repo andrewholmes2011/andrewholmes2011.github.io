@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090716">
+<title>Halloween Screensaver</title>
+<style>
+:root {
+  --night: #090716;
+  --purple: #24113d;
+  --orange: #ff7a18;
+  --gold: #ffc15a;
+  --moon: #fff0c9;
+}
+* { box-sizing: border-box; }
+html, body {
+  width: 100%; height: 100%; margin: 0; overflow: hidden;
+  background: var(--night); color: #fff5e6;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+}
+body {
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 100%, #4b1d48 0%, transparent 54%),
+    linear-gradient(180deg, #080716 0%, #17102d 48%, #311638 100%);
+}
+.sky-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 75% 23%, #5b347722 0%, transparent 35%);
+  pointer-events: none;
+}
+.stars { position: absolute; inset: 0; pointer-events: none; }
+.star {
+  position: absolute; border-radius: 50%; background: #fff4d6;
+  animation: twinkle var(--duration, 3s) ease-in-out infinite alternate;
+}
+.moon {
+  position: absolute; top: 9%; right: 14%;
+  width: clamp(90px, 13vw, 170px); aspect-ratio: 1;
+  border-radius: 50%; background: var(--moon);
+  box-shadow: 0 0 35px #ffdf9a55, 0 0 95px #ffb75b22;
+}
+.moon::after {
+  content: ""; position: absolute; width: 100%; height: 100%;
+  border-radius: 50%; background: #090716;
+  transform: translate(-22%, -8%);
+}
+.moon-crater {
+  position: absolute; z-index: 1; border-radius: 50%;
+  background: #d8c99f55;
+}
+.moon-crater.one { width: 13%; height: 13%; top: 30%; left: 30%; }
+.moon-crater.two { width: 8%; height: 8%; top: 56%; left: 47%; }
+.moon-crater.three { width: 6%; height: 6%; top: 24%; left: 57%; }
+.scene-title {
+  position: absolute; top: 10%; left: 7%; z-index: 2;
+  max-width: 58%; text-shadow: 0 4px 24px #0008;
+}
+.kicker {
+  color: #ffb45f; font-size: clamp(10px, 1.3vw, 15px);
+  font-weight: bold; letter-spacing: .42em; text-transform: uppercase;
+}
+h1 {
+  margin: 15px 0 10px; color: #ff9a32;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(42px, 8.5vw, 112px); line-height: .92;
+  font-weight: 700; letter-spacing: -.045em;
+  text-shadow: 0 0 22px #ff6b1c33, 0 5px 0 #7a2c18;
+}
+.subtitle {
+  margin: 20px 0 0; color: #e8d9f1;
+  font-size: clamp(12px, 1.6vw, 19px); letter-spacing: .12em;
+}
+.clock {
+  position: absolute; z-index: 4; left: 50%; top: 52%;
+  transform: translate(-50%, -50%); text-align: center;
+  width: 100%; pointer-events: none;
+}
+.time {
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(48px, 11vw, 132px); font-weight: 700;
+  letter-spacing: .04em; color: #fff2d6;
+  text-shadow: 0 0 22px #ff8b2a55, 0 4px 25px #0008;
+}
+.date {
+  margin-top: 10px; font-size: clamp(11px, 1.7vw, 18px);
+  color: #ffc16f; letter-spacing: .32em; text-transform: uppercase;
+}
+.hill {
+  position: absolute; bottom: -15%; width: 120%; height: 38%;
+  left: -10%; border-radius: 50% 50% 0 0 / 22% 22% 0 0;
+  background: linear-gradient(180deg, #20132d, #100c1e);
+}
+.hill.back {
+  bottom: -20%; left: -30%; width: 100%; height: 36%;
+  background: #281532; transform: rotate(5deg);
+}
+.house {
+  position: absolute; bottom: 13%; left: 13%; width: clamp(90px, 13vw, 170px);
+  height: clamp(90px, 13vw, 170px); z-index: 2;
+}
+.house-body {
+  position: absolute; bottom: 0; width: 100%; height: 66%;
+  background: #0b0917; border: 2px solid #44304d;
+}
+.roof {
+  position: absolute; top: 0; left: -12%; width: 124%; height: 45%;
+  background: #0a0815; clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  border-bottom: 2px solid #44304d;
+}
+.window {
+  position: absolute; top: 22%; width: 19%; height: 27%;
+  background: #ffae4a; box-shadow: 0 0 18px #ff8a2a88;
+}
+.window.left { left: 19%; }
+.window.right { right: 19%; }
+.door {
+  position: absolute; bottom: 0; left: 42%; width: 20%; height: 42%;
+  background: #20102b; border: 1px solid #50334d;
+}
+.tree {
+  position: absolute; z-index: 2; bottom: 13%; right: 17%;
+  width: clamp(70px, 11vw, 130px); height: clamp(120px, 21vw, 250px);
+}
+.tree-part {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  width: 0; height: 0; border-left: var(--w) solid transparent;
+  border-right: var(--w) solid transparent; border-bottom: var(--h) solid #101f20;
+  filter: drop-shadow(0 0 2px #5c753b);
+}
+.tree-part.p1 { top: 0; --w: 30px; --h: 65px; }
+.tree-part.p2 { top: 24%; --w: 43px; --h: 78px; }
+.tree-part.p3 { top: 48%; --w: 57px; --h: 90px; }
+.tree-trunk { position: absolute; bottom: 0; left: 43%; width: 14%; height: 22%; background: #25151c; }
+.tree-light { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: #ffc75e; box-shadow: 0 0 12px #ffc75e; animation: twinkle 1.4s infinite alternate; }
+.tree-light.l1 { top: 30%; left: 43%; }
+.tree-light.l2 { top: 51%; left: 61%; animation-delay: .5s; }
+.tree-light.l3 { top: 70%; left: 29%; animation-delay: .8s; }
+.pumpkin {
+  position: absolute; z-index: 3; bottom: 8%; width: clamp(55px, 7vw, 90px);
+  aspect-ratio: 1.15; border-radius: 46% 46% 42% 42%;
+  background: radial-gradient(ellipse at 50% 30%, #ffb344, #f36c12 65%, #a9340a);
+  box-shadow: 0 0 28px #ff781e44;
+  animation: pumpkinGlow 2.8s ease-in-out infinite alternate;
+}
+.pumpkin::before {
+  content: ""; position: absolute; width: 13%; height: 18%;
+  background: #31502a; border-radius: 5px 5px 0 0;
+  left: 45%; top: -10%; transform: rotate(8deg);
+}
+.pumpkin::after {
+  content: "▲  ▲"; position: absolute; top: 28%; left: 14%;
+  width: 72%; color: #271124; font-size: clamp(11px, 1.7vw, 21px);
+  letter-spacing: .12em; text-align: center;
+}
+.pumpkin .mouth {
+  position: absolute; left: 30%; top: 57%; width: 40%; height: 17%;
+  background: #271124; clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+}
+.pumpkin.p1 { left: 34%; }
+.pumpkin.p2 { right: 31%; bottom: 5%; transform: scale(.72); animation-delay: .7s; }
+.ghost {
+  position: absolute; z-index: 3; font-size: clamp(28px, 4.4vw, 58px);
+  opacity: .8; animation: ghostFloat var(--duration, 8s) ease-in-out infinite;
+  filter: drop-shadow(0 0 12px #ffffff22);
+}
+.ghost.g1 { left: 9%; top: 42%; --duration: 7s; }
+.ghost.g2 { right: 9%; top: 48%; --duration: 9s; animation-delay: -3s; }
+.ghost.g3 { left: 45%; top: 20%; --duration: 11s; animation-delay: -6s; opacity: .55; }
+.bat {
+  position: absolute; z-index: 3; font-size: clamp(22px, 3vw, 38px);
+  animation: batFly var(--duration, 12s) linear infinite;
+  left: -10%; top: var(--top, 30%);
+}
+.fog {
+  position: absolute; bottom: 5%; left: -20%; width: 140%; height: 18%;
+  background: linear-gradient(90deg, transparent, #d6b9e51a, #ffffff12, transparent);
+  filter: blur(25px); animation: fogDrift 18s ease-in-out infinite alternate;
+  pointer-events: none; z-index: 4;
+}
+.hint {
+  position: absolute; z-index: 5; bottom: 24px; left: 50%;
+  transform: translateX(-50%); color: #d4bddc99;
+  font-size: 10px; letter-spacing: .18em; text-align: center;
+  white-space: nowrap; transition: opacity .5s;
+}
+body.controls-hidden .hint { opacity: 0; }
+@keyframes twinkle { from { opacity: .3; transform: scale(.85); } to { opacity: 1; transform: scale(1.1); } }
+@keyframes ghostFloat { 0%,100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-28px) rotate(6deg); } }
+@keyframes batFly { 0% { transform: translateX(0) translateY(0) scale(.8); } 50% { transform: translateX(60vw) translateY(-35px) scale(1.1); } 100% { transform: translateX(120vw) translateY(12px) scale(.8); } }
+@keyframes fogDrift { from { transform: translateX(-6%); opacity: .35; } to { transform: translateX(6%); opacity: .8; } }
+@keyframes pumpkinGlow { from { filter: brightness(.9); } to { filter: brightness(1.15); } }
+@media (max-width: 600px) {
+  .scene-title { top: 7%; left: 6%; max-width: 75%; }
+  .moon { top: 12%; right: 8%; }
+  .clock { top: 49%; }
+  .house { left: 5%; bottom: 12%; }
+  .tree { right: 6%; bottom: 12%; }
+  .pumpkin.p1 { left: 38%; }
+  .pumpkin.p2 { right: 25%; }
+  .subtitle { max-width: 90%; line-height: 1.5; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+</style>
+</head>
+<body>
+<div class="sky-glow"></div>
+<div class="stars" id="stars"></div>
+
+<div class="moon" aria-hidden="true">
+  <span class="moon-crater one"></span>
+  <span class="moon-crater two"></span>
+  <span class="moon-crater three"></span>
+</div>
+
+<header class="scene-title">
+  <div class="kicker">October • Spooky Season</div>
+  <h1>HAPPY<br>HALLOWEEN</h1>
+  <p class="subtitle">A little spooky. A lot of magic.</p>
+</header>
+
+<div class="clock" aria-label="Current date and time">
+  <div class="time" id="time">12:00:00 AM</div>
+  <div class="date" id="date">HALLOWEEN NIGHT</div>
+</div>
+
+<div class="ghost g1" aria-hidden="true">👻</div>
+<div class="ghost g2" aria-hidden="true">👻</div>
+<div class="ghost g3" aria-hidden="true">🦇</div>
+
+<div class="bat" style="--top:33%;--duration:17s" aria-hidden="true">🦇</div>
+<div class="bat" style="--top:60%;--duration:22s;animation-delay:-8s" aria-hidden="true">🦇</div>
+<div class="bat" style="--top:15%;--duration:25s;animation-delay:-14s" aria-hidden="true">🦇</div>
+
+<div class="house" aria-hidden="true">
+  <div class="roof"></div>
+  <div class="house-body">
+    <div class="window left"></div>
+    <div class="window right"></div>
+    <div class="door"></div>
+  </div>
+</div>
+
+<div class="tree" aria-hidden="true">
+  <div class="tree-part p1"></div>
+  <div class="tree-part p2"></div>
+  <div class="tree-part p3"></div>
+  <div class="tree-trunk"></div>
+  <div class="tree-light l1"></div>
+  <div class="tree-light l2"></div>
+  <div class="tree-light l3"></div>
+</div>
+
+<div class="pumpkin p1" aria-hidden="true"><div class="mouth"></div></div>
+<div class="pumpkin p2" aria-hidden="true"><div class="mouth"></div></div>
+<div class="hill back"></div>
+<div class="hill"></div>
+<div class="fog"></div>
+
+<div class="hint" id="hint">DOUBLE-CLICK FOR FULLSCREEN · PRESS H TO HIDE THIS MESSAGE</div>
+
+<script>
+const stars = document.getElementById("stars");
+for (let i = 0; i < 100; i++) {
+  const star = document.createElement("span");
+  star.className = "star";
+  const size = Math.random() * 2.5 + 1;
+  star.style.width = size + "px";
+  star.style.height = size + "px";
+  star.style.left = Math.random() * 100 + "%";
+  star.style.top = Math.random() * 76 + "%";
+  star.style.setProperty("--duration", (1.5 + Math.random() * 4) + "s");
+  star.style.animationDelay = (-Math.random() * 5) + "s";
+  stars.appendChild(star);
+}
+
+function updateClock() {
+  const now = new Date();
+  document.getElementById("time").textContent = now.toLocaleTimeString([], {
+    hour: "2-digit", minute: "2-digit", second: "2-digit"
+  });
+  document.getElementById("date").textContent = now.toLocaleDateString([], {
+    weekday: "long", month: "long", day: "numeric", year: "numeric"
+  });
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+document.addEventListener("dblclick", async () => {
+  try {
+    if (!document.fullscreenElement) {
+      await document.documentElement.requestFullscreen();
+    } else {
+      await document.exitFullscreen();
+    }
+  } catch (error) {}
+});
+
+document.addEventListener("keydown", async (event) => {
+  if (event.key.toLowerCase() === "h") {
+    document.body.classList.toggle("controls-hidden");
+  }
+  if (event.key === "Escape") {
+    document.body.classList.remove("controls-hidden");
+  }
+  if (event.key.toLowerCase() === "f" && !document.fullscreenElement) {
+    try { await document.documentElement.requestFullscreen(); } catch (error) {}
+  }
+});
+</script>
+</body>
+</html>
