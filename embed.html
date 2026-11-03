@@ -4,51 +4,129 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#09090f">
-  <title>Video Player</title>
+  <title>Fortnite Pirate Shop Access Videos</title>
   <style>
     * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100vh;
-      padding: 24px;
-      display: grid;
-      place-items: center;
+      padding: 32px 20px 48px;
       background: #09090f;
-      color: #fff;
+      color: #f7f7fb;
       font-family: Inter, Arial, sans-serif;
     }
-    main { width: 100%; max-width: 1100px; }
-    header { margin-bottom: 20px; }
-    h1 { margin: 0 0 8px; font-size: 24px; }
-    header p { margin: 0; color: #9999aa; font-size: 14px; }
-    .video-container {
-      width: 100%;
-      aspect-ratio: 16 / 9;
+    main { width: 100%; max-width: 1180px; margin: 0 auto; }
+    .hero { margin-bottom: 30px; }
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      border: 1px solid #51418b;
+      border-radius: 999px;
+      color: #c9baff;
+      background: #211a38;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 38px); letter-spacing: -.03em; }
+    .hero p { max-width: 720px; margin: 0; color: #a5a5b5; line-height: 1.6; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 470px), 1fr)); gap: 22px; }
+    .video-card {
+      min-width: 0;
       overflow: hidden;
       border: 1px solid #292936;
-      border-radius: 14px;
-      background: #000;
+      border-radius: 16px;
+      background: #12121b;
     }
-    iframe { width: 100%; height: 100%; border: 0; }
-    footer { margin-top: 16px; color: #777789; font-size: 12px; text-align: center; }
+    .player { aspect-ratio: 16 / 9; background: #000; }
+    iframe { display: block; width: 100%; height: 100%; border: 0; }
+    .details { padding: 17px 18px 19px; }
+    h2 { margin: 0 0 7px; font-size: 17px; line-height: 1.4; }
+    .creator { margin: 0 0 9px; color: #c6b8ff; font-size: 13px; font-weight: 600; }
+    .description { margin: 0; color: #a5a5b5; font-size: 13px; line-height: 1.55; }
+    .note {
+      margin-top: 26px;
+      padding: 16px 18px;
+      border: 1px solid #343044;
+      border-radius: 12px;
+      color: #aaa8b8;
+      background: #111019;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .note strong { color: #eeeafc; }
+    .more { margin-top: 18px; text-align: center; }
+    .more a { color: #c9baff; text-decoration: none; }
+    .more a:hover { text-decoration: underline; }
+    footer { margin-top: 28px; color: #666675; font-size: 12px; text-align: center; }
+    @media (max-width: 540px) { body { padding: 24px 14px 36px; } .details { padding: 14px; } }
   </style>
 </head>
 <body>
   <main>
-    <header>
-      <h1>Video Player</h1>
-      <p>Watch the video below.</p>
+    <header class="hero">
+      <span class="eyebrow">Fortnite • Treasure Hunters</span>
+      <h1>Pirate Shop Access Videos</h1>
+      <p>Watch videos covering the Pirate Shop Access token, how players are finding it, and what happens when it is activated. New videos are being posted, so this is a curated collection of relevant videos found on November 2, 2026—not a complete list of every upload.</p>
     </header>
-    <div class="video-container">
-      <iframe
-        src="https://www.youtube.com/embed/BcMl26D02QI"
-        title="YouTube Video Player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen>
-      </iframe>
+
+    <section class="grid" aria-label="Pirate Shop Access videos">
+      <article class="video-card">
+        <div class="player">
+          <iframe src="https://www.youtube-nocookie.com/embed/EZR7LQF_wwQ" title="How to Get Pirate Shop Access Token in Fortnite - Imack Studios" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="details">
+          <h2>How to Get Pirate Shop Access Token in Fortnite</h2>
+          <p class="creator">Imack Studios</p>
+          <p class="description">A guide explaining Pirate Shop Access and where the token can be found.</p>
+        </div>
+      </article>
+
+      <article class="video-card">
+        <div class="player">
+          <iframe src="https://www.youtube-nocookie.com/embed/vpINWX7RYAI" title="Finding the Pirate Shop Token in Fortnite - Nick Eh 30" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="details">
+          <h2>Finding the Pirate Shop Token in Fortnite</h2>
+          <p class="creator">Nick Eh 30</p>
+          <p class="description">Live gameplay focused on searching for the new token.</p>
+        </div>
+      </article>
+
+      <article class="video-card">
+        <div class="player">
+          <iframe src="https://www.youtube-nocookie.com/embed/4snV6gVQXMA" title="How to Find the Free Item Shop Pirate Token - TG Plays" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="details">
+          <h2>How to Find the Free Item Shop Pirate Token</h2>
+          <p class="creator">TG Plays</p>
+          <p class="description">A longer video discussing a landing spot and the token hunt.</p>
+        </div>
+      </article>
+
+      <article class="video-card">
+        <div class="player">
+          <iframe src="https://www.youtube-nocookie.com/embed/hSvxZic-zL4" title="How to Get Free Pirate Shop Token in Fortnite - Pack A Puncher" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="details">
+          <h2>How to Get Free Pirate Shop Token in Fortnite</h2>
+          <p class="creator">Pack A Puncher</p>
+          <p class="description">A short video about the Pirate Shop token and the new feature.</p>
+        </div>
+      </article>
+    </section>
+
+    <aside class="note">
+      <strong>Keep in mind:</strong> These are creator videos, not official guarantees. Reports describe Pirate Shop Access as a rare random reward, and there is no confirmed guaranteed way to obtain it. Check the in-game information for current eligibility and restrictions.
+    </aside>
+
+    <div class="more">
+      <a href="https://www.youtube.com/results?search_query=Fortnite+Pirate+Shop+Access+Token" target="_blank" rel="noopener noreferrer">Find more Pirate Shop Access videos on YouTube ↗</a>
     </div>
-    <footer>Powered by YouTube</footer>
+
+    <footer>Videos are embedded from YouTube. All video rights belong to their respective creators.</footer>
   </main>
 </body>
 </html>
