@@ -12,16 +12,21 @@ header{background:linear-gradient(125deg,var(--navy),var(--purple));color:white;
 main{padding:28px 0 55px}.back{display:inline-block;margin-bottom:20px;color:var(--purple);font-weight:700;text-decoration:none}
 .file{display:flex;align-items:center;justify-content:space-between;gap:18px;background:white;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:12px}
 .file h2{font-size:17px;margin:0 0 4px}.file p{margin:0;color:var(--muted);font-size:13px}
+.details{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.detail{font-size:12px;font-weight:700;padding:4px 9px;border-radius:6px;background:#f0ebf8;color:var(--purple)}.detail.due{background:#fff3d8;color:#77500a}
 .open{white-space:nowrap;background:var(--purple);color:white;text-decoration:none;padding:10px 14px;border-radius:8px;font-weight:700}
 .open:hover{background:var(--navy)}@media(max-width:560px){.file{align-items:flex-start;flex-direction:column}.open{width:100%;text-align:center}}
 </style>
 </head>
 <body>
-<header><div class="wrap"><h1>Spanish 1 Worksheets</h1><p class="sub">All available worksheet files for this class.</p></div></header>
+<header><div class="wrap"><h1>Spanish 1 Worksheets</h1><p class="sub">Assignments, due dates, points, and worksheet files.</p></div></header>
 <main class="wrap">
 <a class="back" href="../hub/">← Back to Worksheets Hub</a>
 <article class="file">
-<div><h2>LOS ARTÍCULOS MYSTERY PIC</h2><p>Definite and indefinite articles · Interactive worksheet</p></div>
+<div>
+<h2>LOS ARTÍCULOS MYSTERY PIC</h2>
+<p>Definite and indefinite articles · Interactive worksheet</p>
+<div class="details"><span class="detail due">Due: November 3</span><span class="detail">5 points</span></div>
+</div>
 <a class="open" href="los-articulos-mystery-pic.html">Open worksheet</a>
 </article>
 </main>
