@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090f">
+  <title>Video Player</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px;
+      display: grid;
+      place-items: center;
+      background: #09090f;
+      color: #fff;
+      font-family: Inter, Arial, sans-serif;
+    }
+    main { width: 100%; max-width: 1100px; }
+    header { margin-bottom: 20px; }
+    h1 { margin: 0 0 8px; font-size: 24px; }
+    header p { margin: 0; color: #9999aa; font-size: 14px; }
+    .video-container {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border: 1px solid #292936;
+      border-radius: 14px;
+      background: #000;
+    }
+    iframe { width: 100%; height: 100%; border: 0; }
+    footer { margin-top: 16px; color: #777789; font-size: 12px; text-align: center; }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Video Player</h1>
+      <p>Watch the video below.</p>
+    </header>
+    <div class="video-container">
+      <iframe
+        src="https://www.youtube.com/embed/BcMl26D02QI"
+        title="YouTube Video Player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <footer>Powered by YouTube</footer>
+  </main>
+</body>
+</html>
