@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Worksheets Hub</title>
+<style>
+:root{--navy:#211447;--purple:#56349b;--gold:#f2b632;--ink:#252238;--muted:#716b80;--line:#e8e2f0}
+*{box-sizing:border-box}body{margin:0;background:#f5f3f9;color:var(--ink);font:16px/1.5 Inter,Arial,sans-serif}
+header{background:linear-gradient(125deg,var(--navy),var(--purple));color:#fff;padding:42px 22px}
+.wrap{width:min(1050px,calc(100% - 36px));margin:auto}
+h1{font-size:clamp(30px,5vw,44px);line-height:1.1;margin:0 0 10px}.subtitle{margin:0;color:#eee8ff}
+main{padding:30px 0 60px}.section-title{font-size:20px;margin:0 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:16px}
+.class-card{display:flex;flex-direction:column;gap:12px;background:white;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 6px 20px #2114470b}
+.class-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:#f1ebfb;color:var(--purple);font-weight:800;font-size:19px}
+.class-card h2{font-size:19px;margin:0}.class-card p{margin:0;color:var(--muted);font-size:14px}
+.open{display:inline-flex;align-items:center;justify-content:center;margin-top:auto;padding:11px 15px;border-radius:9px;background:var(--purple);color:#fff;text-decoration:none;font-weight:700}
+.open:hover{background:var(--navy)}.footer{margin-top:25px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>Worksheets Hub</h1><p class="subtitle">Find class worksheets and open the files you need.</p></div></header>
+<main class="wrap">
+<h2 class="section-title">Your classes</h2>
+<div class="grid">
+<article class="class-card">
+<div class="class-icon">ES</div>
+<h2>Spanish 1</h2>
+<p>Worksheets and class practice files.</p>
+<a class="open" href="../spanish1/">Open Spanish 1</a>
+</article>
+</div>
+<p class="footer">New class folders can be added here as more worksheets are uploaded.</p>
+</main>
+</body>
+</html>
