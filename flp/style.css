@@ -74,3 +74,42 @@ main{max-width:1220px;margin:0 auto;padding:0 28px 72px}
 .money-motto{margin-top:19px;padding:21px 22px;border-radius:12px;background:linear-gradient(110deg,#351344,#633477);color:#fff}
 .motto-label{color:var(--gold);font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
 .money-motto p{margin:8px 0 0;font:700 19px/1.45 'Manrope',sans-serif}
+
+
+/* Consistent presentation and keyboard accessibility across all portfolio pages */
+.links a:focus-visible,
+.brand:focus-visible,
+.button-link:focus-visible,
+.instructions-link:focus-visible,
+.site-footer a:focus-visible,
+.home-card:focus-visible,
+.breadcrumb a:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+.instructions-link:hover {
+  color: var(--purple-deep);
+  transform: translateY(-1px);
+}
+.content-panel {
+  min-width: 0;
+}
+.task-content {
+  line-height: 1.7;
+}
+.task-content:has(.bias-list) {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.bias-item {
+  box-shadow: 0 3px 12px rgba(49,20,64,.045);
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
