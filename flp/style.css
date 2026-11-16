@@ -383,3 +383,23 @@ main { max-width:1120px; padding:0 22px 42px; }
   html { scroll-behavior:auto; }
   *,*::before,*::after { transition-duration:.01ms !important; animation-duration:.01ms !important; }
 }
+
+/* Correct page-section targeting: topic hero is the first section in main */
+main > .content-panel:nth-of-type(2) .panel-heading {
+  margin:-25px -18px 19px; padding:25px 18px; min-height:112px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--green-dark); color:#fff; text-align:center;
+  font-size:clamp(28px,4vw,42px); letter-spacing:-.7px;
+}
+main > .content-panel:nth-of-type(4) .bias-item {
+  padding:14px 16px; margin:4px 0 8px; border:0; border-radius:4px;
+  background:#f0f3ef;
+}
+main > .content-panel:nth-of-type(4) .bias-item h3 { color:#20251f; font-weight:700; }
+main > .content-panel:nth-of-type(5) .bias-item { padding:13px 0; border-bottom:1px solid #edf0eb; }
+main > .content-panel:nth-of-type(5) .bias-item h3 { color:var(--ink); font-weight:500; }
+@media(max-width:760px) {
+  main > .content-panel:nth-of-type(2) .panel-heading {
+    margin:-20px -9px 15px; padding:21px 12px; min-height:88px;
+  }
+}
