@@ -742,21 +742,14 @@ button { font:inherit; cursor:pointer; }
 <!-- PAGE 5: MOVIE PUZZLES -->
 <section class="slide puzzles">
   <div class="content center">
-    <div class="eyebrow">Challenge 01 · Emoji Movies</div>
-    <h2>GUESS THE CHRISTMAS MOVIE</h2>
-    <p class="subtitle">Every team completes all three movie puzzles.</p>
-
     <div class="puzzle-grid">
       <div class="puzzle-card">
-        <div class="puzzle-number">MOVIE 01</div>
         <div class="puzzle-emojis">🧔‍♂️📦🎅❄️</div>
       </div>
       <div class="puzzle-card">
-        <div class="puzzle-number">MOVIE 02</div>
         <div class="puzzle-emojis">🧝‍♂️🍝🍬🎄</div>
       </div>
       <div class="puzzle-card">
-        <div class="puzzle-number">MOVIE 03</div>
         <div class="puzzle-emojis">🎅🎁🚀🌍</div>
       </div>
     </div>
@@ -830,10 +823,10 @@ button { font:inherit; cursor:pointer; }
   </div>
 </section>
 
-<!-- PAGE 8: FINAL PUZZLE -->
+<!-- PAGE 8: CHALLENGE 05 FINAL PUZZLE -->
 <section class="slide final-puzzle">
   <div class="content center">
-    <div class="eyebrow">Challenge 04 · Final Puzzle</div>
+    <div class="eyebrow">Challenge 05 · Final Puzzle</div>
     <h2>SOLVE THE PUZZLE</h2>
     <p class="subtitle">
       Rearrange every letter to discover the holiday location.
@@ -856,10 +849,10 @@ button { font:inherit; cursor:pointer; }
   </div>
 </section>
 
-<!-- PAGE 9: IN-PERSON CHALLENGE 05 -->
+<!-- PAGE 9: IN-PERSON CHALLENGE 04 -->
 <section class="slide final-puzzle">
   <div class="content center">
-    <div class="eyebrow">Challenge 05 · In Person</div>
+    <div class="eyebrow">Challenge 04 · In Person</div>
     <h2>TREE SEARCH</h2>
     <div style="font-size:clamp(90px,18vw,180px);margin:20px 0">🎄</div>
     <p class="subtitle">Find the tree-shaped papers on the ceiling. Write down every letter you find, then unscramble the letters to reveal the answer.</p>
@@ -909,8 +902,8 @@ button { font:inherit; cursor:pointer; }
         <div class="answer-item team-c"><strong>Movie 3</strong><p>Arthur Christmas</p></div>
         <div class="answer-item team-d"><strong>Challenge 02</strong><p>WINTER</p></div>
         <div class="answer-item team-a"><strong>Challenge 03</strong><p>Snowflake letters unscrambled</p></div>
-        <div class="answer-item" style="--team:#b83c48"><strong>Challenge 04</strong><p>NORTH POLE</p></div>
-        <div class="answer-item team-b"><strong>Challenge 05</strong><p>Tree letters unscrambled</p></div>
+        <div class="answer-item" style="--team:#b83c48"><strong>Challenge 05</strong><p>NORTH POLE</p></div>
+        <div class="answer-item team-b"><strong>Challenge 04</strong><p>Tree letters unscrambled</p></div>
       </div>
     </div>
   </div>
@@ -1001,7 +994,7 @@ button { font:inherit; cursor:pointer; }
       <section id="winnerSection" class="host-section" hidden>
         <h3>Winner</h3>
         <p class="host-muted">
-          Select the winning team. Your choice updates the winner slide on page 9.
+          Select the winning team. Your choice updates the winner slide on page 10.
         </p>
 
         <label for="winningTeam">Winning team</label>
@@ -1340,7 +1333,7 @@ function updateWinnerDisplay() {
   return winner;
 }
 
-/* UPDATE THE WINNER ON PAGE 9 */
+/* UPDATE THE WINNER ON PAGE 10 */
 
 $("announceWinnerButton").addEventListener("click",()=>{
   const winner = updateWinnerDisplay();
@@ -1348,7 +1341,7 @@ $("announceWinnerButton").addEventListener("click",()=>{
   $("pauseOverlay").hidden = true;
   $("winnerOverlay").hidden = true;
   $("hostPanel").hidden = true;
-  $("winnerMessage").textContent = "Page 9 updated: "+winner;
+  $("winnerMessage").textContent = "Page 10 updated: "+winner;
 
   // Navigate directly to the actual winner slide.
   $("winnerSlide").scrollIntoView({
